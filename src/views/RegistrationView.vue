@@ -1,0 +1,10 @@
+<template>
+  <h3>
+    Registration
+  </h3>
+</template>
+
+<script setup lang="ts">
+</script>
+
+<style></style>
