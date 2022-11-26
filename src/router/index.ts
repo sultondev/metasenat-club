@@ -1,6 +1,8 @@
-import {createRouter, createWebHistory} from "vue-router"
+import {createRouter, createWebHistory, RouteLocationNormalized} from "vue-router"
 import WelcomeView from "@/views/WelcomeView.vue"
 import LoginView from "@/views/LoginView.vue"
+import {useUserStore} from "@/store/userStore";
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +16,7 @@ const router = createRouter({
             path: "/login",
             name: "Login",
             component: LoginView,
+            // beforeEnter: guardMyRoute
         }
         // {
         //   path: "/about",
@@ -25,5 +28,11 @@ const router = createRouter({
         // },
     ],
 })
+
+function guardMyRoute(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
+    const userStore = useUserStore()
+
+    next()
+}
 
 export default router

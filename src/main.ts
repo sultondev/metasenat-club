@@ -6,8 +6,10 @@ import {createPinia} from "pinia"
 import {axiosInstance} from "@/plugins/axios"
 
 const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)
 app.use(router)
-app.use(createPinia())
 app.provide("axios", axiosInstance)
 
 app.mount('#app')
