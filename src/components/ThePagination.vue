@@ -2,7 +2,7 @@
   <section class="pagination">
     <div class="flex gap-[10px]">
       <button class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
-              @click="sponsorStore.activePage--"
+              @click="sponsorStore.changeActivePage(sponsorStore.activePage-1)"
               :disabled="sponsorStore.activePage === 1"><img
           src="@/assets/icons/website/left.svg" alt="">
       </button>
@@ -10,14 +10,14 @@
         <li class="" v-for="count in props.count" :key="count">
           <button
               :class="['text-xl border border-[#DFE3E8] py-[6px] px-[10px] bg-white rounded-[5px] ', sponsorStore.activePage === count ? ' pagination-list__active' : ''] "
-              @click="sponsorStore.activePage = count"
+              @click="sponsorStore.changeActivePage(count)"
           >
             {{ count }}
           </button>
         </li>
       </ul>
       <button class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
-              @click="sponsorStore.activePage++"
+              @click="sponsorStore.changeActivePage(sponsorStore.activePage+1)"
               :disabled="sponsorStore.activePage === props.count"
       >
         <img src="@/assets/icons/website/right.svg" alt="">

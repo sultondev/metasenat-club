@@ -52,13 +52,9 @@ import ThePagination from "@/components/ThePagination.vue"
 const numFormat: any = inject("numFormat")
 const axios: any = inject("axios")
 const props = defineProps(["page"])
-const protectedApi = inject("protectedApi")
 const sponsorStore = useSponsorStore()
 const response: any = ref({})
 
-function print(arg: string) {
-  console.log(arg)
-}
 
 async function fetchData(url: string, page?: string) {
   const request = await axios.get(page ? url + page : url)
@@ -66,7 +62,6 @@ async function fetchData(url: string, page?: string) {
     response.value = request
     sponsorStore.sponsorsList = request.data.results;
   }
-  console.log(sponsorStore.sponsorsList)
   console.log(response.value)
 }
 
