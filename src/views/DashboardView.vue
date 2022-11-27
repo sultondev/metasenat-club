@@ -60,7 +60,7 @@
 import {inject, ref} from "vue";
 
 const axios: any = inject('axios')
-const dashboardFields = ref([])
+const dashboardFields: any = ref([])
 const loading = ref(true)
 
 async function fetchData(url: string) {
