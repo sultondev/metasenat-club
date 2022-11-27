@@ -23,8 +23,6 @@ module.exports = {
         "prettier"
     ],
     "rules": {
-        "prettier/prettier": "error",
-        // not needed for vue 3
-        "vue/no-multiple-template-root": "off",
+        "prettier/prettier": "error"
     }
 }

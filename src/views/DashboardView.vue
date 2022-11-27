@@ -3,20 +3,6 @@
     <div class="container mx-auto">
       <div class="mb-[28px]" v-if="dashboardFields">
         <ul class="dashboard-list flex justify-between">
-          <!--          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white min-w-[380px]"-->
-          <!--              v-for="(amount, title) in dashboardFields"-->
-          <!--              :key="amount">-->
-          <!--            <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">-->
-          <!--              <img src="@/assets/icons/website/money-1.svg" alt="">-->
-          <!--            </div>-->
-          <!--            <div class="">-->
-          <!--              <p class="text-[14px] text-[#7A7A9D]" v-text="listTitles(title).value">-->
-          <!--              </p>-->
-          <!--              <p class="text-[20px] font-bold">-->
-          <!--                {{ amount }} <span class="text-[#B2B7C1]">UZS</span>-->
-          <!--              </p>-->
-          <!--            </div>-->
-          <!--          </li>-->
 
           <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white min-w-[380px]">
             <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">
@@ -71,30 +57,11 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, ref} from "vue";
+import {inject, ref} from "vue";
 
 const axios: any = inject('axios')
 const dashboardFields = ref([])
 const loading = ref(true)
-
-const listTitles = (arg: string) => computed(() => {
-  let result = "";
-  switch (arg) {
-    case 'total_paid':
-      result = "Jami to‘langan summa";
-      break;
-    case 'total_need':
-      result = "Jami so‘ralgan summa";
-      break;
-    case 'total_must_pay':
-      result = "To‘lanishi kerak summa";
-      break;
-    default:
-      result = "Unknown"
-  }
-
-  return result
-})
 
 async function fetchData(url: string) {
   const response = await axios.get(url)

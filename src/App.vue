@@ -1,12 +1,12 @@
-<script setup lang="ts">
-import TheNavbar from "@/components/TheNavbar.vue"
-</script>
-
 <template>
   <TheNavbar></TheNavbar>
   <router-view></router-view>
 </template>
 
+<script setup lang="ts">
+import TheNavbar from "@/components/TheNavbar.vue";
+
+</script>
 
 <style>
 @import url("@/assets/fonts/style.css");
