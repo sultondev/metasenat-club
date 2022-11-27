@@ -15,6 +15,7 @@ const router = createRouter({
             path: "/",
             name: "WelcomeView",
             component: WelcomeView,
+            beforeEnter: guardAuth
         },
         {
             path: "/login",
