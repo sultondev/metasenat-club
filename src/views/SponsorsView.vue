@@ -37,7 +37,7 @@
           <div class="">
             {{ response.data.count }} tadan 1-10 ko'rsatilmoqda
           </div>
-          <ThePagination :count="50 / 10"></ThePagination>
+          <ThePagination :count="Math.floor(response.data.count / 10) + 1"></ThePagination>
         </div>
       </div>
     </div>
