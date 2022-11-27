@@ -45,12 +45,12 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, ref} from "vue";
-
-const numFormat = inject("numFormat")
-const axios: any = inject("axios")
-import ThePagination from "@/components/ThePagination.vue"
+import {inject, ref} from "vue";
 import {useSponsorStore} from "@/store/useSponsorStore";
+import ThePagination from "@/components/ThePagination.vue"
+
+const numFormat: any = inject("numFormat")
+const axios: any = inject("axios")
 
 const protectedApi = inject("protectedApi")
 const sponsorStore = useSponsorStore()
