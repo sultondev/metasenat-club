@@ -71,7 +71,7 @@ async function fetchData(url: string) {
   }
 }
 
-fetchData("dashboard")
+fetchData("/dashboard")
 
 </script>
 

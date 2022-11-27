@@ -5,7 +5,8 @@
         <img src="@/assets/images/logo/logo.svg" alt="">
         METASENAT
       </h2>
-      <form action="" class="login-form bg-white rounded-[12px] p-[32px] flex flex-col gap-[44px]">
+      <form @submit.prevent="onSubmit({username: loginField, password: passwordField})"
+            class="login-form bg-white rounded-[12px] p-[32px] flex flex-col gap-[44px]">
         <h2 class="text-left text-3xl font-bold">Kirish</h2>
         <div class="flex flex-col gap-[22px]">
           <div class="flex flex-col">
@@ -36,19 +37,21 @@
 import {inject, ref} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
 
-
 const loginField = ref("")
 const passwordField = ref("")
+const axios: any = inject("axios")
 
-async function fetchData(url: string) {
-  const axios: any = inject('axios')
-  const response = await axios.get(url)
-  if (response) {
-    console.log(response)
+async function onSubmit(data: { username: string, password: string }) {
+  try {
+    const response = await axios.post("/auth/login/", JSON.stringify(data))
+    if (response.status === 200) {
+      localStorage.setItem("accessToken", response.data.access)
+    }
+  } catch {
+    alert("wrong")
   }
 }
 
-fetchData('dashboard')
 
 </script>
 

@@ -20,7 +20,7 @@ const router = createRouter({
             path: "/login",
             name: "Login",
             component: LoginView,
-            // beforeEnter: guardMyRoute
+            beforeEnter: guardAuth
         },
         {
             path: "/main",
@@ -52,10 +52,11 @@ const router = createRouter({
     ],
 })
 
-function guardMyRoute(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
+function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
     const userStore = useUserStore()
-    
-    next()
+
+    if (to.name !== 'Login' && !localStorage.getItem('accessToken')) next({name: 'Login'})
+    else next({name: 'Main'})
 }
 
 export default router

@@ -3,6 +3,9 @@
     <h3>
       Welcome
     </h3>
+    <router-link to="/login" class="text-blue-600">
+      Login Page
+    </router-link>
   </div>
 </template>
 
