@@ -25,8 +25,7 @@
                 class="text-[#B2B7C1] font-medium">UZS</span></span>
             <span class="text-center font-medium">{{ sponsor.created_at.slice(0, 10).split('-').join('.') }}</span>
             <span class="text-center">{{ sponsor.get_status_display }}</span>
-            <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""
-                                                     @click="print($route.params)"></button>
+            <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
           </li>
         </ul>
       </div>
