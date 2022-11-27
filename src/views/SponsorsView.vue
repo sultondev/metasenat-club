@@ -11,10 +11,10 @@
         <h6 class="text-[#B1B1B8] text-center uppercase">Holati</h6>
         <h6 class="text-[#B1B1B8] text-center uppercase">Amallar</h6>
       </div>
-      <div class="overflow-x-scroll" v-if="sponsorsList.length > 0">
+      <div class="overflow-x-scroll" v-if="sponsorStore.sponsorsList.length > 0">
         <ul class="sponsors-body flex flex-col gap-[12px] overflow-x-scroll">
           <li class="sponsors-body__item min-w-[1200px] py-[25px] px-[16px] bg-white rounded-[8px]"
-              v-for="(sponsor, idx) in sponsorsList">
+              v-for="(sponsor, idx) in sponsorStore.sponsorsList">
             <span class="">{{ idx + 1 }}</span>
             <span class="font-bold">{{ sponsor.full_name }}</span>
             <span class="text-center font-medium">{{ sponsor.phone }}</span>
@@ -32,8 +32,13 @@
       <div class="" v-else>
         Loading..
       </div>
-      <div class="">
-        {{ response.data.count }} tadan 1-10 ko'rsatilmoqda
+      <div class="" v-if="response.data">
+        <div class="flex justify-between">
+          <div class="">
+            {{ response.data.count }} tadan 1-10 ko'rsatilmoqda
+          </div>
+          <ThePagination :count="10"></ThePagination>
+        </div>
       </div>
     </div>
   </section>
@@ -44,17 +49,20 @@ import {inject, onMounted, ref} from "vue";
 
 const numFormat = inject("numFormat")
 const axios: any = inject("axios")
+import ThePagination from "@/components/ThePagination.vue"
+import {useSponsorStore} from "@/store/useSponsorStore";
+
 const protectedApi = inject("protectedApi")
-const sponsorsList = ref([])
+const sponsorStore = useSponsorStore()
 const response: any = ref({})
 
-async function fetchData(url: string) {
-  const request = await axios.get(url)
+async function fetchData(url: string, page?: string) {
+  const request = await axios.get(page ? url + page : url)
   if (request) {
     response.value = request
-    sponsorsList.value = request.data.results;
+    sponsorStore.sponsorsList = request.data.results;
   }
-  console.log(sponsorsList.value)
+  console.log(sponsorStore.sponsorsList)
   console.log(response.value)
 }
 
