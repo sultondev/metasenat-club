@@ -6,7 +6,7 @@
           <router-link to="/main/dashboard" class="py-[12px] px-[64px] border-r-[2px] border-[#E0E7FF]">
             DASHBOARD
           </router-link>
-          <router-link to="/main/clients" class="py-[12px] px-[64px] border-r-[2px] border-[#E0E7FF]">
+          <router-link to="/main/sponsors" class="py-[12px] px-[64px] border-r-[2px] border-[#E0E7FF]">
             HOMIYLAR
           </router-link>
           <router-link to="/main/students" class="py-[12px] px-[64px]">

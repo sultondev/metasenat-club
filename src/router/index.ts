@@ -3,7 +3,7 @@ import WelcomeView from "@/views/WelcomeView.vue"
 import LoginView from "@/views/LoginView.vue"
 import DashboardView from "@/views/DashboardView.vue"
 import MainView from "@/views/MainView.vue"
-import ClientsView from "@/views/ClientsView.vue"
+import SponsorsView from "@/views/SponsorsView.vue"
 import StudentsView from "@/views/StudentsView.vue"
 import {useUserStore} from "@/store/userStore";
 
@@ -11,11 +11,11 @@ import {useUserStore} from "@/store/userStore";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        // {
-        //     path: "/",
-        //     name: "WelcomeView",
-        //     component: WelcomeView,
-        // },
+        {
+            path: "/",
+            name: "WelcomeView",
+            component: WelcomeView,
+        },
         {
             path: "/login",
             name: "Login",
@@ -28,8 +28,8 @@ const router = createRouter({
             component: MainView,
             children: [
                 {
-                    path: "clients",
-                    component: ClientsView,
+                    path: "sponsors",
+                    component: SponsorsView,
                 },
                 {
                     path: "dashboard",
@@ -54,7 +54,7 @@ const router = createRouter({
 
 function guardMyRoute(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
     const userStore = useUserStore()
-
+    
     next()
 }
 

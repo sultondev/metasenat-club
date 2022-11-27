@@ -68,7 +68,6 @@ async function fetchData(url: string) {
   if (response.status === 200) {
     dashboardFields.value = response.data;
     loading.value = false
-    console.log(dashboardFields.value)
   }
 }
 
