@@ -13,16 +13,18 @@
             <input type="text" class="border bg-[#E0E7FF20A] bg-[#E0E7FF] rounded-[6px] py-[12px] px-[14px] text-sm"
                    name="login" id="login"
                    placeholder="login kiriting"
-                   v-model="loginField">
+                   v-model="loginField" required
+            />
           </div>
           <div class="flex flex-col">
             <label for="password" class="font-medium">PAROL</label>
             <input type="password" class="border bg-[#E0E7FF20A] bg-[#E0E7FF] rounded-[6px] py-[12px] px-[14px] text-sm"
                    name="password" id="password"
                    placeholder="parol kiriting"
-                   v-model="passwordField">
+                   v-model="passwordField" required
+            />
           </div>
-          <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML"></vue-recaptcha>
+          <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"></vue-recaptcha>
           <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white " type="submit">Kirish</button>
         </div>
       </form>
@@ -31,12 +33,22 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {inject, ref} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
 
 
 const loginField = ref("")
 const passwordField = ref("")
+
+async function fetchData(url: string) {
+  const axios: any = inject('axios')
+  const response = await axios.get(url)
+  if (response) {
+    console.log(response)
+  }
+}
+
+fetchData('dashboard')
 
 </script>
 
@@ -44,6 +56,7 @@ const passwordField = ref("")
 .login {
   width: 100%;
   height: 100vh;
+  min-height: 700px;
   display: flex;
   justify-content: center;
   align-items: center;

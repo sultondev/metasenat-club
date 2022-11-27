@@ -1,22 +1,45 @@
 import {createRouter, createWebHistory, RouteLocationNormalized} from "vue-router"
 import WelcomeView from "@/views/WelcomeView.vue"
 import LoginView from "@/views/LoginView.vue"
+import DashboardView from "@/views/DashboardView.vue"
+import MainView from "@/views/MainView.vue"
+import ClientsView from "@/views/ClientsView.vue"
+import StudentsView from "@/views/StudentsView.vue"
 import {useUserStore} from "@/store/userStore";
 
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        {
-            path: "/",
-            name: "WelcomeView",
-            component: WelcomeView,
-        },
+        // {
+        //     path: "/",
+        //     name: "WelcomeView",
+        //     component: WelcomeView,
+        // },
         {
             path: "/login",
             name: "Login",
             component: LoginView,
             // beforeEnter: guardMyRoute
+        },
+        {
+            path: "/main",
+            name: "Main",
+            component: MainView,
+            children: [
+                {
+                    path: "clients",
+                    component: ClientsView,
+                },
+                {
+                    path: "dashboard",
+                    component: DashboardView,
+                },
+                {
+                    path: "students",
+                    component: StudentsView
+                }
+            ]
         }
         // {
         //   path: "/about",
