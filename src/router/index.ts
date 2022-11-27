@@ -34,6 +34,7 @@ const router = createRouter({
                 },
                 {
                     path: "dashboard",
+                    props: true,
                     component: DashboardView,
                 },
                 {
@@ -42,14 +43,6 @@ const router = createRouter({
                 }
             ]
         }
-        // {
-        //   path: "/about",
-        //   name: "about",
-        //   // route level code-splitting
-        //   // this generates a separate chunk (About.[hash].js) for this route
-        //   // which is lazy-loaded when the route is visited.
-        //   component: () => import("../views/AboutView.vue"),
-        // },
     ],
 })
 
@@ -57,7 +50,7 @@ function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, n
     const userStore = useUserStore()
 
     if (to.name !== 'Login' && !localStorage.getItem('accessToken')) next({name: 'Login'})
-    else next({name: 'Main'})
+    else next({path: '/main/dashboard'})
 }
 
 export default router

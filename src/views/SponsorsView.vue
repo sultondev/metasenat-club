@@ -12,8 +12,8 @@
         <h6 class="text-[#B1B1B8] text-center uppercase">Amallar</h6>
       </div>
       <div class="overflow-x-scroll" v-if="sponsorStore.sponsorsList.length > 0">
-        <ul class="sponsors-body flex flex-col gap-[12px] overflow-x-scroll">
-          <li class="sponsors-body__item min-w-[1200px] py-[25px] px-[16px] bg-white rounded-[8px]"
+        <ul class="sponsors-body flex flex-col gap-[12px] overflow-x-scroll min-w-[1200px]">
+          <li class="sponsors-body__item  py-[25px] px-[16px] bg-white rounded-[8px]"
               v-for="(sponsor, idx) in sponsorStore.sponsorsList">
             <span class="">{{ idx + 1 }}</span>
             <span class="font-bold">{{ sponsor.full_name }}</span>
@@ -23,9 +23,10 @@
             </span>
             <span class="text-center font-bold">{{ numFormat(sponsor.spent) }} <span
                 class="text-[#B2B7C1] font-medium">UZS</span></span>
-            <span class="text-center font-medium">{{ sponsor.created_at }}</span>
+            <span class="text-center font-medium">{{ sponsor.created_at.slice(0, 10).split('-').join('.') }}</span>
             <span class="text-center">{{ sponsor.get_status_display }}</span>
-            <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
+            <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""
+                                                     @click="print($route.params)"></button>
           </li>
         </ul>
       </div>
@@ -37,7 +38,7 @@
           <div class="">
             {{ response.data.count }} tadan 1-10 ko'rsatilmoqda
           </div>
-          <ThePagination :count="10"></ThePagination>
+          <ThePagination :count="50 / 10"></ThePagination>
         </div>
       </div>
     </div>
@@ -51,10 +52,14 @@ import ThePagination from "@/components/ThePagination.vue"
 
 const numFormat: any = inject("numFormat")
 const axios: any = inject("axios")
-
+const props = defineProps(["page"])
 const protectedApi = inject("protectedApi")
 const sponsorStore = useSponsorStore()
 const response: any = ref({})
+
+function print(arg: string) {
+  console.log(arg)
+}
 
 async function fetchData(url: string, page?: string) {
   const request = await axios.get(page ? url + page : url)
@@ -67,7 +72,7 @@ async function fetchData(url: string, page?: string) {
 }
 
 
-fetchData("sponsor-list")
+fetchData("sponsor-list", `/?page=${sponsorStore.activePage}`)
 
 
 </script>
