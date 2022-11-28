@@ -6,7 +6,7 @@ import {defineStore} from 'pinia'
 // the first argument is a unique id of the store across your application
 export const useUserStore = defineStore('user', {
     state: () => ({
-        isAuthenticated: true,
+        isAuthenticated: false,
     }),
     actions: {
         authUser() {
@@ -18,11 +18,20 @@ export const useUserStore = defineStore('user', {
         },
         changeUserAuth(state: boolean) {
             this.isAuthenticated = state;
+        },
+        Init() {
+            if (localStorage.getItem("accessToken")) {
+                this.isAuthenticated = true;
+            } else {
+                this.isAuthenticated = false
+            }
         }
     },
     getters: {
-        isLoggedIn: () => {
-            return false
+        isLoggedIn: (state) => {
+            return (userState: boolean) => {
+                return !state.isAuthenticated;
+            }
         }
     }
 })

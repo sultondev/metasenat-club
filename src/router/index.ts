@@ -15,15 +15,19 @@ const router = createRouter({
             path: "/",
             name: "WelcomeView",
             component: WelcomeView,
+            meta: {
+                requiresAuth: false
+            }
         },
         {
             path: "/login",
             name: "Login",
             component: LoginView,
+            beforeEnter: guardAuth
         },
         {
             path: "/main",
-            name: "Main",
+            name: "MainView",
             component: MainView,
             children: [
                 {
@@ -38,7 +42,8 @@ const router = createRouter({
                     props: true,
                     component: DashboardView,
                     meta: {
-                        requiresAuth: true
+                        requiresAuth: true,
+                        title: "DashboardMain"
                     },
                 },
                 {
@@ -52,6 +57,7 @@ const router = createRouter({
             meta: {
                 requiresAuth: true
             },
+            beforeEnter: guardAuth
         }
     ],
 })
@@ -59,18 +65,25 @@ const router = createRouter({
 function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
     const userStore = useUserStore()
 
-    if (to.name !== 'Login' && !localStorage.getItem('accessToken')) next({name: 'Login'})
-    else next({path: '/main/dashboard'})
-}
-
-
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    const userStatus = false;
-    if (to.name !== "Login" && !userStatus) {
-        next({name: "Login"})
+    if (to.name !== 'Login' && to.meta.requiresAuth) {
+        next("/login")
+    } else if (to.name === "WelcomeView") {
+        next(to.fullPath)
     } else {
         next()
     }
-})
+}
+
+
+// router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+//     const userStore = useUserStore()
+//     if (to.name !== "Login" && !userStore.isAuthenticated) {
+//         // this route requires auth, check if logged in
+//         // if not, redirect to login page.
+//         next({name: "Login"})
+//     } else {
+//         next({path: "/main"})
+//     }
+// })
 
 export default router
