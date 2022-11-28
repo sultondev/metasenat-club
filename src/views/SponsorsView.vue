@@ -23,8 +23,10 @@
             </span>
             <span class="text-center font-bold">{{ numFormat(sponsor.spent) }} <span
                 class="text-[#B2B7C1] font-medium">UZS</span></span>
-            <span class="text-center font-medium">{{ sponsor.created_at.slice(0, 10).split('-').join('.') }}</span>
-            <span class="text-center">{{ sponsor.get_status_display }}</span>
+            <span class="text-center font-medium">{{ formatDateTime(sponsor.created_at) }}</span>
+            <span :class="'text-center ' + `${ sponsor.get_status_display.toLowerCase().replace(/\s/g, '') }` ">{{
+                sponsor.get_status_display
+              }}</span>
             <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
           </li>
         </ul>
@@ -87,10 +89,31 @@ async function fetchData(url: string, page?: string) {
 
 fetchData("sponsor-list", `/?page=${sponsorStore.activePage}&page_size=${sponsorStore.pageSize}`)
 
-
+function formatDateTime(arg: string) {
+  const [year, month, day] = arg.slice(0, 10).split('-').join('-').split('-');
+  const res: any = [day, month, year].join(".")
+  return res;
+}
 </script>
 
-<style>
+<style scoped>
+
+.yangi {
+  color: #5BABF2;
+}
+
+.moderatsiyada {
+  color: #FFA445;
+}
+
+.tasdiqlangan {
+  color: #00CF83;
+}
+
+.bekorqilingan {
+  color: #979797;
+}
+
 .sponsors-head {
   display: grid;
   grid-template-columns: 40px 240px 1fr 1fr 1fr 1fr 1fr 1fr;
