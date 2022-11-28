@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory, RouteLocationNormalized} from "vue-router"
+import {createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized} from "vue-router"
 import WelcomeView from "@/views/WelcomeView.vue"
 import LoginView from "@/views/LoginView.vue"
 import DashboardView from "@/views/DashboardView.vue"
@@ -15,13 +15,11 @@ const router = createRouter({
             path: "/",
             name: "WelcomeView",
             component: WelcomeView,
-            beforeEnter: guardAuth
         },
         {
             path: "/login",
             name: "Login",
             component: LoginView,
-            beforeEnter: guardAuth
         },
         {
             path: "/main",
@@ -31,17 +29,29 @@ const router = createRouter({
                 {
                     path: "sponsors",
                     component: SponsorsView,
+                    meta: {
+                        requiresAuth: true
+                    },
                 },
                 {
                     path: "dashboard",
                     props: true,
                     component: DashboardView,
+                    meta: {
+                        requiresAuth: true
+                    },
                 },
                 {
                     path: "students",
-                    component: StudentsView
+                    component: StudentsView,
+                    meta: {
+                        requiresAuth: true
+                    },
                 }
-            ]
+            ],
+            meta: {
+                requiresAuth: true
+            },
         }
     ],
 })
@@ -52,5 +62,15 @@ function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, n
     if (to.name !== 'Login' && !localStorage.getItem('accessToken')) next({name: 'Login'})
     else next({path: '/main/dashboard'})
 }
+
+
+router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    const userStatus = false;
+    if (to.name !== "Login" && !userStatus) {
+        next({name: "Login"})
+    } else {
+        next()
+    }
+})
 
 export default router
