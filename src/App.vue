@@ -5,7 +5,10 @@
 
 <script setup lang="ts">
 import TheNavbar from "@/components/TheNavbar.vue";
+import {useUserStore} from "@/store/userStore";
 
+const userStore = useUserStore()
+userStore.Init()
 </script>
 
 <style>

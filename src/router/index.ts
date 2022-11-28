@@ -69,7 +69,7 @@ function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, n
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (!userStore.isLoggedIn) {
+        if (!userStore.isLoggedIn && !localStorage.getItem("accessToken")) {
             next({name: 'Login'})
         } else if (userStore.isLoggedIn) {
             console.log(to.path)

@@ -18,7 +18,7 @@
                   class="nav-user__picture"
                   alt="UserImage">
               </a>
-              <button class="nav__logout">
+              <button class="nav__logout" @click="userStore.logOut">
                 <span class="icon-exit"></span>
               </button>
             </div>
@@ -31,8 +31,10 @@
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
+import router from "@/router";
 
 const userStore = useUserStore();
+
 </script>
 
 <style>
