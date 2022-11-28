@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', {
             // I  could add some validation to check whether the user has valid token or not
             // It was because of back-end the authorization field didn't work
             // and also lack of time
-            // but thanks a lot it was awesome experience
+            // but thanks a lot it was an awesome experience
             if (localStorage.getItem("accessToken")) {
                 this.isAuthenticated = true;
             } else {
