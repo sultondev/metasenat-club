@@ -36,16 +36,21 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
+import {useUserStore} from "@/store/userStore";
+import router from "@/router";
 
 const loginField = ref("")
 const passwordField = ref("")
 const axios: any = inject("axios")
+const userStore = useUserStore()
 
 async function onSubmit(data: { username: string, password: string }) {
   try {
     const response = await axios.post("/auth/login/", JSON.stringify(data))
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.access)
+      userStore.isAuthenticated = true;
+      router.push('/main/dashboard')
     }
   } catch {
     alert("wrong")
