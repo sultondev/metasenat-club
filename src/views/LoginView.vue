@@ -5,9 +5,13 @@
         <img src="@/assets/images/logo/logo.svg" alt="">
         METASENAT
       </h2>
+
       <form @submit.prevent="onSubmit({username: loginField, password: passwordField})"
             class="login-form bg-white rounded-[12px] p-[32px] flex flex-col gap-[44px]">
         <h2 class="text-left text-3xl font-bold">Kirish</h2>
+        <p v-if="loginAlert">
+          <span class="text-red-500">Wrong username or password</span>
+        </p>
         <div class="flex flex-col gap-[22px]">
           <div class="flex flex-col">
             <label for="login" class="font-medium">LOGIN</label>
@@ -34,13 +38,14 @@
 </template>
 
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {inject, ref, watch} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
 import {useUserStore} from "@/store/userStore";
 import router from "@/router";
 
 const loginField = ref("")
 const passwordField = ref("")
+const loginAlert = ref(false)
 const axios: any = inject("axios")
 const userStore = useUserStore()
 
@@ -53,9 +58,13 @@ async function onSubmit(data: { username: string, password: string }) {
       router.push('/main/dashboard')
     }
   } catch {
-    alert("wrong")
+    loginAlert.value = true
   }
 }
+
+watch([loginField, passwordField], () => {
+  loginAlert.value = false
+})
 
 
 </script>
