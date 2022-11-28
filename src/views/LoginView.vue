@@ -32,9 +32,8 @@
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"></vue-recaptcha>
           <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
                   :disabled="loading">
-            Kirish
-            <span v-if="loading">
-              <img src="@/assets/images/website/loading.gif" alt="Loading gif">
+            <span>
+            {{ loading ? "Checking..." : "Kirish" }}
             </span>
           </button>
         </div>
