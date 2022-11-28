@@ -15,7 +15,7 @@
         <ul class="sponsors-body flex flex-col gap-[12px] overflow-x-scroll min-w-[1200px]">
           <li class="sponsors-body__item  py-[25px] px-[16px] bg-white rounded-[8px]"
               v-for="(sponsor, idx) in sponsorStore.sponsorsList">
-            <span class="">{{ idx + 1 }}</span>
+            <span class="">{{ sponsorStore.activePage * sponsorStore.pageSize + idx + 1 }}</span>
             <span class="font-bold">{{ sponsor.full_name }}</span>
             <span class="text-center font-medium">{{ sponsor.phone }}</span>
             <span class="text-center font-bold">{{ numFormat(sponsor.sum) }} <span
