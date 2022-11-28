@@ -37,13 +37,18 @@
           <div class="">
             {{ response.data.count }} tadan 1-10 ko'rsatilmoqda
           </div>
-          <div class="flex">
-            <select name="pageSize" id="page-size" @change="selectPageSize" :value="sponsorStore.pageSize">
-              <option :value="num" class="" v-for="num in [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
-                      :key="num+'wdadwa'">
-                {{ num }}
-              </option>
-            </select>
+          <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
+              <p class="">Ko'rsatish</p>
+              <select name="pageSize" id="page-size" @change="selectPageSize"
+                      class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px]"
+                      :value="sponsorStore.pageSize">
+                <option :value="num" class="" v-for="num in [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+                        :key="num+'wdadwa'">
+                  {{ num }}
+                </option>
+              </select>
+            </div>
             <ThePagination :count="Math.floor(response.data.count / sponsorStore.pageSize) + 1"></ThePagination>
           </div>
         </div>
