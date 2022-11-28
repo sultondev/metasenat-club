@@ -33,7 +33,7 @@
           </li>
           <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white min-w-[380px]">
             <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-2.svg" alt="">
+              <img src="@/assets/icons/website/money-3.svg" alt="">
             </div>
             <div class="">
               <p class="text-[14px] text-[#7A7A9D]">
