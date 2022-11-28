@@ -29,7 +29,8 @@
                    v-model="passwordField" required
             />
           </div>
-          <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"></vue-recaptcha>
+          <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
+                         @verify="testRobot"></vue-recaptcha>
           <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
                   :disabled="loading">
             <span>
@@ -69,6 +70,10 @@ async function onSubmit(data: { username: string, password: string }) {
     loginAlert.value = true
     loading.value = false
   }
+}
+
+function testRobot(response: any) {
+  console.log(response)
 }
 
 watch([loginField, passwordField], () => {
