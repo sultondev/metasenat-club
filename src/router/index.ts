@@ -24,7 +24,10 @@ const router = createRouter({
             path: "/login",
             name: "Login",
             component: LoginView,
-            beforeEnter: guardAuth,
+            beforeEnter: hideForAuth,
+            meta: {
+                requiresGuest: true
+            }
         },
         {
             path: "/main",
@@ -82,6 +85,14 @@ function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, n
     }
 }
 
+function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+    const userStore = useUserStore()
+    if (to.path === "/login" && localStorage.getItem("accessToken")) {
+        next("/")
+    } else {
+        next()
+    }
+}
 
 // router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
 //     const userStore = useUserStore()
