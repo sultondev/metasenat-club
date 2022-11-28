@@ -37,7 +37,15 @@
           <div class="">
             {{ response.data.count }} tadan 1-10 ko'rsatilmoqda
           </div>
-          <ThePagination :count="Math.floor(response.data.count / 10) + 1"></ThePagination>
+          <div class="flex">
+            <select name="pageSize" id="page-size" @change="selectPageSize" :value="sponsorStore.pageSize">
+              <option :value="num" class="" v-for="num in [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+                      :key="num+'wdadwa'">
+                {{ num }}
+              </option>
+            </select>
+            <ThePagination :count="Math.floor(response.data.count / sponsorStore.pageSize) + 1"></ThePagination>
+          </div>
         </div>
       </div>
     </div>
@@ -55,6 +63,12 @@ const props = defineProps(["page"])
 const sponsorStore = useSponsorStore()
 const response: any = ref({})
 
+function selectPageSize(event: any) {
+  sponsorStore.pageSize = event.target.value;
+  // here I refecht data to add new list items
+  sponsorStore.changeActivePage(sponsorStore.activePage)
+}
+
 
 async function fetchData(url: string, page?: string) {
   const request = await axios.get(page ? url + page : url)
@@ -66,7 +80,7 @@ async function fetchData(url: string, page?: string) {
 }
 
 
-fetchData("sponsor-list", `/?page=${sponsorStore.activePage}`)
+fetchData("sponsor-list", `/?page=${sponsorStore.activePage}&page_size=${sponsorStore.pageSize}`)
 
 
 </script>

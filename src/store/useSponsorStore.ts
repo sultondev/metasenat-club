@@ -14,18 +14,19 @@ type sponsorsListType = {
     sum: string
 }
 // @ts-ignore
-export const useSponsorStore = defineStore<string, { activePage: number, sponsorsList: sponsorsListType[], changeActivePage: (value: number) => void; }>("useSponsorStore", {
+export const useSponsorStore = defineStore<string, { activePage: number, pageSize: number, sponsorsList: sponsorsListType[], changeActivePage: (value: number) => void; }>("useSponsorStore", {
     state: () => {
         return {
             activePage: 1,
+            pageSize: 10,
             sponsorsList: []
         }
     },
     actions: {
-        async changeActivePage(value: number) {
+        async changeActivePage(value: number = 1, propPageSize?: number | string) {
             const response = ref({})
             try {
-                const request = await publicApi.get(`/sponsor-list/?page=${value}`)
+                const request = await publicApi.get(`/sponsor-list/?page=${value}&page_size=${propPageSize ? propPageSize : this.pageSize}`)
                 console.log(value)
 
                 if (request.status === 200) {
