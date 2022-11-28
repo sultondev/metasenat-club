@@ -29,9 +29,7 @@ export const useUserStore = defineStore('user', {
     },
     getters: {
         isLoggedIn: (state) => {
-            return (userState: boolean) => {
-                return !state.isAuthenticated;
-            }
+            return state.isAuthenticated;
         }
     }
 })

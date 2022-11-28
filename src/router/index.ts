@@ -5,6 +5,7 @@ import DashboardView from "@/views/DashboardView.vue"
 import MainView from "@/views/MainView.vue"
 import SponsorsView from "@/views/SponsorsView.vue"
 import StudentsView from "@/views/StudentsView.vue"
+import PageNotFound from "@/views/PageNotFound.vue"
 import {useUserStore} from "@/store/userStore";
 
 
@@ -23,7 +24,7 @@ const router = createRouter({
             path: "/login",
             name: "Login",
             component: LoginView,
-            beforeEnter: guardAuth
+            beforeEnter: guardAuth,
         },
         {
             path: "/main",
@@ -58,17 +59,24 @@ const router = createRouter({
                 requiresAuth: true
             },
             beforeEnter: guardAuth
-        }
+        },
+        {path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound},
     ],
 })
 
 function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: any) {
     const userStore = useUserStore()
-
-    if (to.name !== 'Login' && to.meta.requiresAuth) {
-        next("/login")
-    } else if (to.name === "WelcomeView") {
-        next(to.fullPath)
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!userStore.isLoggedIn) {
+            next({name: 'Login'})
+        } else if (userStore.isLoggedIn) {
+            console.log(to.path)
+            next()
+        } else {
+            next() // go to wherever I'm going
+        }
     } else {
         next()
     }

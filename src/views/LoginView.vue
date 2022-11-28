@@ -37,6 +37,7 @@
 import {inject, ref} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
 import {useUserStore} from "@/store/userStore";
+import router from "@/router";
 
 const loginField = ref("")
 const passwordField = ref("")
@@ -49,6 +50,7 @@ async function onSubmit(data: { username: string, password: string }) {
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.access)
       userStore.isAuthenticated = true;
+      router.push('/main/dashboard')
     }
   } catch {
     alert("wrong")
