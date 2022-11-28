@@ -30,7 +30,13 @@
             />
           </div>
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"></vue-recaptcha>
-          <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white " type="submit">Kirish</button>
+          <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
+                  :disabled="loading">
+            Kirish
+            <span v-if="loading">
+              <img src="@/assets/images/website/loading.gif" alt="Loading gif">
+            </span>
+          </button>
         </div>
       </form>
     </div>
@@ -48,17 +54,21 @@ const passwordField = ref("")
 const loginAlert = ref(false)
 const axios: any = inject("axios")
 const userStore = useUserStore()
+const loading = ref(false)
 
 async function onSubmit(data: { username: string, password: string }) {
+  loading.value = true
   try {
     const response = await axios.post("/auth/login/", JSON.stringify(data))
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.access)
       userStore.isAuthenticated = true;
       router.push('/main/dashboard')
+      loading.value = false
     }
   } catch {
     loginAlert.value = true
+    loading.value = false
   }
 }
 
