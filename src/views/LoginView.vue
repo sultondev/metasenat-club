@@ -32,7 +32,7 @@
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
                          @verify="testRobot"></vue-recaptcha>
           <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
-                  :disabled="loading">
+                  :disabled="loading || !recaptchaTest">
             <span>
             {{ loading ? "Checking..." : "Kirish" }}
             </span>
@@ -55,6 +55,7 @@ const loginAlert = ref(false)
 const axios: any = inject("axios")
 const userStore = useUserStore()
 const loading = ref(false)
+const recaptchaTest = ref(false)
 
 async function onSubmit(data: { username: string, password: string }) {
   loading.value = true
@@ -73,7 +74,7 @@ async function onSubmit(data: { username: string, password: string }) {
 }
 
 function testRobot(response: any) {
-  console.log(response)
+  recaptchaTest.value = true;
 }
 
 watch([loginField, passwordField], () => {
