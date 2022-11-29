@@ -37,6 +37,10 @@
               <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
             </li>
           </ul>
+          <div class="text-2xl py-[40px]"
+               v-if="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1">
+            Uzur siz qidirayotgan homiy ro'yxatda yo'q
+          </div>
         </div>
         <div class="" v-else>
           Loading..
@@ -104,6 +108,8 @@ function formatDateTime(arg: string) {
   const res: any = [day, month, year].join(".")
   return res;
 }
+
+console.log(sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length)
 </script>
 
 <style>
