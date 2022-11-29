@@ -9,7 +9,7 @@
       <ul class="pagination-list flex flex-wrap items-center gap-2">
         <li class="" v-for="count in props.count" :key="count">
           <button
-              :class="['text-xl border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px]', sponsorStore.activePage === count ? ' pagination-list__active' : ''] "
+              :class="['text-[14px] max-w-[32px] min-w-[32px] min-h-[32px] max-h-[32px] border border-[#DFE3E8]  px-[8px] bg-white rounded-[5px]', sponsorStore.activePage === count ? ' pagination-list__active' : ''] "
               @click="sponsorStore.changeActivePage(count)"
           >
             {{ count }}
