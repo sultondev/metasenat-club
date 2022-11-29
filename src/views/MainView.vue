@@ -34,7 +34,7 @@
       </ul>
     </div>
   </section>
-  <main class="main min-h-screen bg-[#F5F5F7] py-[48px] xl:px-[120px]">
+  <main class="main py-[48px] xl:px-[120px]">
     <router-view></router-view>
   </main>
 </template>

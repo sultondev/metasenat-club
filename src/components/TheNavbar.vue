@@ -1,16 +1,12 @@
 <template>
-  <header class="header xl:py-[12px] xl:px-[120px]" v-if="userStore.isAuthenticated">
+  <header class="header xl:py-[12px] xl:px-[120px]  bg-white" v-if="userStore.isAuthenticated">
     <div class="container mx-auto ">
       <nav class="nav ">
         <ul class="nav-list flex justify-between">
           <li class="nav-list__item flex items-center">
-            <!--            <h3 class="nav-logo flex">-->
-            <!--              <img src="@/assets/images/logo/logo.svg" class="nav-logo__picture" alt="">-->
-            <!--              <span class="nav-logo__name flex flex-col">-->
-            <!--              METASENAT-->
-            <!--            </span>-->
-            <!--            </h3>-->
-            <img src="@/assets/icons/website/header-logo.svg" alt="">
+            <router-link to="/">
+              <img src="@/assets/icons/website/header-logo.svg" alt="">
+            </router-link>
           </li>
           <li class="nav-list__item flex items-center">
             <a href="#" class="nav-user flex items-center xl:mr-[40px]"><span

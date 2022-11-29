@@ -14,6 +14,10 @@ userStore.Init()
 <style>
 @import url("@/assets/fonts/style.css");
 
+body {
+  background: #F5F5F7;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;
