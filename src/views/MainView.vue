@@ -57,16 +57,8 @@ import TheNavbar from "@/components/TheNavbar.vue"
   background: #3366FF;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 .main-list__link {
   border-right: 2px solid #3366FF99;
-}
-
-.router-link-active ~ a {
-  border: none;
 }
 
 
@@ -74,16 +66,27 @@ import TheNavbar from "@/components/TheNavbar.vue"
   border-right: 2px solid #DDE3FB;
 }
 
-.main-list__third.router-link-active {
+
+.main-list__second {
   border-left: 2px solid #DDE3FB;
 }
 
-.main-list__second.router-link-active .main-list__first {
-  border-right: 2px solid #DDE3FB;
+.main-list__second.router-link-active {
+  border: none;
 }
 
 .main-list__second.router-link-active ~ a {
   border: none;
 }
+
+
+.main-list__third.router-link-active {
+  border: none;
+}
+
+
+/*.main-list:hover > .main__item > a:not(:hover) {*/
+/*  opacity: 0.5;*/
+/*}*/
 
 </style>
