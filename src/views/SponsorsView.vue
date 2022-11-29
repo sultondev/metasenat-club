@@ -37,9 +37,12 @@
               <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
             </li>
           </ul>
-          <div class="text-2xl py-[40px]"
+          <div class="text-2xl py-[40px] mx-auto"
                v-if="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1">
-            Uzur siz qidirayotgan homiy ro'yxatda yo'q
+            <div class="max-w-fit mx-auto">
+              <span>Uzur siz qidirayotgan homiy ro'yxatda yo'q</span>
+              <img src="@/assets/icons/website/empty.svg" class="mx-auto my-[40px]" alt="">
+            </div>
           </div>
         </div>
         <div class="" v-else>
