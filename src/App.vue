@@ -18,6 +18,11 @@ body {
   background: #F5F5F7;
 }
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 6px;

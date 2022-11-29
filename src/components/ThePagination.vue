@@ -1,10 +1,10 @@
 <template>
-  <section class="pagination">
+  <section class="pagination ">
     <div class="flex gap-[10px]">
       <button class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
               @click="sponsorStore.changeActivePage(sponsorStore.activePage-1)"
               :disabled="sponsorStore.activePage === 1"><img
-          src="@/assets/icons/website/left.svg" alt="">
+          src="@/assets/icons/website/left.svg" class="min-w-[22px]" alt="">
       </button>
       <ul class="pagination-list flex gap-2">
         <li class="" v-for="count in props.count" :key="count">
@@ -20,7 +20,7 @@
               @click="sponsorStore.changeActivePage(sponsorStore.activePage+1)"
               :disabled="sponsorStore.activePage === props.count"
       >
-        <img src="@/assets/icons/website/right.svg" alt="">
+        <img src="@/assets/icons/website/right.svg" class="min-w-[22px]" alt="">
       </button>
 
     </div>
@@ -41,5 +41,6 @@ console.log(props.count)
 <style>
 .pagination-list__active {
   border-color: #3366FF;
+  color: #3366FF;
 }
 </style>
