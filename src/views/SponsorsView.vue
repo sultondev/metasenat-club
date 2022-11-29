@@ -19,7 +19,9 @@
             <li class="sponsors-body__item  px-[12px] bg-white rounded-[8px] max-h-[68px]"
                 v-for="(sponsor, idx) in sponsorStore.sponsorsList">
 
-              <span class="text-[15px] ">{{ sponsorStore.activePage * sponsorStore.pageSize + idx - 9 }}</span>
+              <span class="text-[15px] ">{{
+                  (sponsorStore.activePage * sponsorStore.pageSize) + idx - sponsorStore.pageSize + 1
+                }}</span>
               <span class="sponsors-body__item-name text-[14px] text-left font-bold">{{ sponsor.full_name }}</span>
               <span class="text-[14px] whitespace-nowrap text-center font-medium">{{ sponsor.phone }}</span>
               <span class="text-[14px] whitespace-nowrap text-center font-bold">
