@@ -53,7 +53,7 @@
               <select name="pageSize" id="page-size" @change="selectPageSize"
                       class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px]"
                       :value="sponsorStore.pageSize">
-                <option :value="num" class="" v-for="num in [8,9,10,11,12,13,14,15,16,17,18,19,20]"
+                <option :value="num" class="" v-for="num in [10, 15, 20, 25, 35, 40, 45, 50]"
                         :key="num+'wdadwa'">
                   {{ num }}
                 </option>

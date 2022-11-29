@@ -46,25 +46,32 @@ import TheNavbar from "@/components/TheNavbar.vue"
 </script>
 
 <style>
+
+.main-list__first {
+  border-right: 2px solid transparent;
+}
+
+.main-list__second {
+  border-right: 2px solid transparent;
+}
+
+.main-list__third {
+  border-left: 2px solid transparent;
+}
+
 .router-link-active {
   background-color: #3366FF;
   color: #fff;
-  transition: all 0.5s;
-  border: none;
+  transition: all 0.3s;
 }
 
 .router-link-active:hover {
   background: #3366FF;
 }
 
-.main-list__link {
-  border-right: 2px solid #3366FF99;
-}
-
-
 .main-list__first.router-link-active + a {
   border-right: 2px solid #DDE3FB;
-  border-left: none;
+  border-left: 2px solid transparent;
 }
 
 
@@ -73,16 +80,16 @@ import TheNavbar from "@/components/TheNavbar.vue"
 }
 
 .main-list__second.router-link-active {
-  border: none;
+  border-left: 2px solid transparent;
 }
 
-.main-list__second.router-link-active ~ a {
-  border: none;
+.main-list__second.router-link-active + a {
+  border-left: 2px solid transparent;
 }
 
 
 .main-list__third.router-link-active {
-  border: none;
+  border-left: transparent;
 }
 
 
