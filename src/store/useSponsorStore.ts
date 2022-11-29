@@ -14,7 +14,7 @@ type sponsorsListType = {
     sum: string
 }
 // @ts-ignore
-export const useSponsorStore = defineStore<string, { activePage: number, pageSize: number, sponsorsList: sponsorsListType[], changeActivePage: (value: number) => void; }>("useSponsorStore", {
+export const useSponsorStore = defineStore<string, { activePage: number, pageSize: number, sponsorsList: sponsorsListType[], changeActivePage: (value: number) => void; sponsorsFilter: any; filterSponsorsByName: any; }>("useSponsorStore", {
     state: () => {
         return {
             activePage: 1,
