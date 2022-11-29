@@ -124,7 +124,7 @@ function formatDateTime(arg: string) {
 
 .sponsors-head {
   display: grid;
-  grid-template-columns: 40px minmax(240px, 3fr) minmax(132px, 1fr) minmax(180px, 1fr) minmax(120px, 1fr) minmax(78px, 1fr) minmax(60px, 1fr) minmax(30px, 1fr);
+  grid-template-columns: min(20px) minmax(240px, 3fr) minmax(132px, 1fr) minmax(180px, 1fr) minmax(120px, 1fr) minmax(78px, 1fr) minmax(60px, 1fr) minmax(30px, 1fr);
   /*grid-template-columns: 10px 260px 132px 108px minmax(120px, 1fr) 1fr 1fr 1fr;*/
   gap: 46px;
   place-items: center;
@@ -132,11 +132,12 @@ function formatDateTime(arg: string) {
 
 .sponsors-body__item {
   display: grid;
-  grid-template-columns: 40px minmax(240px, 3fr) minmax(132px, 1fr) minmax(180px, 1fr) minmax(120px, 1fr) minmax(78px, 1fr) minmax(60px, 1fr) minmax(30px, 1fr);
+  grid-template-columns: min(20px) minmax(240px, 3fr) minmax(132px, 1fr) minmax(180px, 1fr) minmax(120px, 1fr) minmax(78px, 1fr) minmax(60px, 1fr) minmax(30px, 1fr);
   /*grid-template-columns: 10px 3fr 132px 108px minmax(120px, 1fr) 1fr 1fr 1fr;*/
   gap: 46px;
   place-items: center;
   padding: 16px 12px;
+  width: fit-content;
 }
 
 .sponsors-body__item-name {
