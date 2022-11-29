@@ -29,8 +29,8 @@
           </label>
           <button class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px]">
             <span
-                class="icon-filter mr-[20px] text-[13px]"></span><span
-              class="">Filter</span>
+                class="icon-filter mr-[20px] text-[13px] "></span><span
+              class="font-medium text-[14px]">Filter</span>
           </button>
         </li>
       </ul>
@@ -64,6 +64,7 @@ import TheNavbar from "@/components/TheNavbar.vue"
 
 .main-list__first.router-link-active + a {
   border-right: 2px solid #DDE3FB;
+  border-left: none;
 }
 
 

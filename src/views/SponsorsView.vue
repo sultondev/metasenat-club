@@ -3,14 +3,16 @@
     <div class="container mx-auto  ">
       <div class="overflow-x-scroll mb-[6px]">
         <div class="sponsors-head px-[16px] mb-[12px]">
-          <h6 class="text-[#B1B1B8] text-[12px]">#</h6>
-          <h6 class="sponsors-head__item-name text-[#B1B1B8] text-[12px]">F.I.SH.</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] text-center uppercase">Tel.Raqami</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] text-center uppercase whitespace-nowrap">Homiylik summasi</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] text-center uppercase whitespace-nowrap">Sarflangan summa</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] text-center uppercase">Sana</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] text-center uppercase">Holati</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] text-center uppercase">Amallar</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium">#</h6>
+          <h6 class="sponsors-head__item-name font-medium text-[#B1B1B8] text-[12px]">F.I.SH.</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Tel.Raqami</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase whitespace-nowrap">Homiylik
+            summasi</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase whitespace-nowrap">Sarflangan
+            summa</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Sana</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Holati</h6>
+          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Amallar</h6>
         </div>
         <div class="" v-if="sponsorStore.sponsorsList.length > 0">
           <ul class="sponsors-body flex flex-col gap-[12px] min-w-[1200px]">
