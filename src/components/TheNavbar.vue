@@ -4,8 +4,8 @@
       <nav class="nav ">
         <ul class="nav-list flex justify-between">
           <li class="nav-list__item flex items-center">
-            <router-link to="/">
-              <img src="@/assets/icons/website/header-logo.svg" alt="">
+            <router-link to="/" class="bg-none" exact-active-class="nav-active">
+              <img src="@/assets/icons/website/header-logo.svg" class="min-w-[173px] min-h-[24px]" alt="">
             </router-link>
           </li>
           <li class="nav-list__item flex items-center">
@@ -34,6 +34,10 @@ const userStore = useUserStore();
 </script>
 
 <style>
+
+.nav-active {
+  background: none;
+}
 
 .header {
   box-shadow: 2px 0 20px #00000010;

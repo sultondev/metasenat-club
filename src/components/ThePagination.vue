@@ -38,7 +38,7 @@ const props = defineProps(['count'])
 console.log(props.count)
 </script>
 
-<style>
+<style scoped>
 .pagination-list__active {
   border-color: #3366FF;
   color: #3366FF;
