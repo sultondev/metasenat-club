@@ -1,5 +1,5 @@
 <template>
-  <section class="sponsors py-[48px] ">
+  <section class="sponsors" v-cloak>
     <div class="container mx-auto  ">
       <div class="overflow-x-scroll mb-[6px]">
         <div class="sponsors-head px-[16px] mb-[12px]">
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="" v-if="response.data">
-        <div class="flex justify-between items-center gap-[40px]  overflow-x-scroll">
+        <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ response.data.count }} tadan 1-{{ sponsorStore.pageSize }} ko'rsatilmoqda
           </div>
@@ -51,7 +51,7 @@
               <select name="pageSize" id="page-size" @change="selectPageSize"
                       class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px]"
                       :value="sponsorStore.pageSize">
-                <option :value="num" class="" v-for="num in [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+                <option :value="num" class="" v-for="num in [8,9,10,11,12,13,14,15,16,17,18,19,20]"
                         :key="num+'wdadwa'">
                   {{ num }}
                 </option>

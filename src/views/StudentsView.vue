@@ -1,5 +1,5 @@
 <template>
-  <section class="students">
+  <section class="students" v-cloak>
     <div class="container mx-auto">
       <h4 class="">Students</h4>
     </div>

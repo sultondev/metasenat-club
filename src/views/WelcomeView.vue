@@ -1,5 +1,5 @@
 <template>
-  <section class="px-[120px]">
+  <section class="px-[120px]" v-cloak>
     <div class="container mx-auto">
       <h3>
         Welcome

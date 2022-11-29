@@ -18,7 +18,7 @@ export const useSponsorStore = defineStore<string, { activePage: number, pageSiz
     state: () => {
         return {
             activePage: 1,
-            pageSize: 10,
+            pageSize: 18,
             sponsorsList: []
         }
     },

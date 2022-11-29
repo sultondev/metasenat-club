@@ -1,5 +1,5 @@
 <template>
-  <section class="dashboard">
+  <section class="dashboard" v-cloak>
     <div class="container mx-auto">
       <div class="mb-[28px]" v-if="dashboardFields">
         <ul class="dashboard-list flex justify-between gap-[28px]">
