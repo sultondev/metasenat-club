@@ -1,6 +1,6 @@
 <template>
-  <section class="sponsors py-[48px]">
-    <div class="container mx-auto overflow-x-scroll">
+  <section class="sponsors py-[48px] ">
+    <div class="container mx-auto overflow-x-scroll ">
       <div class="sponsors-head px-[16px] mb-[12px]">
         <h6 class="text-[#B1B1B8] ">#</h6>
         <h6 class="text-[#B1B1B8] ">F.I.SH.</h6>
