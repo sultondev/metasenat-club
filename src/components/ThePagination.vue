@@ -1,9 +1,10 @@
 <template>
   <section class="pagination ">
     <div class="flex gap-[10px]">
-      <button class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
-              @click="sponsorStore.changeActivePage(sponsorStore.activePage-1)"
-              :disabled="sponsorStore.activePage === 1"><img
+      <button
+          class="border max-w-[32px] min-w-[32px] max-h-[32px] min-h-[32px] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
+          @click="sponsorStore.changeActivePage(sponsorStore.activePage-1)"
+          :disabled="sponsorStore.activePage === 1"><img
           src="@/assets/icons/website/left.svg" class="min-w-[22px]" alt="">
       </button>
       <ul class="pagination-list flex flex-wrap items-center gap-2">
@@ -16,9 +17,10 @@
           </button>
         </li>
       </ul>
-      <button class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
-              @click="sponsorStore.changeActivePage(sponsorStore.activePage+1)"
-              :disabled="sponsorStore.activePage === props.count"
+      <button
+          class="border max-w-[32px] min-w-[32px] max-h-[32px] min-h-[32px] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
+          @click="sponsorStore.changeActivePage(sponsorStore.activePage+1)"
+          :disabled="sponsorStore.activePage === props.count"
       >
         <img src="@/assets/icons/website/right.svg" class="min-w-[22px]" alt="">
       </button>
