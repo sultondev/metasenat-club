@@ -17,7 +17,7 @@
         <div class="" v-if="sponsorStore.sponsorsList.length > 0">
           <ul class="sponsors-body flex flex-col gap-[12px] min-w-[1200px]">
             <li class="sponsors-body__item  px-[12px] bg-white rounded-[8px] max-h-[68px]"
-                v-for="(sponsor, idx) in sponsorStore.sponsorsList">
+                v-for="(sponsor, idx) in sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter)">
 
               <span class="text-[15px] ">{{
                   (sponsorStore.activePage * sponsorStore.pageSize) + idx - sponsorStore.pageSize + 1

@@ -25,7 +25,8 @@
                  class="icon-filter w-[20px] h-[20px] mr-[8px]">
             <input type="text"
                    id="filter"
-                   class="main-filter__input bg-transparent outline-0 text-[15px]" placeholder="Izlash">
+                   class="main-filter__input bg-transparent outline-0 text-[15px]" placeholder="Izlash"
+                   v-model="sponsorStore.sponsorsFilter">
           </label>
           <button class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px]">
             <span
@@ -43,6 +44,9 @@
 
 <script setup lang="ts">
 import TheNavbar from "@/components/TheNavbar.vue"
+import {useSponsorStore} from "@/store/useSponsorStore";
+
+const sponsorStore = useSponsorStore()
 </script>
 
 <style>
