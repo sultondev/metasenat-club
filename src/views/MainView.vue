@@ -1,8 +1,8 @@
 <template>
   <TheNavbar></TheNavbar>
-  <section class="sect-main py-[24px] max-h-[88px] xl:px-[120px] bg-white" v-cloak>
+  <section class="sect-main py-[24px] xl:max-h-[88px] px-[120px] bg-white" v-cloak>
     <div class="container mx-auto ">
-      <ul class="main-list flex justify-between items-center">
+      <ul class="main-list flex xl:justify-between xl:items-center xl:flex-row md:flex-col md:items-start gap-[24px]">
         <li class="main-list__item flex items-center border-[2px] border-[#E0E7FF] overflow-hidden box-content rounded-[6px] text-[12px]">
           <router-link to="/main/dashboard"
                        class="main-list__first min-h-[40px] flex items-center min-w-[192px] justify-center tracking-[1.13px] transition-all text-[#3366FF99]  border-[#E0E7FF] hover:bg-[#E0E7FF]">
@@ -36,7 +36,7 @@
       </ul>
     </div>
   </section>
-  <main class="main py-[48px] xl:px-[120px]">
+  <main class="main py-[48px] px-[120px]">
     <router-view></router-view>
   </main>
 </template>
