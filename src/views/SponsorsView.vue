@@ -85,17 +85,25 @@ import {useRoute, useRouter} from "vue-router";
 const numFormat: any = inject("numFormat")
 const sponsorStore = useSponsorStore()
 const fetchData: any = inject("fetchData")
+const router = useRouter()
 const route = useRoute();
+
 const {page, pageSize} = route.query;
 
-function selectPageSize(event: any) {
+async function selectPageSize(event: any) {
   sponsorStore.pageSize = event.target.value;
-  // here I refecht data to add new list items
-  sponsorStore.changeActivePage(event.target.value)
+  try {
+    const response = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${event.target.value}`)
+    if (response.status === 200) {
+      sponsorStore.sponsorsList = response.data.results
+      console.log(response.data)
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 Init()
-console.log(sponsorStore.count)
 
 function formatDateTime(arg: string) {
   const [year, month, day] = arg.slice(0, 10).split('-').join('-').split('-');
@@ -114,8 +122,9 @@ async function Init() {
       sponsorStore.sponsorsList = response.data.results;
     }
   } else {
-    const response: any = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&pageSize=${sponsorStore.pageSize}`)
+    const response: any = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${sponsorStore.pageSize}`)
     if (response.status === 200) {
+      router.push({path: "/main/sponsors", query: {page: sponsorStore.activePage, pageSize: sponsorStore.pageSize}})
       sponsorStore.sponsorsList = response.data.results;
       sponsorStore.count = response.data.count;
 
