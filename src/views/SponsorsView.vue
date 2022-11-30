@@ -16,37 +16,44 @@
         </div>
         <div class="" v-if="sponsorStore.sponsorsList.length > 0">
           <ul class="sponsors-body flex flex-col gap-[12px] min-w-[1200px]">
-            <li class="sponsors-body__item  px-[12px] bg-white rounded-[8px] max-h-[68px]"
-                v-for="(sponsor, idx) in sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter)">
+            <li class=""
+                v-for="(sponsor, idx) in sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter)"
+                :key="sponsor+id">
+              <transition>
+                <div class="sponsors-body__item  px-[12px] bg-white rounded-[8px] max-h-[68px]">
 
               <span class="text-[15px] ">{{
                   (sponsorStore.activePage * sponsorStore.pageSize) + idx - sponsorStore.pageSize + 1
                 }}</span>
-              <span class="sponsors-body__item-name text-[14px] text-left font-bold">{{ sponsor.full_name }}</span>
-              <span class="text-[14px] whitespace-nowrap text-center font-medium">{{ sponsor.phone }}</span>
-              <span class="text-[14px] whitespace-nowrap text-center font-bold">
+                  <span class="sponsors-body__item-name text-[14px] text-left font-bold">{{ sponsor.full_name }}</span>
+                  <span class="text-[14px] whitespace-nowrap text-center font-medium">{{ sponsor.phone }}</span>
+                  <span class="text-[14px] whitespace-nowrap text-center font-bold">
               {{ numFormat(sponsor.sum) }}
               <span class="text-[#B2B7C1] font-medium">UZS</span>
             </span>
-              <span class="text-center font-bold whitespace-nowrap">{{ numFormat(sponsor.spent) }} <span
-                  class="text-[#B2B7C1] font-medium">UZS</span></span>
-              <span class="text-center font-medium whitespace-nowrap">{{ formatDateTime(sponsor.created_at) }}</span>
-              <span :class="'text-center ' + `${ sponsor.get_status_display.toLowerCase().replace(/\s/g, '') }` ">{{
-                  sponsor.get_status_display
-                }}</span>
-              <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
+                  <span class="text-center font-bold whitespace-nowrap">{{ numFormat(sponsor.spent) }} <span
+                      class="text-[#B2B7C1] font-medium">UZS</span></span>
+                  <span class="text-center font-medium whitespace-nowrap">{{
+                      formatDateTime(sponsor.created_at)
+                    }}</span>
+                  <span :class="'text-center ' + `${ sponsor.get_status_display.toLowerCase().replace(/\s/g, '') }` ">{{
+                      sponsor.get_status_display
+                    }}</span>
+                  <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
+                </div>
+              </transition>
             </li>
           </ul>
           <div class="text-2xl py-[40px] mx-auto"
-               v-if="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1">
+               v-show="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1">
             <div class="max-w-fit mx-auto">
               <span>Uzur siz qidirayotgan homiy ro'yxatda yo'q</span>
               <img src="@/assets/icons/website/empty.svg" class="mx-auto my-[40px]" alt="">
             </div>
           </div>
         </div>
-        <div class="" v-else>
-          Loading..
+        <div class="mx-auto" v-else>
+          <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
       </div>
       <div class="" v-if="sponsorStore.sponsorsList.length > 1">
@@ -189,6 +196,7 @@ async function Init() {
   place-items: center;
   padding: 16px 12px;
   width: fit-content;
+  animation: fade-up 0.6s;
 }
 
 .sponsors-body__item-name {
@@ -199,5 +207,13 @@ async function Init() {
   place-self: flex-start;
 }
 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 </style>
