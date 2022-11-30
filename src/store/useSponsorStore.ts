@@ -18,13 +18,13 @@ type sponsorsListType = {
 
 interface sponsorStoreInterface {
     Init: () => void;
-    activePage: number | string,
-    pageSize: number | string,
+    activePage: number,
+    pageSize: number,
     sponsorsList: sponsorsListType[],
     changeActivePage: (value: number) => void;
     sponsorsFilter: any;
     filterSponsorsByName: any;
-    count: number | string
+    count: number
 }
 
 // @ts-ignore

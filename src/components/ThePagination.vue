@@ -3,7 +3,7 @@
     <div class="flex gap-[10px]">
       <button
           class="border max-w-[32px] min-w-[32px] max-h-[32px] min-h-[32px] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
-          @click="changeActivePage(sponsorStore.activePage-1)"
+          @click="changeActivePage(Number(sponsorStore.activePage)-1)"
           :disabled="sponsorStore.activePage === 1"><img
           src="@/assets/icons/website/left.svg" class="min-w-[22px]" alt="">
       </button>
@@ -19,7 +19,7 @@
       </ul>
       <button
           class="border max-w-[32px] min-w-[32px] max-h-[32px] min-h-[32px] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
-          @click="changeActivePage(sponsorStore.activePage+1)"
+          @click="changeActivePage(Number(sponsorStore.activePage)+1)"
           :disabled="sponsorStore.activePage === props.count"
       >
         <img src="@/assets/icons/website/right.svg" class="min-w-[22px]" alt="">
@@ -40,7 +40,7 @@ const props = defineProps(['count'])
 const router: any = useRouter()
 
 
-async function changeActivePage(value: number = 1) {
+async function changeActivePage(value: any = 1) {
   try {
     const request = await publicApi.get(`/sponsor-list/?page=${value}&page_size=${sponsorStore.pageSize}`)
     if (request.status === 200) {
