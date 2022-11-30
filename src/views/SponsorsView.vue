@@ -49,10 +49,10 @@
           Loading..
         </div>
       </div>
-      <div class="" v-if="response.data">
+      <div class="" v-if="sponsorStore.sponsorsList.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
-            {{ response.data.count }} tadan 1-{{ sponsorStore.pageSize }} ko'rsatilmoqda
+            {{ sponsorStore.count }} tadan 1-{{ sponsorStore.pageSize }} ko'rsatilmoqda
           </div>
           <ul class="flex items-center gap-[12px]">
             <li class="flex gap-2 items-center">
@@ -67,7 +67,7 @@
                   {{ num }}
                 </option>
               </select>
-              <ThePagination :count="Math.floor(response.data.count / sponsorStore.pageSize) + 1"></ThePagination>
+              <ThePagination :count="Math.floor(sponsorStore.count / sponsorStore.pageSize) + 1"></ThePagination>
             </li>
           </ul>
         </div>
@@ -80,31 +80,22 @@
 import {inject, ref} from "vue";
 import {useSponsorStore} from "@/store/useSponsorStore";
 import ThePagination from "@/components/ThePagination.vue"
+import {useRoute, useRouter} from "vue-router";
 
 const numFormat: any = inject("numFormat")
-const axios: any = inject("axios")
-const props = defineProps(["page"])
 const sponsorStore = useSponsorStore()
-const response: any = ref({})
+const fetchData: any = inject("fetchData")
+const route = useRoute();
+const {page, pageSize} = route.query;
 
 function selectPageSize(event: any) {
   sponsorStore.pageSize = event.target.value;
   // here I refecht data to add new list items
-  sponsorStore.changeActivePage(sponsorStore.activePage)
+  sponsorStore.changeActivePage(event.target.value)
 }
 
-
-async function fetchData(url: string, page?: string) {
-  const request = await axios.get(page ? url + page : url)
-  if (request) {
-    response.value = request
-    sponsorStore.sponsorsList = request.data.results;
-  }
-  console.log(response.value)
-}
-
-
-fetchData("sponsor-list", `/?page=${sponsorStore.activePage}&page_size=${sponsorStore.pageSize}`)
+Init()
+console.log(sponsorStore.count)
 
 function formatDateTime(arg: string) {
   const [year, month, day] = arg.slice(0, 10).split('-').join('-').split('-');
@@ -112,7 +103,26 @@ function formatDateTime(arg: string) {
   return res;
 }
 
-console.log(sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length)
+async function Init() {
+  if (route.query.page || route.query.pageSize) {
+    sponsorStore.pageSize = Number(pageSize)
+    sponsorStore.activePage = Number(page)
+    const response: any = await fetchData(`/sponsor-list/?page=${!isNaN(Number(page)) ? page : sponsorStore.activePage}&page_size=${!isNaN(Number(pageSize)) ? pageSize : sponsorStore.pageSize}`)
+    console.log(response.data)
+    sponsorStore.count = response.data.count
+    if (response.status === 200) {
+      sponsorStore.sponsorsList = response.data.results;
+    }
+  } else {
+    const response: any = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&pageSize=${sponsorStore.pageSize}`)
+    if (response.status === 200) {
+      sponsorStore.sponsorsList = response.data.results;
+      sponsorStore.count = response.data.count;
+
+    }
+  }
+}
+
 </script>
 
 <style>

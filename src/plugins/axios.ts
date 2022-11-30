@@ -21,3 +21,15 @@ export const authProtectedApi: any = () =>
     });
 
 export const publicApi = axios.create({..._BASE_CONFIG});
+
+
+export async function fetchData(url: string) {
+    const request = await publicApi.get(url)
+    try {
+        if (request) {
+            return request
+        }
+    } catch (error) {
+        return error
+    }
+}

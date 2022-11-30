@@ -1,6 +1,8 @@
 import {defineStore} from "pinia";
-import {inject, ref} from "vue";
+import {ref} from "vue";
 import {publicApi} from "@/plugins/axios";
+import {fetchData} from "@/plugins/axios";
+import {useRoute, useRouter} from "vue-router";
 
 type sponsorsListType = {
     created_at: string;
@@ -13,41 +15,34 @@ type sponsorsListType = {
     spent: string
     sum: string
 }
+
+interface sponsorStoreInterface {
+    Init: () => void;
+    activePage: number | string,
+    pageSize: number | string,
+    sponsorsList: sponsorsListType[],
+    changeActivePage: (value: number) => void;
+    sponsorsFilter: any;
+    filterSponsorsByName: any;
+    count: number | string
+}
+
 // @ts-ignore
-export const useSponsorStore = defineStore<string, { activePage: number, pageSize: number, sponsorsList: sponsorsListType[], changeActivePage: (value: number) => void; sponsorsFilter: any; filterSponsorsByName: any; }>("useSponsorStore", {
+export const useSponsorStore = defineStore<string, sponsorStoreInterface>("useSponsorStore", {
     state: () => {
         return {
             activePage: 1,
             pageSize: 15,
             sponsorsList: [],
-            sponsorsFilter: ""
+            sponsorsFilter: "",
+            count: 0
         }
     },
-    actions: {
-        async changeActivePage(value: number = 1, propPageSize?: number | string) {
-            const response = ref({})
-            try {
-                const request = await publicApi.get(`/sponsor-list/?page=${value}&page_size=${propPageSize ? propPageSize : this.pageSize}`)
-                console.log(value)
-
-                if (request.status === 200) {
-                    response.value = request
-                    this.activePage = value;
-                    this.sponsorsList = request.data.results;
-                }
-                console.log(response.value)
-            } catch {
-                console.log("api wrong")
-            }
-        }
-    }
-    ,
     getters: {
         fetchSponsors: () => {
             return async (page: string | number) => {
-                const axios: any = inject("axios")
                 try {
-                    const response = await axios.get(`/sponsor-list/?page=${page}`)
+                    const response = await publicApi.get(`/sponsor-list/?page=${page}`)
                     if (response.status === 200) {
                         return response.data.results
                     }
@@ -68,7 +63,7 @@ export const useSponsorStore = defineStore<string, { activePage: number, pageSiz
                     return state.sponsorsList
                 }
             }
-        }
+        },
     }
 
 })
