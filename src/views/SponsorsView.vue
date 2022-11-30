@@ -88,7 +88,7 @@ const fetchData: any = inject("fetchData")
 const router = useRouter()
 const route = useRoute();
 
-const {page, pageSize} = route.query;
+const {page, size} = route.query;
 
 async function selectPageSize(event: any) {
   sponsorStore.pageSize = event.target.value;
@@ -96,7 +96,7 @@ async function selectPageSize(event: any) {
     const response = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${event.target.value}`)
     if (response.status === 200) {
       sponsorStore.sponsorsList = response.data.results
-      console.log(response.data)
+      await router.push({path: "/main/sponsors", query: {page: sponsorStore.activePage, size: event.target.value}})
     }
   } catch (error) {
     console.log(error)
@@ -113,9 +113,9 @@ function formatDateTime(arg: string) {
 
 async function Init() {
   if (route.query.page || route.query.pageSize) {
-    sponsorStore.pageSize = Number(pageSize)
+    sponsorStore.pageSize = Number(size)
     sponsorStore.activePage = Number(page)
-    const response: any = await fetchData(`/sponsor-list/?page=${!isNaN(Number(page)) ? page : sponsorStore.activePage}&page_size=${!isNaN(Number(pageSize)) ? pageSize : sponsorStore.pageSize}`)
+    const response: any = await fetchData(`/sponsor-list/?page=${!isNaN(Number(page)) ? page : sponsorStore.activePage}&page_size=${!isNaN(Number(size)) ? size : sponsorStore.pageSize}`)
     console.log(response.data)
     sponsorStore.count = response.data.count
     if (response.status === 200) {
@@ -124,7 +124,10 @@ async function Init() {
   } else {
     const response: any = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${sponsorStore.pageSize}`)
     if (response.status === 200) {
-      router.push({path: "/main/sponsors", query: {page: sponsorStore.activePage, pageSize: sponsorStore.pageSize}})
+      await router.push({
+        path: "/main/sponsors",
+        query: {page: sponsorStore.activePage, size: sponsorStore.pageSize}
+      })
       sponsorStore.sponsorsList = response.data.results;
       sponsorStore.count = response.data.count;
 

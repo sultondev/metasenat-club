@@ -46,8 +46,7 @@ async function changeActivePage(value: any = 1) {
     if (request.status === 200) {
       sponsorStore.activePage = value;
       sponsorStore.sponsorsList = request.data.results;
-      console.log(value)
-      router.push({path: '/main/sponsors', query: {page: value, pageSize: sponsorStore.pageSize}})
+      await router.push({path: '/main/sponsors', query: {page: value, size: sponsorStore.pageSize}})
     }
   } catch (error) {
     console.log(error)
