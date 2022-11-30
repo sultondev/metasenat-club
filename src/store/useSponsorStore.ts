@@ -24,7 +24,8 @@ interface sponsorStoreInterface {
     changeActivePage: (value: number) => void;
     sponsorsFilter: any;
     filterSponsorsByName: any;
-    count: number
+    count: number,
+    getPaginationCount: any;
 }
 
 // @ts-ignore
@@ -64,6 +65,9 @@ export const useSponsorStore = defineStore<string, sponsorStoreInterface>("useSp
                 }
             }
         },
+        getPaginationCount(state) {
+            return Math.floor(state.count / state.pageSize + 1)
+        }
     }
 
 })

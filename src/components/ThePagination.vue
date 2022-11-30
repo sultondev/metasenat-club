@@ -39,6 +39,7 @@ const sponsorStore = useSponsorStore()
 const props = defineProps(['count'])
 const router: any = useRouter()
 
+console.log(Math.floor(sponsorStore.count / sponsorStore.pageSize) + 1)
 
 async function changeActivePage(value: any = 1) {
   try {
@@ -47,6 +48,8 @@ async function changeActivePage(value: any = 1) {
       sponsorStore.activePage = value;
       sponsorStore.sponsorsList = request.data.results;
       await router.push({path: '/main/sponsors', query: {page: value, size: sponsorStore.pageSize}})
+     
+
     }
   } catch (error) {
     console.log(error)

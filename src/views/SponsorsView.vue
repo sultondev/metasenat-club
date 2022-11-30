@@ -67,7 +67,7 @@
                   {{ num }}
                 </option>
               </select>
-              <ThePagination :count="Math.floor(sponsorStore.count / sponsorStore.pageSize) + 1"></ThePagination>
+              <ThePagination :count="sponsorStore.getPaginationCount"></ThePagination>
             </li>
           </ul>
         </div>
@@ -92,14 +92,30 @@ const {page, size} = route.query;
 
 async function selectPageSize(event: any) {
   sponsorStore.pageSize = event.target.value;
-  try {
-    const response = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${event.target.value}`)
-    if (response.status === 200) {
-      sponsorStore.sponsorsList = response.data.results
-      await router.push({path: "/main/sponsors", query: {page: sponsorStore.activePage, size: event.target.value}})
+  if (sponsorStore.activePage > sponsorStore.getPaginationCount) {
+    try {
+      const response = await fetchData(`/sponsor-list/?page=${sponsorStore.getPaginationCount}&page_size=${event.target.value}`)
+      if (response.status === 200) {
+        sponsorStore.sponsorsList = response.data.results
+        sponsorStore.activePage = sponsorStore.getPaginationCount
+        await router.push({
+          path: "/main/sponsors",
+          query: {page: sponsorStore.getPaginationCount, size: event.target.value}
+        })
+      }
+    } catch (error) {
+      console.log(error)
     }
-  } catch (error) {
-    console.log(error)
+  } else {
+    try {
+      const response = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${event.target.value}`)
+      if (response.status === 200) {
+        sponsorStore.sponsorsList = response.data.results
+        await router.push({path: "/main/sponsors", query: {page: sponsorStore.activePage, size: event.target.value}})
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
