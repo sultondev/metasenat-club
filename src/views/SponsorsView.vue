@@ -52,7 +52,7 @@
       <div class="" v-if="sponsorStore.sponsorsList.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
-            {{ sponsorStore.count }} tadan 1-{{ sponsorStore.pageSize }} ko'rsatilmoqda
+            {{ sponsorStore.count }} tadan 1-{{ sponsorStore.sponsorsList.length }} ko'rsatilmoqda
           </div>
           <ul class="flex items-center gap-[12px]">
             <li class="flex gap-2 items-center">

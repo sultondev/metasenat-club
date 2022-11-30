@@ -48,7 +48,7 @@ async function changeActivePage(value: any = 1) {
       sponsorStore.activePage = value;
       sponsorStore.sponsorsList = request.data.results;
       await router.push({path: '/main/sponsors', query: {page: value, size: sponsorStore.pageSize}})
-     
+
 
     }
   } catch (error) {
@@ -63,6 +63,7 @@ async function changeActivePage(value: any = 1) {
 .pagination-list__active {
   border-color: #3366FF;
   color: #3366FF;
+  transition: all 0.4s;
 }
 
 
