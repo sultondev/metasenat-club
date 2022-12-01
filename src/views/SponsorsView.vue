@@ -60,7 +60,9 @@
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ sponsorStore.count }} tadan
-            {{ 1 }}-{{ sponsorStore.sponsorsList.length }}
+            {{ (sponsorStore.activePage - 1) * sponsorStore.pageSize + 1 }}-{{
+              (sponsorStore.sponsorsList.length === sponsorStore.pageSize ? sponsorStore.sponsorsList.length * sponsorStore.activePage : sponsorStore.count)
+            }}
             ko'rsatilmoqda
           </div>
           <ul class="flex items-center gap-[12px]">
