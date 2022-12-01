@@ -1,6 +1,6 @@
 <template>
   <TheNavbar></TheNavbar>
-  <section class="sect-main py-[24px] xl:max-h-[88px] px-[120px] bg-white" v-cloak>
+  <section class="sect-main py-[24px] xl:max-h-[88px] custom:px-[120px] sm:px-[20px] bg-white" v-cloak>
     <div class="container mx-auto ">
       <ul class="main-list flex xl:justify-between xl:items-center xl:flex-row md:flex-col md:items-start gap-[24px]">
         <li class="main-list__item flex items-center border-[2px] border-[#E0E7FF] overflow-hidden box-content rounded-[6px] text-[12px]">
@@ -37,7 +37,7 @@
       </ul>
     </div>
   </section>
-  <main class="main py-[48px] px-[120px]">
+  <main class="main py-[48px] custom:px-[120px] sm:px-[20px]">
     <router-view></router-view>
   </main>
 </template>

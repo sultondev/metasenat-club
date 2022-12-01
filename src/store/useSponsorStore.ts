@@ -3,30 +3,9 @@ import {ref} from "vue";
 import {publicApi} from "@/plugins/axios";
 import {fetchData} from "@/plugins/axios";
 import {useRoute, useRouter} from "vue-router";
+import {sponsorStoreInterface} from "@/typing/interfaces/sponsorStoreInterface";
+import {sponsorsListType} from "@/typing/types/useSponsorStore";
 
-type sponsorsListType = {
-    created_at: string;
-    firm: string;
-    full_name: string
-    get_status_display: string;
-    id: number;
-    payment_type: { id: number, title: string }[]
-    phone: string
-    spent: string
-    sum: string
-}
-
-interface sponsorStoreInterface {
-    Init: () => void;
-    activePage: number,
-    pageSize: number,
-    sponsorsList: sponsorsListType[],
-    changeActivePage: (value: number) => void;
-    sponsorsFilter: any;
-    filterSponsorsByName: any;
-    count: number,
-    getPaginationCount: any;
-}
 
 // @ts-ignore
 export const useSponsorStore = defineStore<string, sponsorStoreInterface>("useSponsorStore", {
@@ -67,7 +46,7 @@ export const useSponsorStore = defineStore<string, sponsorStoreInterface>("useSp
         },
         getPaginationCount(state) {
             return Math.floor(state.count / state.pageSize + 1)
-        }
+        },
     }
 
 })

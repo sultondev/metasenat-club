@@ -13,7 +13,7 @@
                 Jami to‘langan summa
               </p>
               <p class="text-[20px] font-bold">
-                {{ numFormat(dashboardFields.total_paid) }} <span class="text-[#B2B7C1]">UZS</span>
+                {{ numberWithSpaces(dashboardFields.total_paid) }} <span class="text-[#B2B7C1]">UZS</span>
               </p>
             </div>
           </li>
@@ -27,7 +27,7 @@
                 Jami so‘ralgan summa
               </p>
               <p class="text-[20px] font-bold">
-                {{ numFormat(dashboardFields.total_need) }} <span class="text-[#B2B7C1]">UZS</span>
+                {{ numberWithSpaces(dashboardFields.total_need) }} <span class="text-[#B2B7C1]">UZS</span>
               </p>
             </div>
           </li>
@@ -40,7 +40,7 @@
                 To‘lanishi kerak summa
               </p>
               <p class="text-[20px] font-bold">
-                {{ numFormat(dashboardFields.total_must_pay) }} <span class="text-[#B2B7C1]">UZS</span>
+                {{ numberWithSpaces(dashboardFields.total_must_pay) }} <span class="text-[#B2B7C1]">UZS</span>
               </p>
             </div>
           </li>
@@ -60,10 +60,11 @@
 
 <script setup lang="ts">
 import {inject, ref} from "vue";
+import {useSponsors} from "@/composables/sponsors";
 
 const axios: any = inject('axios')
 const dashboardFields: any = ref([])
-const numFormat: any = inject('numFormat')
+const {numberWithSpaces} = useSponsors()
 const loading = ref(true)
 
 async function fetchData(url: string) {

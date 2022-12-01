@@ -1,56 +1,61 @@
 <template>
   <section class="sponsors" v-cloak>
-    <div class="container mx-auto  ">
+    <div class="mx-auto ex-sm:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
-        <div class="sponsors-head px-[16px] mb-[12px]">
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium">#</h6>
-          <h6 class="sponsors-head__item-name font-medium text-[#B1B1B8] text-[12px]">F.I.SH.</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Tel.Raqami</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase whitespace-nowrap">Homiylik
-            summasi</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase whitespace-nowrap">Sarflangan
-            summa</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Sana</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Holati</h6>
-          <h6 class="text-[#B1B1B8] text-[12px] font-medium text-center uppercase">Amallar</h6>
-        </div>
-        <div class="" v-if="sponsorStore.sponsorsList.length > 0">
-          <ul class="sponsors-body flex flex-col gap-[12px] min-w-[1200px]">
-            <li class=""
-                v-for="(sponsor, idx) in sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter)"
-                :key="sponsor+id">
-              <transition>
-                <div class="sponsors-body__item  px-[12px] bg-white rounded-[8px] max-h-[68px]">
 
-              <span class="text-[15px] ">{{
-                  (sponsorStore.activePage * sponsorStore.pageSize) + idx - sponsorStore.pageSize + 1
-                }}</span>
-                  <span class="sponsors-body__item-name text-[14px] text-left font-bold">{{ sponsor.full_name }}</span>
-                  <span class="text-[14px] whitespace-nowrap text-center font-medium">{{ sponsor.phone }}</span>
-                  <span class="text-[14px] whitespace-nowrap text-center font-bold">
-              {{ numFormat(sponsor.sum) }}
-              <span class="text-[#B2B7C1] font-medium">UZS</span>
-            </span>
-                  <span class="text-center font-bold whitespace-nowrap">{{ numFormat(sponsor.spent) }} <span
-                      class="text-[#B2B7C1] font-medium">UZS</span></span>
-                  <span class="text-center font-medium whitespace-nowrap">{{
-                      formatDateTime(sponsor.created_at)
-                    }}</span>
-                  <span :class="'text-center ' + `${ sponsor.get_status_display.toLowerCase().replace(/\s/g, '') }` ">{{
-                      sponsor.get_status_display
-                    }}</span>
+        <div class="" v-if="sponsorStore.sponsorsList.length > 0">
+
+          <Table classes="w-full table-auto border-separate border-spacing-y-4">
+            <template #thead>
+              <tr class="text-xs text-[#B1B1B8] uppercase text-center">
+                <th class="text-left px-4">#</th>
+                <th class=" text-left">F.I.SH.</th>
+                <th class="">Tel.Raqami</th>
+                <th class="px-4 whitespace-nowrap">Homiylik summasi</th>
+                <th class="px-4 whitespace-nowrap">Sarflangan summa</th>
+                <th class="px-4">Sana</th>
+                <th class="">Holati</th>
+                <th class=" px-4">Amallar</th>
+              </tr>
+            </template>
+
+            <template #tbody>
+              <tr v-for="(sponsor, idx) in sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter)"
+                  :key="sponsor.id" class="border-spacing-y-3 border-separate text-sm">
+                <td class="py-[23px] bg-white rounded-l-[12px] px-4">
+                  {{ (sponsorStore.activePage * sponsorStore.pageSize) + idx - sponsorStore.pageSize + 1 }}
+                </td>
+                <td class="py-[23px]  bg-white font-bold text-ellipsis">{{ sponsor.full_name }}</td>
+                <td class="py-[23px]  bg-white text-center whitespace-nowrap">{{ sponsor.phone }}</td>
+                <td class="py-[23px]  bg-white text-center whitespace-nowrap font-medium">
+                  <span class="font-medium text-slate-700">
+                    {{ numberWithSpaces(sponsor.sum) }}
+                  </span> <span>UZS</span>
+                </td>
+                <td class="py-[23px]  bg-white text-center whitespace-nowrap font-medium">
+                  <span class="font-medium text-slate-700">
+                  {{ numberWithSpaces(sponsor.spent) }}
+                  </span> <span class="">UZS</span>
+                </td>
+                <td class="py-[23px]  bg-white text-center whitespace-nowrap px-4">{{
+                    formatDateTime(sponsor.created_at)
+                  }}
+                </td>
+                <td :class="'py-[23px]  bg-white text-center  whitespace-nowrap '+ statusColor(sponsor.get_status_display)">
+                  {{ sponsor.get_status_display }}
+                </td>
+                <td class="py-[23px]  bg-white text-center rounded-r-[12px] px-4">
                   <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
-                </div>
-              </transition>
-            </li>
-          </ul>
-          <div class="text-2xl py-[40px] mx-auto"
-               v-show="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1">
-            <div class="max-w-fit mx-auto">
-              <span>Uzur siz qidirayotgan homiy ro'yxatda yo'q</span>
-              <img src="@/assets/icons/website/empty.svg" class="mx-auto my-[40px]" alt="">
-            </div>
-          </div>
+                </td>
+              </tr>
+            </template>
+          </Table>
+
+          <NotFound :condition="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1"
+                    text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
+            <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
+          </NotFound>
+
         </div>
         <div class="mx-auto" v-else>
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
@@ -60,9 +65,7 @@
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ sponsorStore.count }} tadan
-            {{ (sponsorStore.activePage - 1) * sponsorStore.pageSize + 1 }}-{{
-              (sponsorStore.sponsorsList.length === sponsorStore.pageSize ? sponsorStore.sponsorsList.length * sponsorStore.activePage : sponsorStore.count)
-            }}
+            {{ (sponsorStore.activePage - 1) * sponsorStore.pageSize + 1 }}-{{ sponsorListEnd }}
             ko'rsatilmoqda
           </div>
           <ul class="flex items-center gap-[12px]">
@@ -88,21 +91,33 @@
 </template>
 
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {computed, inject, ref} from "vue";
+import Table from "@/components/UI/Table.vue"
 import {useSponsorStore} from "@/store/useSponsorStore";
 import ThePagination from "@/components/ThePagination.vue"
 import {useRoute, useRouter} from "vue-router";
+import {useSponsors} from "@/composables/sponsors";
+import NotFound from "@/components/UI/NotFound.vue"
 
-const numFormat: any = inject("numFormat")
+
+const {numberWithSpaces, formatDateTime, statusColor} = useSponsors()
 const sponsorStore = useSponsorStore()
 const fetchData: any = inject("fetchData")
 const router = useRouter()
 const route = useRoute();
-
 const {page, size} = route.query;
+// Dynamic list length sometimes may not be the same with original
+// sponsorsListList length because of select Page Size
+const sponsorListLength = ref(sponsorStore.sponsorsList.length)
+
+
+const sponsorListEnd = computed(() => (sponsorStore.sponsorsList.length >= sponsorStore.pageSize || sponsorListLength.value === sponsorStore.sponsorsList.length ?
+    sponsorStore.sponsorsList.length * sponsorStore.activePage : sponsorStore.count))
+
 
 async function selectPageSize(event: any) {
   sponsorStore.pageSize = event.target.value;
+  sponsorListLength.value = event.target.value;
   if (sponsorStore.activePage > sponsorStore.getPaginationCount) {
     try {
       const response = await fetchData(`/sponsor-list/?page=${sponsorStore.getPaginationCount}&page_size=${event.target.value}`)
@@ -132,11 +147,6 @@ async function selectPageSize(event: any) {
 
 Init()
 
-function formatDateTime(arg: string) {
-  const [year, month, day] = arg.slice(0, 10).split('-').join('-').split('-');
-  const res: any = [day, month, year].join(".")
-  return res;
-}
 
 async function Init() {
   if (route.query.page || route.query.pageSize) {
@@ -165,57 +175,5 @@ async function Init() {
 </script>
 
 <style>
-
-.yangi {
-  color: #5BABF2;
-}
-
-.moderatsiyada {
-  color: #FFA445;
-}
-
-.tasdiqlangan {
-  color: #00CF83;
-}
-
-.bekorqilingan {
-  color: #979797;
-}
-
-.sponsors-head {
-  display: grid;
-  grid-template-columns: min(20px) minmax(240px, 3fr) minmax(132px, 1fr) minmax(180px, 1fr) minmax(120px, 1fr) minmax(78px, 1fr) minmax(60px, 1fr) minmax(30px, 1fr);
-  /*grid-template-columns: 10px 260px 132px 108px minmax(120px, 1fr) 1fr 1fr 1fr;*/
-  gap: 46px;
-  place-items: center;
-}
-
-.sponsors-body__item {
-  display: grid;
-  grid-template-columns: min(20px) minmax(240px, 3fr) minmax(132px, 1fr) minmax(180px, 1fr) minmax(120px, 1fr) minmax(78px, 1fr) minmax(60px, 1fr) minmax(30px, 1fr);
-  /*grid-template-columns: 10px 3fr 132px 108px minmax(120px, 1fr) 1fr 1fr 1fr;*/
-  gap: 46px;
-  place-items: center;
-  padding: 16px 12px;
-  width: fit-content;
-  animation: fade-up 0.6s;
-}
-
-.sponsors-body__item-name {
-  place-self: flex-start;
-}
-
-.sponsors-head__item-name {
-  place-self: flex-start;
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
 </style>
