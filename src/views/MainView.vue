@@ -4,18 +4,7 @@
     <div class="container mx-auto ">
       <ul class="main-list flex xl:justify-between xl:items-center xl:flex-row md:flex-col md:items-start gap-[24px]">
         <li class="main-list__item flex items-center border-[2px] border-[#E0E7FF] overflow-hidden box-content rounded-[6px] text-[12px]">
-          <router-link to="/main/dashboard"
-                       class="main-list__first min-h-[40px] flex items-center min-w-[192px] justify-center tracking-[1.13px] transition-all text-[#3366FF99]  border-[#E0E7FF] hover:bg-[#E0E7FF]">
-            DASHBOARD
-          </router-link>
-          <router-link to="/main/sponsors"
-                       class="main-list__second min-h-[40px] flex items-center  min-w-[192px] justify-center tracking-[1.13px] transition-all text-[#3366FF99]  border-[#E0E7FF] hover:bg-[#E0E7FF]">
-            HOMIYLAR
-          </router-link>
-          <router-link to="/main/students"
-                       class="main-list__third  min-h-[40px] flex items-center min-w-[192px] justify-center tracking-[1.13px]  transition-all text-[#3366FF99] hover:bg-[#E0E7FF]">
-            TALABALAR
-          </router-link>
+          <Tablet :tablets="tablets"></Tablet>
         </li>
         <li class="main-list__item flex gap-[20px] items-center">
           <label
@@ -23,15 +12,13 @@
               id="filter">
             <img src="@/assets/icons/website/search.svg" alt="Search Icon"
                  class="icon-filter w-[20px] h-[20px] mr-[8px]">
-            <input type="text"
-                   id="filter"
-                   class="main-filter__input bg-transparent outline-0 text-[15px]" placeholder="Izlash"
-                   v-model="sponsorStore.sponsorsFilter">
+            <BaseInput id="filter" classes="main-filter__input bg-transparent outline-0 text-[15px]"
+                       placeholder="Izlash" v-model="sponsorStore.sponsorsFilter"/>
           </label>
           <button class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px]">
             <span
-                class="icon-filter mr-[20px] text-[13px] "></span><span
-              class="font-medium text-[14px]">Filter</span>
+                class="icon-filter mr-[20px] text-[13px] "></span>
+            <span class="font-medium text-[14px]">Filter</span>
           </button>
         </li>
       </ul>
@@ -45,23 +32,28 @@
 <script setup lang="ts">
 import TheNavbar from "@/components/TheNavbar.vue"
 import {useSponsorStore} from "@/store/useSponsorStore";
+import BaseInput from "@/components/UI/BaseInput.vue"
+import Tablet from "@/components/UI/Tablet.vue";
+import {ref} from "vue";
 
 const sponsorStore = useSponsorStore()
+const tablets = ref([
+  {
+    title: "dashboard",
+    link: "/main/dashboard",
+  },
+  {
+    title: "sponsors",
+    link: "/main/sponsors",
+  },
+  {
+    title: "students",
+    link: "/main/students",
+  },
+])
 </script>
 
 <style>
-
-.main-list__first {
-  border-right: 2px solid transparent;
-}
-
-.main-list__second {
-  border-right: 2px solid transparent;
-}
-
-.main-list__third {
-  border-left: 2px solid transparent;
-}
 
 .router-link-active {
   background-color: #3366FF;
@@ -73,32 +65,5 @@ const sponsorStore = useSponsorStore()
   background: #3366FF;
 }
 
-.main-list__first.router-link-active + a {
-  border-right: 2px solid #DDE3FB;
-  border-left: 2px solid transparent;
-}
-
-
-.main-list__second {
-  border-left: 2px solid #DDE3FB;
-}
-
-.main-list__second.router-link-active {
-  border-left: 2px solid transparent;
-}
-
-.main-list__second.router-link-active + a {
-  border-left: 2px solid transparent;
-}
-
-
-.main-list__third.router-link-active {
-  border-left: transparent;
-}
-
-
-/*.main-list:hover > .main__item > a:not(:hover) {*/
-/*  opacity: 0.5;*/
-/*}*/
 
 </style>

@@ -6,7 +6,10 @@ export function useSponsors() {
     }
 
     function numberWithSpaces(x: string | number) {
-        return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        if (!isNaN(Number(x))) {
+            return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+        return undefined
     }
 
     const statusColor = (value: string) => {

@@ -2,48 +2,35 @@
   <section class="dashboard" v-cloak>
     <div class="container mx-auto">
       <div class="mb-[28px]" v-if="dashboardFields">
-        <ul class="dashboard-list flex justify-between gap-[28px]">
+        <ul class="dashboard-list flex justify-between gap-[28px] flex-wrap items-center">
 
-          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
-            <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-1.svg" class="w-[28px] h-[20px]" alt="">
-            </div>
-            <div class="">
-              <p class="text-[12px] text-[#7A7A9D]">
-                Jami to‘langan summa
-              </p>
-              <p class="text-[20px] font-bold">
-                {{ numberWithSpaces(dashboardFields.total_paid) }} <span class="text-[#B2B7C1]">UZS</span>
-              </p>
-            </div>
+          <li class="flex-wrap">
+            <DashboardBanner text="Jami to‘langan summa" :money-count="numberWithSpaces(dashboardFields.total_paid)"
+                             currency="UZS">
+              <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">
+                <img src="@/assets/icons/website/money-1.svg" class="w-[28px] h-[20px]" alt="">
+              </div>
+            </DashboardBanner>
           </li>
 
-          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
-            <div class="bg-[#EDC7001A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-2.svg" class="w-[28px] h-[20px]" alt="">
-            </div>
-            <div class="">
-              <p class="text-[14px] text-[#7A7A9D]">
-                Jami so‘ralgan summa
-              </p>
-              <p class="text-[20px] font-bold">
-                {{ numberWithSpaces(dashboardFields.total_need) }} <span class="text-[#B2B7C1]">UZS</span>
-              </p>
-            </div>
+          <li class="flex-wrap">
+            <DashboardBanner text="Jami so‘ralgan summa" :money-count="numberWithSpaces(dashboardFields.total_need)"
+                             currency="UZS">
+              <div class="bg-[#EDC7001A] py-[14px] px-[10px] rounded-[12px]">
+                <img src="@/assets/icons/website/money-2.svg" class="w-[28px] h-[20px]" alt="">
+              </div>
+            </DashboardBanner>
           </li>
-          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
-            <div class="bg-[#ED72001A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-3.svg" class="w-[28px] h-[20px]" alt="">
-            </div>
-            <div class="">
-              <p class="text-[14px] text-[#7A7A9D]">
-                To‘lanishi kerak summa
-              </p>
-              <p class="text-[20px] font-bold">
-                {{ numberWithSpaces(dashboardFields.total_must_pay) }} <span class="text-[#B2B7C1]">UZS</span>
-              </p>
-            </div>
+          <li class="flex-wrap">
+            <DashboardBanner text="To'lanishi kerak summa"
+                             :money-count="numberWithSpaces(dashboardFields.total_must_pay)"
+                             currency="UZS">
+              <div class="bg-[#ED72001A] py-[14px] px-[10px] rounded-[12px]">
+                <img src="@/assets/icons/website/money-3.svg" class="w-[28px] h-[20px]" alt="">
+              </div>
+            </DashboardBanner>
           </li>
+
         </ul>
       </div>
       <div class="" v-else>
@@ -61,6 +48,7 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import {useSponsors} from "@/composables/sponsors";
+import DashboardBanner from "@/components/UI/DashboardBanner.vue"
 
 const axios: any = inject('axios')
 const dashboardFields: any = ref([])
@@ -76,6 +64,7 @@ async function fetchData(url: string) {
 }
 
 fetchData("/dashboard")
+
 
 </script>
 

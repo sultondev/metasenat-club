@@ -76,7 +76,7 @@
               <select name="pageSize" id="page-size" @change="selectPageSize"
                       class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px]"
                       :value="sponsorStore.pageSize">
-                <option :value="num" class="" v-for="num in [10, 15, 20, 25, 35, 40, 45, 50]"
+                <option :value="num" class="" v-for="num in pageSizeLimits"
                         :key="num+'wdadwa'">
                   {{ num }}
                 </option>
@@ -109,6 +109,7 @@ const {page, size} = route.query;
 // Dynamic list length sometimes may not be the same with original
 // sponsorsListList length because of select Page Size
 const sponsorListLength = ref(sponsorStore.sponsorsList.length)
+const pageSizeLimits = ref([10, 15, 20, 25, 35, 40, 45, 50])
 
 
 const sponsorListEnd = computed(() => (sponsorStore.sponsorsList.length >= sponsorStore.pageSize || sponsorListLength.value === sponsorStore.sponsorsList.length ?
