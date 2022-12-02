@@ -20,7 +20,7 @@
             </template>
 
             <template #tbody>
-              <tr v-for="(sponsor, idx) in listOfSponsors"
+              <tr v-for="(sponsor, idx) in filterSponsorsByName"
                   :key="sponsor.id" class="border-spacing-y-3 border-separate text-sm">
                 <td class="py-[23px] bg-white rounded-l-[12px] px-4">
                   {{ (page - 1) * size + idx + 1 }}
@@ -51,7 +51,7 @@
             </template>
           </Table>
 
-          <NotFound :condition="filterSponsorsByName.length > 0"
+          <NotFound :condition="filterSponsorsByName.length === 0"
                     text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
             <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
           </NotFound>
@@ -111,10 +111,8 @@ const sponsorListEnd = computed(() => (listOfSponsors.value.length >= size.value
 
 
 const fetchSponsorsData = async () => {
-  console.log(page.value)
   const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
   if (response.status === 200) {
-    console.log(listOfSponsors.value)
     totalCount.value = response.data.count
     listOfSponsors.value = response.data.results
   } else {
@@ -125,20 +123,24 @@ const fetchSponsorsData = async () => {
   }
 }
 
-const filterSponsorsByName = () => {
+const filterSponsorsByName = computed(() => {
   if (filters.value.length > 0) {
-    return listOfSponsors.value.filter((item: sponsorsListType) => {
+    const filtered = listOfSponsors.value.filter((item: sponsorsListType) => {
       const lowVer = item.full_name.toLowerCase()
       return lowVer.includes(filters.value.toLowerCase())
     })
+    return filtered
   } else {
     return listOfSponsors.value
   }
-}
-
-onMounted(() => {
-  fetchSponsorsData()
 })
+
+onMounted(async () => {
+  await fetchSponsorsData()
+  console.log("filter ", filterSponsorsByName.value)
+  console.log("List of", listOfSponsors.value)
+})
+
 
 watch(route, async () => {
   filters.value = route.query.filters || ""
