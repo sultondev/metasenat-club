@@ -31,19 +31,7 @@ export const useSponsorStore = defineStore<string, sponsorStoreInterface>("useSp
                 }
             }
         },
-        filterSponsorsByName(state) {
-            // @ts-ignore
-            return function (filters: string) {
-                if (filters.length > 0) {
-                    return state.sponsorsList.filter((item: sponsorsListType) => {
-                        const lowVer = item.full_name.toLowerCase()
-                        return lowVer.includes(filters.toLowerCase())
-                    })
-                } else {
-                    return state.sponsorsList
-                }
-            }
-        },
+
         getPaginationCount(state) {
             return Math.floor(state.count / state.pageSize + 1)
         },

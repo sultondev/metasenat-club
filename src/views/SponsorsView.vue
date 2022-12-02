@@ -3,7 +3,7 @@
     <div class="mx-auto ex-sm:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
 
-        <div class="" v-if="sponsorStore.sponsorsList.length > 0">
+        <div class="" v-if="listOfSponsors.length">
 
           <Table classes="w-full table-auto border-separate border-spacing-y-4">
             <template #thead>
@@ -20,10 +20,10 @@
             </template>
 
             <template #tbody>
-              <tr v-for="(sponsor, idx) in sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter)"
+              <tr v-for="(sponsor, idx) in listOfSponsors"
                   :key="sponsor.id" class="border-spacing-y-3 border-separate text-sm">
                 <td class="py-[23px] bg-white rounded-l-[12px] px-4">
-                  {{ (sponsorStore.activePage * sponsorStore.pageSize) + idx - sponsorStore.pageSize + 1 }}
+                  {{ (page - 1) * size + idx + 1 }}
                 </td>
                 <td class="py-[23px]  bg-white font-bold text-ellipsis">{{ sponsor.full_name }}</td>
                 <td class="py-[23px]  bg-white text-center whitespace-nowrap">{{ sponsor.phone }}</td>
@@ -51,7 +51,7 @@
             </template>
           </Table>
 
-          <NotFound :condition="sponsorStore.filterSponsorsByName(sponsorStore.sponsorsFilter).length < 1"
+          <NotFound :condition="filterSponsorsByName.length > 0"
                     text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
             <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
           </NotFound>
@@ -61,11 +61,11 @@
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
       </div>
-      <div class="" v-if="sponsorStore.sponsorsList.length > 1">
+      <div class="" v-if="listOfSponsors.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ sponsorStore.count }} tadan
-            {{ (sponsorStore.activePage - 1) * sponsorStore.pageSize + 1 }}-{{ sponsorListEnd }}
+            {{ (page - 1) * size + 1 }}-{{ sponsorListEnd }}
             ko'rsatilmoqda
           </div>
           <ul class="flex items-center gap-[12px]">
@@ -73,15 +73,7 @@
               <p class="text-[15px]">Ko'rsatish</p>
             </li>
             <li class="flex items-center gap-[20px] pb-[0px]  max-w-full">
-              <select name="pageSize" id="page-size" @change="selectPageSize"
-                      class="border border-[#DFE3E8] py-[6px] px-[8px] bg-white rounded-[5px]"
-                      :value="sponsorStore.pageSize">
-                <option :value="num" class="" v-for="num in pageSizeLimits"
-                        :key="num+'wdadwa'">
-                  {{ num }}
-                </option>
-              </select>
-              <ThePagination :count="sponsorStore.getPaginationCount"></ThePagination>
+              <ThePagination :count="totalCount"></ThePagination>
             </li>
           </ul>
         </div>
@@ -91,88 +83,69 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, ref} from "vue";
+import {computed, inject, onMounted, ref, watch} from "vue";
 import Table from "@/components/UI/Table.vue"
-import {useSponsorStore} from "@/store/useSponsorStore";
 import ThePagination from "@/components/ThePagination.vue"
+import NotFound from "@/components/UI/NotFound.vue"
+import {useSponsorStore} from "@/store/useSponsorStore";
 import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
-import NotFound from "@/components/UI/NotFound.vue"
+import {sponsorsListType} from "@/typing/types/useSponsorStore";
 
 
 const {numberWithSpaces, formatDateTime, statusColor} = useSponsors()
 const sponsorStore = useSponsorStore()
 const fetchData: any = inject("fetchData")
+const fetchError: any = ref({})
 const router = useRouter()
 const route = useRoute();
-const {page, size} = route.query;
-// Dynamic list length sometimes may not be the same with original
-// sponsorsListList length because of select Page Size
-const sponsorListLength = ref(sponsorStore.sponsorsList.length)
-const pageSizeLimits = ref([10, 15, 20, 25, 35, 40, 45, 50])
+const listOfSponsors = ref([])
+const page = ref(+route.query! || 1)
+const size = ref(+route.query.size! || 15)
+const filters: any = ref(route.query.filters || "")
+const totalCount = ref(0)
 
-
+const sponsorListLength = ref(listOfSponsors.value.length)
 const sponsorListEnd = computed(() => (sponsorStore.sponsorsList.length >= sponsorStore.pageSize || sponsorListLength.value === sponsorStore.sponsorsList.length ?
     sponsorStore.sponsorsList.length * sponsorStore.activePage : sponsorStore.count))
 
 
-async function selectPageSize(event: any) {
-  sponsorStore.pageSize = event.target.value;
-  sponsorListLength.value = event.target.value;
-  if (sponsorStore.activePage > sponsorStore.getPaginationCount) {
-    try {
-      const response = await fetchData(`/sponsor-list/?page=${sponsorStore.getPaginationCount}&page_size=${event.target.value}`)
-      if (response.status === 200) {
-        sponsorStore.sponsorsList = response.data.results
-        sponsorStore.activePage = sponsorStore.getPaginationCount
-        await router.push({
-          path: "/main/sponsors",
-          query: {page: sponsorStore.getPaginationCount, size: event.target.value}
-        })
-      }
-    } catch (error) {
-      console.log(error)
-    }
+const fetchSponsorsData = async () => {
+  console.log(page.value)
+  const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
+  if (response.status === 200) {
+    console.log(listOfSponsors.value)
+    totalCount.value = response.data.count
+    listOfSponsors.value = response.data.results
   } else {
-    try {
-      const response = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${event.target.value}`)
-      if (response.status === 200) {
-        sponsorStore.sponsorsList = response.data.results
-        await router.push({path: "/main/sponsors", query: {page: sponsorStore.activePage, size: event.target.value}})
-      }
-    } catch (error) {
-      console.log(error)
+    fetchError.value = {
+      error: true,
+      message: "Something Bad happened"
     }
   }
 }
 
-Init()
-
-
-async function Init() {
-  if (route.query.page || route.query.pageSize) {
-    sponsorStore.pageSize = Number(size)
-    sponsorStore.activePage = Number(page)
-    const response: any = await fetchData(`/sponsor-list/?page=${!isNaN(Number(page)) ? page : sponsorStore.activePage}&page_size=${!isNaN(Number(size)) ? size : sponsorStore.pageSize}`)
-    console.log(response.data)
-    sponsorStore.count = response.data.count
-    if (response.status === 200) {
-      sponsorStore.sponsorsList = response.data.results;
-    }
+const filterSponsorsByName = () => {
+  if (filters.value.length > 0) {
+    return listOfSponsors.value.filter((item: sponsorsListType) => {
+      const lowVer = item.full_name.toLowerCase()
+      return lowVer.includes(filters.value.toLowerCase())
+    })
   } else {
-    const response: any = await fetchData(`/sponsor-list/?page=${sponsorStore.activePage}&page_size=${sponsorStore.pageSize}`)
-    if (response.status === 200) {
-      await router.push({
-        path: "/main/sponsors",
-        query: {page: sponsorStore.activePage, size: sponsorStore.pageSize}
-      })
-      sponsorStore.sponsorsList = response.data.results;
-      sponsorStore.count = response.data.count;
-
-    }
+    return listOfSponsors.value
   }
 }
 
+onMounted(() => {
+  fetchSponsorsData()
+})
+
+watch(route, async () => {
+  filters.value = route.query.filters || ""
+  page.value = +route.query.page! || 1
+  size.value = +route.query.size! || 15
+  await fetchSponsorsData()
+})
 </script>
 
 <style>

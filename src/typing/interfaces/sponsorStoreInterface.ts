@@ -9,5 +9,5 @@ export interface sponsorStoreInterface {
     sponsorsFilter: any;
     filterSponsorsByName: sponsorsListType[];
     count: number,
-    getPaginationCount: any;
+    getPaginationCount: number;
 }

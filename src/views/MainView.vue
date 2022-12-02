@@ -12,8 +12,8 @@
               id="filter">
             <img src="@/assets/icons/website/search.svg" alt="Search Icon"
                  class="icon-filter w-[20px] h-[20px] mr-[8px]">
-            <BaseInput id="filter" classes="main-filter__input bg-transparent outline-0 text-[15px]"
-                       placeholder="Izlash" v-model="sponsorStore.sponsorsFilter"/>
+            <input id="filter" class="main-filter__input bg-transparent outline-0 text-[15px]"
+                   placeholder="Izlash" v-model="filters"/>
           </label>
           <button class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px]">
             <span
@@ -31,12 +31,12 @@
 
 <script setup lang="ts">
 import TheNavbar from "@/components/TheNavbar.vue"
-import {useSponsorStore} from "@/store/useSponsorStore";
-import BaseInput from "@/components/UI/BaseInput.vue"
 import Tablet from "@/components/UI/Tablet.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
 
-const sponsorStore = useSponsorStore()
+const router = useRouter()
+const route = useRoute()
 const tablets = ref([
   {
     title: "dashboard",
@@ -51,6 +51,16 @@ const tablets = ref([
     link: "/main/students",
   },
 ])
+const filters = ref(route.query.filters || "")
+
+const setFilter = () => {
+  router.push({path: "/main/sponsors", query: {...route.query, filters: filters.value}})
+}
+
+watch(filters, () => {
+  setFilter()
+})
+
 </script>
 
 <style>
