@@ -64,7 +64,7 @@
       <div class="" v-if="listOfSponsors.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
-            {{ sponsorStore.count }} tadan
+            {{ totalCount }} tadan
             {{ (page - 1) * size + 1 }}-{{ sponsorListEnd }}
             ko'rsatilmoqda
           </div>
@@ -106,8 +106,8 @@ const filters: any = ref(route.query.filters || "")
 const totalCount = ref(0)
 
 const sponsorListLength = ref(listOfSponsors.value.length)
-const sponsorListEnd = computed(() => (sponsorStore.sponsorsList.length >= sponsorStore.pageSize || sponsorListLength.value === sponsorStore.sponsorsList.length ?
-    sponsorStore.sponsorsList.length * sponsorStore.activePage : sponsorStore.count))
+const sponsorListEnd = computed(() => (listOfSponsors.value.length >= size.value || sponsorListLength.value === listOfSponsors.value.length ?
+    listOfSponsors.value.length * page.value : totalCount))
 
 
 const fetchSponsorsData = async () => {
