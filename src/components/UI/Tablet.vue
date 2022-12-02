@@ -11,13 +11,14 @@
 
 <script setup lang="ts">
 
+type TabletObj = {
+  title: string,
+  link: string,
+}
+
+
 interface TabletProps {
-  tablets: [
-    {
-      title: string,
-      link: string,
-    }
-  ]
+  tablets: TabletObj[]
 }
 
 defineProps<TabletProps>()

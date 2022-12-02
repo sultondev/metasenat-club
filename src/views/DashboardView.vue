@@ -5,7 +5,8 @@
         <ul class="dashboard-list flex justify-between gap-[28px] flex-wrap items-center">
 
           <li class="flex-wrap">
-            <DashboardBanner text="Jami to‘langan summa" :money-count="numberWithSpaces(dashboardFields.total_paid)"
+            <DashboardBanner text="Jami to‘langan summa"
+                             :money-count="numberWithSpaces(dashboardFields.total_paid) || 'Loading...'"
                              currency="UZS">
               <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">
                 <img src="@/assets/icons/website/money-1.svg" class="w-[28px] h-[20px]" alt="">
@@ -14,7 +15,8 @@
           </li>
 
           <li class="flex-wrap">
-            <DashboardBanner text="Jami so‘ralgan summa" :money-count="numberWithSpaces(dashboardFields.total_need)"
+            <DashboardBanner text="Jami so‘ralgan summa"
+                             :money-count="numberWithSpaces(dashboardFields.total_need) || 'Loading...' "
                              currency="UZS">
               <div class="bg-[#EDC7001A] py-[14px] px-[10px] rounded-[12px]">
                 <img src="@/assets/icons/website/money-2.svg" class="w-[28px] h-[20px]" alt="">
@@ -23,7 +25,7 @@
           </li>
           <li class="flex-wrap">
             <DashboardBanner text="To'lanishi kerak summa"
-                             :money-count="numberWithSpaces(dashboardFields.total_must_pay)"
+                             :money-count="numberWithSpaces(dashboardFields.total_must_pay)  || 'Loading...'"
                              currency="UZS">
               <div class="bg-[#ED72001A] py-[14px] px-[10px] rounded-[12px]">
                 <img src="@/assets/icons/website/money-3.svg" class="w-[28px] h-[20px]" alt="">

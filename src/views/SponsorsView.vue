@@ -3,7 +3,7 @@
     <div class="mx-auto ex-sm:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
 
-        <div class="" v-if="listOfSponsors.length">
+        <div class="" v-if="listOfSponsors.length > 0">
 
           <Table classes="w-full table-auto border-separate border-spacing-y-4">
             <template #thead>
@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, ref, watch} from "vue";
+import {computed, inject, onMounted, Ref, ref, watch} from "vue";
 import Table from "@/components/UI/Table.vue"
 import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
@@ -99,7 +99,7 @@ const fetchData: any = inject("fetchData")
 const fetchError: any = ref({})
 const router = useRouter()
 const route = useRoute();
-const listOfSponsors = ref([])
+const listOfSponsors: Ref<sponsorsListType[]> = ref([])
 const page = ref(+route.query! || 1)
 const size = ref(+route.query.size! || 15)
 const filters: any = ref(route.query.filters || "")
