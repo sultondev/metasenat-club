@@ -24,7 +24,7 @@ const {numberWithSpaces} = useSponsors()
 
 interface BannerProps {
   text: string;
-  sums: string | number;
+  sums: any;
   currency: string;
   imageName: string;
   bgClr: string;
