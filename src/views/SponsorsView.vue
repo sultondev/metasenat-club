@@ -57,8 +57,11 @@
           </NotFound>
 
         </div>
-        <div class="mx-auto" v-else>
+        <div class="mx-auto" v-else-if="listOfSponsors.length === 0 && !fetchError.error">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
+        </div>
+        <div class="" v-else>
+          <p class="">{{ fetchError.message }}</p>
         </div>
       </div>
       <div class="" v-if="listOfSponsors.length > 1">
@@ -87,14 +90,12 @@ import {computed, inject, onMounted, Ref, ref, watch} from "vue";
 import Table from "@/components/UI/Table.vue"
 import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
-import {useSponsorStore} from "@/store/useSponsorStore";
 import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
-import {sponsorsListType} from "@/typing/types/useSponsorStore";
+import {sponsorsListType} from "@/typing/types/sponsor";
 
 
 const {numberWithSpaces, formatDateTime, statusColor} = useSponsors()
-const sponsorStore = useSponsorStore()
 const fetchData: any = inject("fetchData")
 const fetchError: any = ref({})
 const router = useRouter()
@@ -111,14 +112,18 @@ const sponsorListEnd = computed(() => (listOfSponsors.value.length >= size.value
 
 
 const fetchSponsorsData = async () => {
-  const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
-  if (response.status === 200) {
-    totalCount.value = response.data.count
-    listOfSponsors.value = response.data.results
-  } else {
+  try {
+    const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
+    if (response.status === 200) {
+      console.log(response)
+      totalCount.value = response.data.count
+      listOfSponsors.value = response.data.results
+    }
+  } catch (error) {
+    console.log(error)
     fetchError.value = {
       error: true,
-      message: "Something Bad happened"
+      message: error.message
     }
   }
 }

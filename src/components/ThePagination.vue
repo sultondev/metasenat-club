@@ -11,12 +11,17 @@
 
     <div class="flex gap-[10px]">
       <button
-          class="border max-w-[32px] min-w-[32px] max-h-[32px] min-h-[32px] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
+          class="border  hover:bg-[#E0E7FF] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
           @click="selectPage('previous')"
           :disabled="page === 1"><img
           src="@/assets/icons/website/left.svg" class="min-w-[22px]" alt="">
       </button>
-
+      <button
+          class="text-[14px] border border-[#DFE3E8] h-full  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF] "
+          @click="selectPage(1)"
+          v-if="page === pagesSizeAmount">
+        {{ 1 }}
+      </button>
       <div v-for="p in pagesSizeAmount - 1 > page ? 2 : 1" :key="p">
         <button
             :class="page === page+p-1 ? ' pagination-list__active' : ''"
@@ -28,7 +33,7 @@
         </button>
       </div>
       <div class="text-[14px] border border-[#DFE3E8]  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF]"
-           v-if="pagesSizeAmount - 1 > page">
+           v-if="pagesSizeAmount - 1 > page || pagesSizeAmount === page">
         ...
       </div>
       <button
@@ -40,7 +45,7 @@
         {{ pagesSizeAmount }}
       </button>
       <button
-          class="border max-w-[32px] min-w-[32px] max-h-[32px] min-h-[32px] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
+          class="border  hover:bg-[#E0E7FF] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
           @click="selectPage('next')"
           :disabled="page === pagesSizeAmount"
       >

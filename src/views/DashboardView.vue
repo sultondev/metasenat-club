@@ -48,12 +48,13 @@
 </template>
 
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {inject, Ref, ref} from "vue";
 import {useSponsors} from "@/composables/sponsors";
 import DashboardBanner from "@/components/UI/DashboardBanner.vue"
+import {sponsorsListType} from "@/typing/types/sponsor";
 
 const axios: any = inject('axios')
-const dashboardFields: any = ref([])
+const dashboardFields: Ref<sponsorsListType[]> = ref([])
 const {numberWithSpaces} = useSponsors()
 const loading = ref(true)
 

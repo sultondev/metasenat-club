@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
-import router from "@/router";
 
 const userStore = useUserStore();
 
