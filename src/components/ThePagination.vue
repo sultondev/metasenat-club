@@ -17,7 +17,7 @@
           src="@/assets/icons/website/left.svg" class="min-w-[22px]" alt="">
       </button>
 
-      <div v-for="p in pagesSizeAmount - 2 > page ? 2 : 1" :key="p">
+      <div v-for="p in pagesSizeAmount - 1 > page ? 2 : 1" :key="p">
         <button
             :class="page === page+p-1 ? ' pagination-list__active' : ''"
             class="text-[14px] border border-[#DFE3E8] h-full  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF]  "
