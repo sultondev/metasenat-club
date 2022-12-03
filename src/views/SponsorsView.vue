@@ -119,7 +119,7 @@ const fetchSponsorsData = async () => {
       totalCount.value = response.data.count
       listOfSponsors.value = response.data.results
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log(error)
     fetchError.value = {
       error: true,

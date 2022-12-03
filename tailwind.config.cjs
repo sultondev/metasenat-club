@@ -42,10 +42,26 @@ module.exports = {
                 'gold': '#FFA445',
                 'dodgerblue': '#5BABF2',
                 'my-green': '#00CF83',
-                'white': '#fff'
+                'white': '#fff',
+            },
+            backgroundColor: {
+                skin: {
+                    ban1: withoutOpacity("--color-ban-1"),
+                    ban2: withoutOpacity("--color-ban-2"),
+                    ban3: withoutOpacity("--color-ban-3")
+                },
             },
         },
 
     },
     plugins: [],
+}
+
+function withoutOpacity(variableName) {
+    return ({opacityValue}) => {
+        if (opacityValue !== undefined) {
+            return `var(${variableName})`
+        }
+        return `var(${variableName}))`
+    }
 }
