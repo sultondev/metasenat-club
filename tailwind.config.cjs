@@ -26,7 +26,42 @@ module.exports = {
             // => @media (min-width: 1536px) { ... }
             '3xl': '1800px',
         },
-        extend: {}
+        extend: {
+            colors: {
+                'gray': '#F5F5F7',
+                'gray-blue': '#DFE3E8',
+                'dark-gray': '#E8E8E8',
+                'smoke': '#F1F1F3',
+                'primary': '#2E5BFF',
+                'dark-blue': '#28293D',
+                'black': '#1D1D1F',
+                'light-purple': '#E0E7FF',
+                'silver': '#B1B1B8',
+                'light-silver': '#C4CDD5',
+                'dark-silver': '#979797',
+                'gold': '#FFA445',
+                'dodgerblue': '#5BABF2',
+                'my-green': '#00CF83',
+                'white': '#fff',
+            },
+            backgroundColor: {
+                skin: {
+                    ban1: withoutOpacity("--color-ban-1"),
+                    ban2: withoutOpacity("--color-ban-2"),
+                    ban3: withoutOpacity("--color-ban-3")
+                },
+            },
+        },
+
     },
     plugins: [],
+}
+
+function withoutOpacity(variableName) {
+    return ({opacityValue}) => {
+        if (opacityValue !== undefined) {
+            return `var(${variableName})`
+        }
+        return `var(${variableName}))`
+    }
 }

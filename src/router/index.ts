@@ -37,6 +37,7 @@ const router = createRouter({
                 {
                     path: "sponsors",
                     component: SponsorsView,
+                    name: "sponsors-list",
                     meta: {
                         requiresAuth: true
                     },
@@ -75,7 +76,6 @@ function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, n
         if (!userStore.isLoggedIn && !localStorage.getItem("accessToken")) {
             next({name: 'Login'})
         } else if (userStore.isLoggedIn) {
-            console.log(to.path)
             next()
         } else {
             next() // go to wherever I'm going
@@ -93,16 +93,5 @@ function hideForAuth(to: RouteLocationNormalized, from: RouteLocationNormalized,
         next()
     }
 }
-
-// router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-//     const userStore = useUserStore()
-//     if (to.name !== "Login" && !userStore.isAuthenticated) {
-//         // this route requires auth, check if logged in
-//         // if not, redirect to login page.
-//         next({name: "Login"})
-//     } else {
-//         next({path: "/main"})
-//     }
-// })
 
 export default router

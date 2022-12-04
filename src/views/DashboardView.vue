@@ -1,48 +1,11 @@
 <template>
-  <section class="dashboard">
+  <section class="dashboard" v-cloak>
     <div class="container mx-auto">
       <div class="mb-[28px]" v-if="dashboardFields">
-        <ul class="dashboard-list flex justify-between gap-[28px]">
-
-          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
-            <div class="bg-[#4C6FFF1A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-1.svg" class="w-[28px] h-[20px]" alt="">
-            </div>
-            <div class="">
-              <p class="text-[12px] text-[#7A7A9D]">
-                Jami to‘langan summa
-              </p>
-              <p class="text-[20px] font-bold">
-                {{ numFormat(dashboardFields.total_paid) }} <span class="text-[#B2B7C1]">UZS</span>
-              </p>
-            </div>
-          </li>
-
-          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
-            <div class="bg-[#EDC7001A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-2.svg" class="w-[28px] h-[20px]" alt="">
-            </div>
-            <div class="">
-              <p class="text-[14px] text-[#7A7A9D]">
-                Jami so‘ralgan summa
-              </p>
-              <p class="text-[20px] font-bold">
-                {{ numFormat(dashboardFields.total_need) }} <span class="text-[#B2B7C1]">UZS</span>
-              </p>
-            </div>
-          </li>
-          <li class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
-            <div class="bg-[#ED72001A] py-[14px] px-[10px] rounded-[12px]">
-              <img src="@/assets/icons/website/money-3.svg" class="w-[28px] h-[20px]" alt="">
-            </div>
-            <div class="">
-              <p class="text-[14px] text-[#7A7A9D]">
-                To‘lanishi kerak summa
-              </p>
-              <p class="text-[20px] font-bold">
-                {{ numFormat(dashboardFields.total_must_pay) }} <span class="text-[#B2B7C1]">UZS</span>
-              </p>
-            </div>
+        <ul class="dashboard-list flex justify-between gap-[28px] flex-wrap items-center">
+          <li class="" v-for="banner in bannerList">
+            <DashboardBanner :bg-clr="banner.bgClr" :image-name="banner.imgPath" :sums="banner.sums"
+                             :currency="banner.currency" :text="banner.text"/>
           </li>
         </ul>
       </div>
@@ -55,26 +18,58 @@
              alt="">
       </div>
     </div>
+    <simpleImg/>
   </section>
 </template>
 
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {computed, inject, Ref, ref} from "vue";
+import DashboardBanner from "@/components/UI/DashboardBanner.vue"
+
+type fieldsType = {
+  total_must_pay?: number
+  total_need?: number
+  total_paid?: number
+}
 
 const axios: any = inject('axios')
-const dashboardFields: any = ref([])
-const numFormat: any = inject('numFormat')
+const dashboardFields: Ref<fieldsType> = ref({})
 const loading = ref(true)
+const bannerList = computed(() => [
+  {
+    text: "Jami so‘ralgan summa",
+    imgPath: "money-1",
+    sums: dashboardFields.value.total_paid,
+    currency: "UZS",
+    bgClr: "ban1"
+  },
+  {
+    text: "Jami so‘ralgan summa",
+    imgPath: "money-2",
+    sums: dashboardFields.value.total_need,
+    currency: "UZS",
+    bgClr: "ban2"
+  },
+  {
+    text: "To'lanishi kerak summa",
+    imgPath: "money-3",
+    sums: dashboardFields.value.total_must_pay,
+    currency: "UZS",
+    bgClr: "ban3"
+  }
+])
 
 async function fetchData(url: string) {
   const response = await axios.get(url)
   if (response.status === 200) {
     dashboardFields.value = response.data;
+    console.log(response, dashboardFields.value)
     loading.value = false
   }
 }
 
 fetchData("/dashboard")
+
 
 </script>
 

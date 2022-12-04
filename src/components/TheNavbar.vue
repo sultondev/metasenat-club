@@ -1,16 +1,16 @@
 <template>
-  <header class="header xl:py-[12px] xl:px-[120px]  bg-white" v-if="userStore.isAuthenticated">
+  <header class="header py-[12px] px-[120px]  bg-white" v-if="userStore.isAuthenticated">
     <div class="container mx-auto ">
       <nav class="nav ">
         <ul class="nav-list flex justify-between">
           <li class="nav-list__item flex items-center">
-            <router-link to="/">
-              <img src="@/assets/icons/website/header-logo.svg" alt="">
+            <router-link to="/" class="bg-none" exact-active-class="nav-active">
+              <img src="@/assets/icons/website/header-logo.svg" class="min-w-[173px] min-h-[24px]" alt="">
             </router-link>
           </li>
-          <li class="nav-list__item flex items-center">
-            <a href="#" class="nav-user flex items-center xl:mr-[40px]"><span
-                class="nav-user__name xl:mr-[24px] text-[13px]">Shohrux</span> <img
+          <li class="nav-list__item flex items-center gap-[40px]">
+            <a href="#" class="nav-user flex items-center gap-[24px]"><span
+                class="nav-user__name text-[13px]">Shohrux</span> <img
                 src="@/assets/icons/website/user.svg"
                 class="nav-user__picture"
                 alt="UserImage">
@@ -27,13 +27,16 @@
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
-import router from "@/router";
 
 const userStore = useUserStore();
 
 </script>
 
 <style>
+
+.nav-active {
+  background: none;
+}
 
 .header {
   box-shadow: 2px 0 20px #00000010;

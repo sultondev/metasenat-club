@@ -2,7 +2,7 @@
   <section class="login flex items-center flex-col bg-[#F5F5F7]">
     <div class="mx-auto">
       <h2 class="login__header justify-center flex gap-3 mb-[48px] items-center ex-sm:text-2xl">
-        <img src="@/assets/images/logo/logo.svg" alt="">
+        <img src="@/assets/images/logo/logo.svg" class="" alt="">
         METASENAT
       </h2>
 
@@ -32,7 +32,7 @@
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
                          @verify="testRobot"></vue-recaptcha>
           <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
-                  :disabled="loading || !recaptchaTest">
+                  :disabled="loading ">
             <span>
             {{ loading ? "Checking..." : "Kirish" }}
             </span>

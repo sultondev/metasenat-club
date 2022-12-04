@@ -43,6 +43,6 @@ body {
 }
 
 * {
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 </style>
