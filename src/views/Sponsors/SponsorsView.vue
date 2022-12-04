@@ -50,14 +50,13 @@
               </tr>
             </template>
           </Table>
-
           <NotFound :condition="filterSponsorsByName.length === 0"
                     text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
             <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
           </NotFound>
-
         </div>
-        <div class="mx-auto" v-else-if="listOfSponsors.length === 0 && !fetchError.error">
+        <div class="mx-auto"
+             v-else-if="listOfSponsors.length === 0 && !fetchError.error">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else>
@@ -92,6 +91,7 @@ import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
 import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
+import {useSponsorStore} from "@/store/useSponsorsStore";
 import {sponsorsListType} from "@/typing/types/sponsor";
 
 
@@ -110,6 +110,7 @@ const sponsorListLength = ref(listOfSponsors.value.length)
 const sponsorListEnd = computed(() => (listOfSponsors.value.length >= size.value || sponsorListLength.value === listOfSponsors.value.length ?
     listOfSponsors.value.length * page.value : totalCount))
 
+const sponsorStore = useSponsorStore()
 
 const fetchSponsorsData = async () => {
   try {

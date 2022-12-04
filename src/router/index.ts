@@ -3,7 +3,7 @@ import WelcomeView from "@/views/WelcomeView.vue"
 import LoginView from "@/views/LoginView.vue"
 import DashboardView from "@/views/DashboardView.vue"
 import MainView from "@/views/MainView.vue"
-import SponsorsView from "@/views/SponsorsView.vue"
+import SponsorsView from "@/views/Sponsors/SponsorsView.vue"
 import StudentsView from "@/views/StudentsView.vue"
 import PageNotFound from "@/views/PageNotFound.vue"
 import {useUserStore} from "@/store/userStore";
