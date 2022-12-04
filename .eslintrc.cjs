@@ -3,7 +3,7 @@ module.exports = {
         "browser": true,
         "es2021": true
     },
-    "extends": [
+    "extend": [
         "eslint:recommended",
         "plugins:vue/essential",
         "plugins:@typescript-eslint/recommended",
