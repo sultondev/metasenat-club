@@ -15,8 +15,11 @@
     <router-view></router-view>
   </main>
 
-  <teleport to="#modal" v-if="sponsorStore.filterModalOpen">
-    <TheModal @close-modal="sponsorStore.toggleFilterModal"></TheModal>
+  <teleport to="#modal">
+    <TheModal @close-modal="sponsorStore.toggleFilterModal" :show="sponsorStore.filterModalOpen"
+              :is-modal-open="sponsorStore.filterModalOpen">
+      <SponsorsFilterModal @close-modal="sponsorStore.toggleFilterModal"></SponsorsFilterModal>
+    </TheModal>
   </teleport>
 </template>
 
@@ -26,12 +29,14 @@ import TheHeader from "@/components/TheHeader.vue"
 import HeaderTablet from "@/components/HeaderTablet.vue"
 import HeaderFilter from "@/components/HeaderFilter.vue"
 import TheModal from "@/components/UI/TheModal.vue"
+import SponsorsFilterModal from "@/components/ModalContents/SponsorsFilterModal.vue"
 import {useSponsorStore} from "@/store/useSponsorsStore";
 
 const sponsorStore = useSponsorStore()
 </script>
 
 <style>
+
 
 .router-link-active {
   background-color: #3366FF;

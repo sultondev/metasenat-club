@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue"
 import DashboardView from "@/views/DashboardView.vue"
 import MainView from "@/views/MainView.vue"
 import SponsorsView from "@/views/Sponsors/SponsorsView.vue"
+import SponsorDetails from "@/views/Sponsors/SponsorDetails.vue"
 import StudentsView from "@/views/StudentsView.vue"
 import PageNotFound from "@/views/PageNotFound.vue"
 import {useUserStore} from "@/store/userStore";
@@ -41,6 +42,7 @@ const router = createRouter({
                     meta: {
                         requiresAuth: true
                     },
+
                 },
                 {
                     path: "dashboard",
@@ -59,10 +61,20 @@ const router = createRouter({
                     },
                 }
             ],
+
             meta: {
                 requiresAuth: true
             },
             beforeEnter: guardAuth
+        },
+        {
+            path: "/main/sponsors/:id",
+            component: SponsorDetails,
+            name: "sponsor-details",
+            meta: {
+                requiresAuth: true
+            },
+            props: true
         },
         {path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound},
     ],

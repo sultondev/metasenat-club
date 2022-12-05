@@ -49,7 +49,9 @@
                   {{ sponsor.get_status_display }}
                 </td>
                 <td class="py-[23px]  bg-white text-center rounded-r-[12px] px-4">
-                  <button class="text-center mx-auto"><img src="@/assets/icons/website/eye.svg" alt=""></button>
+                  <router-link to="sponsors/12" class="w-fit block mx-auto">
+                    <img src="@/assets/icons/website/eye.svg" alt="Eye icon">
+                  </router-link>
                 </td>
               </tr>
             </template>
