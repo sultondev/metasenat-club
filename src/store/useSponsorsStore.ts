@@ -3,6 +3,16 @@ import {ref} from "vue";
 
 export const useSponsorStore = defineStore('useSponsorStore', () => {
     const loading = ref(true)
+    const filterModalOpen = ref(true)
+    const detailsModal = ref(false)
 
-    return {loading}
+    function toggleDetailsModal() {
+        detailsModal.value = !detailsModal.value
+    }
+
+    const toggleFilterModal = () => {
+        filterModalOpen.value = !filterModalOpen.value
+    }
+
+    return {loading, filterModalOpen, detailsModal, toggleDetailsModal, toggleFilterModal}
 })
