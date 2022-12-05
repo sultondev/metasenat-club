@@ -2,11 +2,11 @@
   <section class="login flex items-center flex-col bg-[#F5F5F7]">
     <div class="mx-auto">
       <h2 class="login__header justify-center flex gap-3 mb-[48px] items-center ex-sm:text-2xl">
-        <img src="@/assets/images/logo/logo.svg" class="" alt="">
+        <img src="@/assets/images/logo/logo.svg" alt="Logo">
         METASENAT
       </h2>
 
-      <form @submit.prevent="onSubmit({username: loginField, password: passwordField})"
+      <form @submit.prevent="onSubmit"
             class="login-form bg-white rounded-[12px] p-[32px] flex flex-col gap-[44px]">
         <h2 class="text-left text-3xl font-bold">Kirish</h2>
         <p v-if="loginAlert">
@@ -14,23 +14,26 @@
         </p>
         <div class="flex flex-col gap-[22px]">
           <div class="flex flex-col">
-            <label for="login" class="font-medium">LOGIN</label>
-            <input type="text" class="border bg-[#E0E7FF20A] bg-[#E0E7FF] rounded-[6px] py-[12px] px-[14px] text-sm"
-                   name="login" id="login"
-                   placeholder="login kiriting"
-                   v-model="loginField" required
+            <label for="login" class="font-medium text-[12px] mb-[8px]">LOGIN</label>
+            <BaseInput v-model="loginField" inp-type="text"
+                       classes="border  border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
+                       hint="login kiriting"
+                       id="login"
+                       :required="true"
             />
           </div>
           <div class="flex flex-col">
-            <label for="password" class="font-medium">PAROL</label>
-            <input type="password" class="border bg-[#E0E7FF20A] bg-[#E0E7FF] rounded-[6px] py-[12px] px-[14px] text-sm"
-                   name="password" id="password"
-                   placeholder="parol kiriting"
-                   v-model="passwordField" required
+            <label for="password" class="font-medium text-[12px] mb-[8px]">PAROL</label>
+            <BaseInput v-model="passwordField" inp-type="password"
+                       classes="border  border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
+                       hint="parol kiriting"
+                       id="password"
+                       :required="true"
             />
           </div>
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
-                         @verify="testRobot"></vue-recaptcha>
+                         @verify="testRobot">
+          </vue-recaptcha>
           <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
                   :disabled="loading ">
             <span>
@@ -48,6 +51,7 @@ import {inject, ref, watch} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
 import {useUserStore} from "@/store/userStore";
 import router from "@/router";
+import BaseInput from "@/components/UI/BaseInput.vue"
 
 const loginField = ref("")
 const passwordField = ref("")
@@ -57,20 +61,27 @@ const userStore = useUserStore()
 const loading = ref(false)
 const recaptchaTest = ref(false)
 
-async function onSubmit(data: { username: string, password: string }) {
+async function onSubmit() {
   loading.value = true
   try {
-    const response = await axios.post("/auth/login/", JSON.stringify(data))
+    const response = await axios.post("/auth/login/", {username: loginField.value, password: passwordField.value})
+    console.log(response)
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.access)
       userStore.isAuthenticated = true;
-      router.push('/main/dashboard')
+      await router.push('/main/dashboard')
       loading.value = false
     }
   } catch {
     loginAlert.value = true
     loading.value = false
   }
+}
+
+
+const updateLoginField = (event: HTMLInputElement) => {
+  // @ts-ignore
+  loginField.value = event.target.value
 }
 
 function testRobot(response: any) {
