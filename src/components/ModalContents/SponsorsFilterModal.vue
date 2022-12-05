@@ -23,7 +23,7 @@
       </h6>
       <div class="">
         <label for="10000">
-          <input id="10000" type="radio" value="1000000" name="moeny-amount">
+          <input id="10000" type="checkbox" value="1000000" name="moeny-amount">
           1000000
         </label>
       </div>
@@ -32,12 +32,20 @@
       <h6 class="text-xs uppercase font-medium">
         Sana
       </h6>
-      <input type="date" class="">
+      <input type="date" class="border border-[#B2B7C1] rounded-[5px] bg-[#E0E7FF33]">
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
-    <div class="">
-      <button>Tozalash</button>
-      <button>Natijalarini ko'rish</button>
+    <div class="flex justify-end gap-[16px] transition-all">
+      <button class="flex items-center  py-[9px] px-[32px] rounded-[5px] border border-[#B2B7C1] hover:bg-[#E7E7E7]">
+        <span class="mr-[4px]">
+          <img src="@/assets/icons/website/clean-modal.svg" alt="Eye white"></span>
+        <span class="text-sm text-[#B2B7C1]">Tozalash</span>
+      </button>
+      <button class="bg-[#3366FF] text-white flex items-center py-[9px] px-[32px] rounded-[5px] hover:bg-[#364575]">
+        <span class="mr-[20px]">
+          <img src="@/assets/icons/website/eye-white.svg" alt="Eye white"></span>
+        <span class="text-sm">Natijalarini ko'rish</span>
+      </button>
     </div>
   </section>
 </template>
