@@ -15,13 +15,24 @@
             display: none
         }
 
-        [v-cloak]::before {
-            content: "Loading Effect"
+        #loading {
+            display: none;
+            width: fit-content;
+            margin: 0 auto;
+            padding: 20% 0;
+        }
+
+        [v-cloak] + #loading {
+            display: block;
         }
     </style>
 </head>
 <body>
+<div id="modal"></div>
 <div id="app" v-cloak></div>
+<div id="loading">
+    <img src="../src/assets/images/website/loading.gif" alt="Loading..."/>
+</div>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

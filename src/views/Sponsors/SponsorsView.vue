@@ -3,7 +3,11 @@
     <div class="mx-auto ex-sm:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
 
-        <div class="" v-if="listOfSponsors.length > 0">
+        <div class="mx-auto"
+             v-if="listOfSponsors.length === 0 && !fetchError.error || sponsorStore.loading">
+          <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
+        </div>
+        <div class="" v-else-if="listOfSponsors.length > 0">
 
           <Table classes="w-full table-auto border-separate border-spacing-y-4">
             <template #thead>
@@ -54,10 +58,6 @@
                     text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
             <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
           </NotFound>
-        </div>
-        <div class="mx-auto"
-             v-else-if="listOfSponsors.length === 0 && !fetchError.error">
-          <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else>
           <p class="">{{ fetchError.message }}</p>
@@ -113,6 +113,9 @@ const sponsorListEnd = computed(() => (listOfSponsors.value.length >= size.value
 const sponsorStore = useSponsorStore()
 
 const fetchSponsorsData = async () => {
+  setTimeout(() => {
+    sponsorStore.loading = false
+  }, 400)
   try {
     const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
     if (response.status === 200) {

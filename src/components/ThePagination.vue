@@ -59,6 +59,7 @@
 <script setup lang="ts">
 import {computed, Ref, ref} from "vue";
 import {useRouter, useRoute} from "vue-router";
+import {useSponsorStore} from "@/store/useSponsorsStore";
 
 interface PaginationProps {
   count: number
@@ -70,23 +71,27 @@ const route = useRoute()
 const page = ref(+route.query.page! || 1)
 const pageSize: Ref<number> = ref(+route.query.size! || 15)
 const pageSizeLimits = ref([10, 15, 20, 25, 35, 40, 45, 50])
-
+const sponsorStore = useSponsorStore()
 const pagesSizeAmount = computed(() => {
   return Math.ceil(props.count / pageSize.value)
 })
 
 
 function selectPage(arg: number | string = 1) {
-  if (typeof arg === 'number') {
-    page.value = arg;
-  }
-  if (arg === 'previous') {
-    page.value--;
-  }
-  if (arg === 'next') {
-    page.value++
-  }
-  router.push({...route, query: {...route.query, page: page.value,}})
+  sponsorStore.loading = true
+  setTimeout(() => {
+    if (typeof arg === 'number') {
+      page.value = arg;
+    }
+    if (arg === 'previous') {
+      page.value--;
+    }
+    if (arg === 'next') {
+      page.value++
+    }
+    router.push({...route, query: {...route.query, page: page.value,}})
+    sponsorStore.loading = false
+  }, 400)
 }
 
 function selectPageSize(arg: any) {
