@@ -1,14 +1,20 @@
 <template>
   <label
-      class="main__wrapper flex border items-center bg-[#E8E8E8] bg-[#E0E7FF] rounded-[6px] p-[10px] min-w-[284px] max-h-[40px]"
+      class="main__wrapper relative flex items-center bg-[#E8E8E8] focus-within:bg-[#E0E7FF] items-center rounded-[6px] p-[10px] min-w-[284px] max-h-[40px]"
       id="filter">
     <img src="@/assets/icons/website/search.svg" alt="Search Icon"
          class="icon-filter w-[20px] h-[20px] mr-[8px]">
     <input id="filter" class="main-filter__input bg-transparent outline-0 text-[15px]"
            placeholder="Izlash" v-model="filters"/>
+    <span v-if="filters.length > 0 ">
+      <button class="absolute right-2 top-[24%]" @click="clearFilter">
+        <img src="@/assets/icons/website/close-icon.svg" class="w-[20px]" alt="close">
+      </button>
+    </span>
   </label>
-  <button class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px] hover:bg-[#E0E7FF]"
-          @click="sponsorStore.toggleFilterModal">
+  <button
+      class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px] hover:bg-[#E0E7FF]"
+      @click="sponsorStore.toggleFilterModal">
             <span
                 class="icon-filter mr-[20px] text-[13px] ">
             </span>
@@ -30,12 +36,15 @@ const setFilter = () => {
   router.push({path: "/main/sponsors", query: {...route.query, filters: filters.value}})
 }
 
+const clearFilter = () => {
+  filters.value = ""
+}
 
 watch(filters, async () => {
   sponsorStore.loading = true
   setTimeout(() => {
     setFilter()
     sponsorStore.loading = false
-  }, 800)
+  }, 400)
 })
 </script>

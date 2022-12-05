@@ -18,7 +18,6 @@
              alt="">
       </div>
     </div>
-    <simpleImg/>
   </section>
 </template>
 

@@ -10,13 +10,14 @@
     </template>
   </TheHeader>
 
-  <teleport to="#modal" v-if="sponsorStore.filterModalOpen">
-    <TheModal @close-modal="sponsorStore.toggleFilterModal"></TheModal>
-  </teleport>
 
   <main class="main py-[48px] custom:px-[120px] sm:px-[20px]">
     <router-view></router-view>
   </main>
+
+  <teleport to="#modal" v-if="sponsorStore.filterModalOpen">
+    <TheModal @close-modal="sponsorStore.toggleFilterModal"></TheModal>
+  </teleport>
 </template>
 
 <script setup lang="ts">
