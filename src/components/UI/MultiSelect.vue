@@ -18,8 +18,8 @@
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
-                 :id="option.id">
-          <label :for="option.id"
+                 :id="String(option.id)">
+          <label :for="String(option.id)"
                  class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
             <span>{{ option.label }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
@@ -40,8 +40,8 @@
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
-                 :id="option.id">
-          <label :for="option.id"
+                 :id="String(option.id)">
+          <label :for="String(option.id)"
                  class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] flex">
             <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
             <span class="text-[#2E5BFF]"> UZS</span>
@@ -62,12 +62,16 @@
 import {ref, watch} from "vue";
 import {useSponsors} from "@/composables/sponsors";
 
+type optionsType = {
+  label: string;
+  id: number;
+}
+
 interface BaseInputProps {
   classes?: string | [] | object;
   hint?: string;
-  id?: string;
   required?: boolean;
-  options: object[];
+  options: optionsType[];
   variant: number;
   inpType: string;
   resetValue: string[];
@@ -80,7 +84,7 @@ interface Emits {
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
-const value = ref<string[]>([])
+const value: any = ref([])
 const {numberWithSpaces} = useSponsors()
 
 

@@ -57,11 +57,16 @@
 </template>
 
 <script setup lang="ts">
-
-import {ref} from "vue";
+import {Ref, ref} from "vue";
 import MultiSelect from "@/components/UI/MultiSelect.vue"
 
-const applicationOptions = ref<object[]>([
+type optionsType = {
+  label: string;
+  id: number;
+}
+
+
+const applicationOptions: Ref<optionsType[]> = ref([
   {
     label: "barchasi",
     id: 86
@@ -84,7 +89,7 @@ const applicationOptions = ref<object[]>([
   }
 ])
 const selectedApplications = ref<string[]>([])
-const generousSums = ref<object[]>([
+const generousSums: any = ref<object[]>([
   {
     label: "Barchasi",
     id: 244122
@@ -114,7 +119,7 @@ const generousSums = ref<object[]>([
     id: 28859
   }
 ])
-const selectedSums = ref([])
+const selectedSums: any = ref([])
 const date = ref("")
 
 
