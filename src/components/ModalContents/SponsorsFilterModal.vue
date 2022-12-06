@@ -10,33 +10,39 @@
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
     <div class="mb-[28px]">
-      <h6 class="text-xs uppercase font-medium">
+      <h6 class="text-xs uppercase font-medium mb-[8px]">
         Ariza holati
       </h6>
-      <select name="" id="">
-        <option v-for="item in applicationStatuses" :value="item">{{ item }}</option>
-      </select>
+      <MultiSelect :options="applicationOptions" :variant="1" v-model="selectedApplications"
+                   inp-type="checkbox" :default-value="selectedApplications"></MultiSelect>
     </div>
     <div class="mb-[28px]">
-      <h6 class="text-xs uppercase font-medium">
+      <h6 class="text-xs uppercase font-medium mb-[16px]">
         Homiylik summasi
       </h6>
       <div class="">
-        <label for="10000">
-          <input id="10000" type="checkbox" value="1000000" name="moeny-amount">
-          1000000
-        </label>
+        <MultiSelect :options="generousSums" :variant="2" v-model="selectedSums"
+                     inp-type="checkbox" :default-value="selectedSums"></MultiSelect>
+        {{ selectedSums }}
       </div>
     </div>
     <div class="mb-[28px]">
-      <h6 class="text-xs uppercase font-medium">
+      <h6 class="text-xs uppercase font-medium mb-[8px]">
         Sana
       </h6>
-      <input type="date" class="border border-[#B2B7C1] rounded-[5px] bg-[#E0E7FF33]">
+      <input type="date"
+             class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] min-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
+             placeholder="jwlai"
+             v-model="date"
+      >
+      {{ date }}
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
     <div class="flex justify-end gap-[16px] transition-all">
-      <button class="flex items-center  py-[9px] px-[32px] rounded-[5px] border border-[#B2B7C1] hover:bg-[#E7E7E7]">
+      <button class="flex items-center  py-[9px] px-[32px] rounded-[5px] border border-[#B2B7C1] hover:bg-[#E7E7E7]"
+              @click="()=>{clearAll()
+              $forceUpdate}"
+      >
         <span class="mr-[4px]">
           <img src="@/assets/icons/website/clean-modal.svg" alt="Eye white"></span>
         <span class="text-sm text-[#B2B7C1]">Tozalash</span>
@@ -53,16 +59,68 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
+import MultiSelect from "@/components/UI/MultiSelect.vue"
+import {useSponsorStore} from "@/store/useSponsorsStore";
 
-const applicationStatuses = ref([
-  "barchasi",
-  "yangi",
-  "moderatsiyada",
-  "tasdiqlangan",
-  "bekor qilingan"
+const sponsorStore = useSponsorStore()
+const applicationOptions = ref<object[]>([
+  {
+    label: "barchasi",
+    id: 86
+  },
+  {
+    label: "yangi",
+    id: 89
+  },
+  {
+    label: "moderatsiyada",
+    id: 90
+  },
+  {
+    label: "tasdiqlangan",
+    id: 20
+  },
+  {
+    label: "bekor qilingan",
+    id: 18
+  }
 ])
-const generousSums = ref(["1000000", "5000000", "7000000", "7000000", "30000000", "50000000"])
+const selectedApplications = ref<string[]>([])
+const generousSums = ref<object[]>([
+  {
+    label: "1000000",
+    id: 1291820
+  },
+  {
+    label: "5000000",
+    id: 88331
+  },
+  {
+    label: "7000000",
+    id: 24357
+  },
+  {
+    label: "10000000",
+    id: 96884
+  },
+  {
+    label: "30000000",
+    id: 2995
+  },
+  {
+    label: "50000000",
+    id: 28859
+  }
+])
+const selectedSums = ref([])
 const date = ref("")
+
+
+function clearAll() {
+  sponsorStore.detailedApplicationsFilter = []
+  sponsorStore.detailedSumsFilter = []
+  date.value = ""
+}
 
 </script>
 

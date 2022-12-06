@@ -5,6 +5,8 @@ export const useSponsorStore = defineStore('useSponsorStore', () => {
     const loading = ref(true)
     const filterModalOpen = ref(false)
     const detailsModal = ref(false)
+    const detailedApplicationsFilter = ref([])
+    const detailedSumsFilter = ref([])
 
     function toggleDetailsModal() {
         detailsModal.value = !detailsModal.value
@@ -14,5 +16,8 @@ export const useSponsorStore = defineStore('useSponsorStore', () => {
         filterModalOpen.value = !filterModalOpen.value
     }
 
-    return {loading, filterModalOpen, detailsModal, toggleDetailsModal, toggleFilterModal}
+    return {
+        loading, filterModalOpen, detailsModal, toggleDetailsModal,
+        toggleFilterModal, detailedApplicationsFilter, detailedSumsFilter
+    }
 })
