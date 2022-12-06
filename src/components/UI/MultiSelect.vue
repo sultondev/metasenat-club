@@ -12,18 +12,18 @@
           v-if="isDropdownOpen">
       <ul class="multiselect-list w-full">
         <li class="multiselect-list__item w-full"
-            :class="{activeBg: sponsorStore.detailedApplicationsFilter.includes(option.label)}"
+            :class="{activeBg: value.includes(option.label)}"
             v-for="(option, idx) in options">
           <input type="checkbox" :value="option.label"
                  class="hidden multiselect-label__box appearance-none"
-                 v-model="sponsorStore.detailedApplicationsFilter"
+                 v-model="value"
                  name="item"
                  :id="option.id">
           <label :for="option.id"
                  class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
             <span>{{ option.label }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-                 v-show="sponsorStore.detailedApplicationsFilter.includes(option.label)">
+                 v-show="value.includes(option.label)">
           </label>
         </li>
       </ul>
@@ -34,11 +34,11 @@
     <form @submit.prevent class="">
       <ul class="grid grid-cols-4 gap-[12px]">
         <li class="relative max-w-[124px] border-[2px] border-[#E0E7FF] rounded-[5px]"
-            :class="{'border-[2px] border-[#2E5BFF]': sponsorStore.detailedSumsFilter.includes(option.label)}"
+            :class="{'border-[2px] border-[#2E5BFF]': value.includes(option.label)}"
             v-for="(option, idx) in options">
           <input type="checkbox" :value="option.label"
                  class="hidden multiselect-label__box appearance-none"
-                 v-model="sponsorStore.detailedSumsFilter"
+                 v-model="value"
                  name="item"
                  :id="option.id">
           <label :for="option.id"
@@ -48,7 +48,7 @@
           </label>
           <span class="absolute -top-2 -right-2">
           <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-               v-show="sponsorStore.detailedSumsFilter.includes(option.label)">
+               v-show="value.includes(option.label)">
           </span>
         </li>
       </ul>
@@ -61,8 +61,6 @@
 
 import {ref, watch} from "vue";
 import {useSponsors} from "@/composables/sponsors";
-import {useSponsorStore} from "@/store/useSponsorsStore";
-
 
 interface BaseInputProps {
   classes?: string | [] | object;
@@ -72,7 +70,7 @@ interface BaseInputProps {
   options: object[];
   variant: number;
   inpType: string;
-  defaultValue: string[];
+  resetValue: string[];
 }
 
 interface Emits {
@@ -83,7 +81,6 @@ const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
 const value = ref<string[]>([])
-const sponsorStore = useSponsorStore()
 const {numberWithSpaces} = useSponsors()
 
 
@@ -93,6 +90,10 @@ const toggleDropdown = () => {
 
 watch(() => value.value, () => {
   emit("update:modelValue", value.value)
+})
+
+watch(() => props.resetValue, () => {
+  value.value = props.resetValue
 })
 </script>
 

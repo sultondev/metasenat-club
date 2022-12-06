@@ -14,7 +14,7 @@
         Ariza holati
       </h6>
       <MultiSelect :options="applicationOptions" :variant="1" v-model="selectedApplications"
-                   inp-type="checkbox" :default-value="selectedApplications"></MultiSelect>
+                   inp-type="checkbox" :reset-value="selectedApplications"></MultiSelect>
     </div>
     <div class="mb-[28px]">
       <h6 class="text-xs uppercase font-medium mb-[16px]">
@@ -22,7 +22,7 @@
       </h6>
       <div class="">
         <MultiSelect :options="generousSums" :variant="2" v-model="selectedSums"
-                     inp-type="checkbox" :default-value="selectedSums"></MultiSelect>
+                     inp-type="checkbox" :reset-value="selectedSums"></MultiSelect>
         {{ selectedSums }}
       </div>
     </div>
@@ -60,9 +60,7 @@
 
 import {ref} from "vue";
 import MultiSelect from "@/components/UI/MultiSelect.vue"
-import {useSponsorStore} from "@/store/useSponsorsStore";
 
-const sponsorStore = useSponsorStore()
 const applicationOptions = ref<object[]>([
   {
     label: "barchasi",
@@ -87,6 +85,10 @@ const applicationOptions = ref<object[]>([
 ])
 const selectedApplications = ref<string[]>([])
 const generousSums = ref<object[]>([
+  {
+    label: "Barchasi",
+    id: 244122
+  },
   {
     label: "1000000",
     id: 1291820
@@ -117,8 +119,8 @@ const date = ref("")
 
 
 function clearAll() {
-  sponsorStore.detailedApplicationsFilter = []
-  sponsorStore.detailedSumsFilter = []
+  selectedSums.value = []
+  selectedApplications.value = []
   date.value = ""
 }
 
