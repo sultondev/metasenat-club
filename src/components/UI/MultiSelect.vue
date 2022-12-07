@@ -21,7 +21,7 @@
                  :id="String(option.id)">
           <label :for="String(option.id)"
                  class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
-            <span>{{ option.label }}</span>
+            <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
                  v-show="value.includes(option.label)">
           </label>
@@ -33,6 +33,22 @@
   <div class="relative" v-else-if="variant === 2">
     <form @submit.prevent class="">
       <ul class="grid grid-cols-4 gap-[12px]">
+        <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded-[5px]"
+            :class="{'border-[2px] !border-[#2E5BFF]': value.includes('barchasi')}">
+          <input type="checkbox" value="barchasi"
+                 class="hidden multiselect-label__box appearance-none"
+                 v-model="value"
+                 name="item"
+                 id="all">
+          <label for="all"
+                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center">
+            Barchasi
+          </label>
+          <span class="absolute -top-2 -right-2">
+          <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
+               v-show="value.includes('barchasi')">
+          </span>
+        </li>
         <li class="relative max-w-[124px] border-[2px] border-[#E0E7FF] rounded-[5px]"
             :class="{'border-[2px] border-[#2E5BFF]': value.includes(option.label)}"
             v-for="(option, idx) in options">
@@ -85,7 +101,7 @@ const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
 const value: any = ref([])
-const {numberWithSpaces} = useSponsors()
+const {numberWithSpaces, titleCase} = useSponsors()
 
 
 const toggleDropdown = () => {

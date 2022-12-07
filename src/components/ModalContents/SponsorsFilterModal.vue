@@ -23,7 +23,6 @@
       <div class="">
         <MultiSelect :options="generousSums" :variant="2" v-model="selectedSums"
                      inp-type="checkbox" :reset-value="selectedSums"></MultiSelect>
-        {{ selectedSums }}
       </div>
     </div>
     <div class="mb-[28px]">
@@ -35,13 +34,11 @@
              placeholder="jwlai"
              v-model="date"
       >
-      {{ date }}
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
     <div class="flex justify-end gap-[16px] transition-all">
       <button class="flex items-center  py-[9px] px-[32px] rounded-[5px] border border-[#B2B7C1] hover:bg-[#E7E7E7]"
-              @click="()=>{clearAll()
-              $forceUpdate}"
+              @click="clearAll"
       >
         <span class="mr-[4px]">
           <img src="@/assets/icons/website/clean-modal.svg" alt="Eye white"></span>
@@ -90,10 +87,6 @@ const applicationOptions: Ref<optionsType[]> = ref([
 ])
 const selectedApplications = ref<string[]>([])
 const generousSums: any = ref<object[]>([
-  {
-    label: "Barchasi",
-    id: 244122
-  },
   {
     label: "1000000",
     id: 1291820

@@ -1,7 +1,7 @@
 <template>
-
-  <TheNavbar></TheNavbar>
-  <TheHeader>
+  <TheHeader
+      left-classes="flex items-center overflow-hidden box-content rounded-[6px] text-[12px] border-[2px] border-[#E0E7FF]"
+      right-classes="flex gap-[20px] items-center">
     <template #left>
       <HeaderTablet/>
     </template>

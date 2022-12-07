@@ -1,9 +1,11 @@
 <template>
+  <TheNavbar></TheNavbar>
   <router-view></router-view>
 </template>
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
+import TheNavbar from "@/components/TheNavbar.vue"
 
 const userStore = useUserStore()
 userStore.Init()

@@ -12,6 +12,10 @@ export function useSponsors() {
         return undefined
     }
 
+    function titleCase(arg: string) {
+        return arg[0].toUpperCase() + arg.slice(1, -1)
+    }
+
     const statusColor = (value: string) => {
         value = value.toLowerCase();
         if (value === 'yangi') return '!text-dodgerblue';
@@ -21,5 +25,5 @@ export function useSponsors() {
         return '';
     }
 
-    return {formatDateTime, numberWithSpaces, statusColor};
+    return {formatDateTime, numberWithSpaces, statusColor, titleCase};
 }

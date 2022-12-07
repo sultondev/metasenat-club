@@ -36,13 +36,12 @@ const router = createRouter({
             component: MainView,
             children: [
                 {
-                    path: "sponsors",
+                    path: "/main/sponsors",
                     component: SponsorsView,
                     name: "sponsors-list",
                     meta: {
                         requiresAuth: true
                     },
-
                 },
                 {
                     path: "dashboard",
@@ -66,8 +65,7 @@ const router = createRouter({
                 requiresAuth: true
             },
             beforeEnter: guardAuth
-        },
-        {
+        }, {
             path: "/main/sponsors/:id",
             component: SponsorDetails,
             name: "sponsor-details",
