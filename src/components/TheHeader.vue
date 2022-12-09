@@ -1,5 +1,5 @@
 <template>
-  <section class="sect-main py-[24px] xl:max-h-[88px] custom:px-[120px] sm:px-[20px] bg-white" v-cloak>
+  <section class="sect-main py-[24px]  custom:px-[120px] sm:px-[20px] bg-white" v-cloak>
     <div class="container mx-auto ">
       <ul class="flex xl:justify-between xl:items-center xl:flex-row md:flex-col md:items-start gap-[24px]">
         <li :class="leftClasses">

@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized} from "vue-router"
 import WelcomeView from "@/views/WelcomeView.vue"
-import LoginView from "@/views/LoginView.vue"
+import LoginView from "@/views/Auth/LoginView.vue"
+import RegistrationView from "@/views/Auth/RegistrationView.vue"
 import DashboardView from "@/views/DashboardView.vue"
 import MainView from "@/views/MainView.vue"
 import SponsorsView from "@/views/Sponsors/SponsorsView.vue"
@@ -29,6 +30,11 @@ const router = createRouter({
             meta: {
                 requiresGuest: true
             }
+        },
+        {
+            path: "/registration",
+            name: "Registration",
+            component: RegistrationView,
         },
         {
             path: "/main",

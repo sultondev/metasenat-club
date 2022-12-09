@@ -1,5 +1,5 @@
 <template>
-  <input :type="inpType" class="w-full text-[15px] py-[8px]" minlength="2" :required="required" :id="id"
+  <input :type="inpType??'text'" class="w-full text-[15px] py-[8px]" minlength="2" :required="required ?? true" :id="id"
          :class="classes"
          :placeholder="hint"
          v-model="value"/>
@@ -15,7 +15,7 @@ interface BaseInputProps {
   hint?: string;
   id?: string;
   required?: boolean;
-  inpType: string;
+  inpType?: string;
 }
 
 interface Emits {

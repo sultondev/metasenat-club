@@ -14,13 +14,13 @@
         </p>
         <div class="flex flex-col gap-[22px]">
           <div class="flex flex-col">
-            <label for="login" class="font-medium text-[12px] mb-[8px]">LOGIN</label>
-            <BaseInput v-model="loginField" inp-type="text"
-                       classes="border  border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
-                       hint="login kiriting"
-                       id="login"
-                       :required="true"
-            />
+            <BaseFormGroup id="login" label-title="LOGIN" label-classes="mb-[8px]">
+              <BaseInput v-model="loginField"
+                         classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
+                         id="login"
+                         hint="adm8904"
+              />
+            </BaseFormGroup>
           </div>
           <div class="flex flex-col">
             <label for="password" class="font-medium text-[12px] mb-[8px]">PAROL</label>
@@ -52,6 +52,7 @@ import {VueRecaptcha} from "vue-recaptcha";
 import {useUserStore} from "@/store/userStore";
 import router from "@/router";
 import BaseInput from "@/components/UI/BaseInput.vue"
+import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 
 const loginField = ref("")
 const passwordField = ref("")

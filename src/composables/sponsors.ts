@@ -1,3 +1,5 @@
+import {fetchData} from "@/plugins/axios";
+
 export function useSponsors() {
     function formatDateTime(arg: string) {
         const [year, month, day] = arg.slice(0, 10).split('-').join('-').split('-');
@@ -16,6 +18,10 @@ export function useSponsors() {
         return arg[0].toUpperCase() + arg.slice(1, -1)
     }
 
+    function fetchUserById(id: any) {
+        return fetchData(`/sponsor-detail/${id}/`)
+    }
+
     const statusColor = (value: string) => {
         value = value.toLowerCase();
         if (value === 'yangi') return '!text-dodgerblue';
@@ -25,5 +31,5 @@ export function useSponsors() {
         return '';
     }
 
-    return {formatDateTime, numberWithSpaces, statusColor, titleCase};
+    return {formatDateTime, numberWithSpaces, statusColor, titleCase, fetchUserById};
 }

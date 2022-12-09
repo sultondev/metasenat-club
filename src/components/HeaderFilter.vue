@@ -41,10 +41,12 @@ const clearFilter = () => {
 }
 
 watch(filters, async () => {
-  sponsorStore.loading = true
-  setTimeout(() => {
-    setFilter()
-    sponsorStore.loading = false
-  }, 400)
+  if (route.name === 'sponsors-list') {
+    sponsorStore.loading = true
+    setTimeout(() => {
+      setFilter()
+      sponsorStore.loading = false
+    }, 400)
+  }
 })
 </script>

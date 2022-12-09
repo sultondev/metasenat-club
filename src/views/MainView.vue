@@ -29,7 +29,7 @@ import TheHeader from "@/components/TheHeader.vue"
 import HeaderTablet from "@/components/HeaderTablet.vue"
 import HeaderFilter from "@/components/HeaderFilter.vue"
 import TheModal from "@/components/UI/TheModal.vue"
-import SponsorsFilterModal from "@/components/ModalContents/SponsorsFilterModal.vue"
+import SponsorsFilterModal from "@/components/ModalContents/Sponsors/SponsorsFilterModal.vue"
 import {useSponsorStore} from "@/store/useSponsorsStore";
 
 const sponsorStore = useSponsorStore()

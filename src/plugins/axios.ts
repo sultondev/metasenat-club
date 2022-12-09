@@ -26,7 +26,7 @@ export const publicApi = axios.create({..._BASE_CONFIG});
 export async function fetchData(url: string) {
     const request = await publicApi.get(url)
     try {
-        if (request) {
+        if (request.status === 200) {
             return request
         }
     } catch (error) {

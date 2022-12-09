@@ -1,5 +1,5 @@
 <template>
-  <header class="header py-[12px] px-[120px]  bg-white" v-if="userStore.isAuthenticated">
+  <header class="header py-[12px] custom:px-[120px] sm:px-[20px]  bg-white" v-if="userStore.isAuthenticated">
     <div class="container mx-auto ">
       <nav class="nav ">
         <ul class="nav-list flex justify-between">
@@ -35,6 +35,10 @@ const userStore = useUserStore();
 <style>
 
 .nav-active {
+  background: none;
+}
+
+.nav-active:hover {
   background: none;
 }
 
