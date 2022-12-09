@@ -13,9 +13,7 @@
         Loading...
       </div>
       <div class="mx-auto">
-        <img src="@/assets/images/dashboard/chart.svg"
-             class="w-full object-cover 2xl:min-h-[420px] 3xl:min-h-[520px] xl:min-w-[1200px] xl:h-[402px] "
-             alt="">
+        <DashboardChart></DashboardChart>
       </div>
     </div>
   </section>
@@ -24,6 +22,7 @@
 <script setup lang="ts">
 import {computed, inject, Ref, ref} from "vue";
 import DashboardBanner from "@/components/UI/DashboardBanner.vue"
+import DashboardChart from "@/components/DashboardChart.vue"
 
 type fieldsType = {
   total_must_pay?: number
@@ -62,7 +61,6 @@ async function fetchData(url: string) {
   const response = await axios.get(url)
   if (response.status === 200) {
     dashboardFields.value = response.data;
-    console.log(response, dashboardFields.value)
     loading.value = false
   }
 }

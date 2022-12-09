@@ -121,7 +121,6 @@ const fetchSponsorsData = async () => {
   try {
     const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
     if (response.status === 200) {
-      console.log(response)
       totalCount.value = response.data.count
       listOfSponsors.value = response.data.results
     }
@@ -148,8 +147,6 @@ const filterSponsorsByName = computed(() => {
 
 onMounted(async () => {
   await fetchSponsorsData()
-  console.log("filter ", filterSponsorsByName.value)
-  console.log("List of", listOfSponsors.value)
 })
 
 
