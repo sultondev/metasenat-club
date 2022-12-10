@@ -1,7 +1,7 @@
 <template>
   <section class="welcome" v-cloak>
     <div class="bg-white absolute xl:w-[60%] ex-sm:w-full h-screen -z-10"></div>
-    <div class="custom:px-[120px] sm:px-[80px] py-[48px]">
+    <div class="custom:px-[120px] sm:px-[60px] py-[48px]">
       <div class="flex xl:justify-between ex-sm:justify-center">
         <div class="">
           <SendApplication></SendApplication>
@@ -21,7 +21,7 @@
           </div>
           <div class="">
             <div class="flex items-center gap-[16px]">
-              <img src="@/assets/images/website/president-picture.jpg" class="w-20 h-20 object-cover rounded-[16px]"
+              <img src="@/assets/images/website/president-picture.jpg" class="w-16 h-16 object-cover rounded-[16px]"
                    alt="">
               <div class="">
                 <h6 class="text-xl font-medium">

@@ -1,5 +1,5 @@
 <template>
-  <header class="header py-[12px] custom:px-[120px] sm:px-[20px]  bg-white"
+  <header class="header py-[12px] custom:px-[120px] sm:px-[20px] relative bg-white"
           v-if="this.$route.name !== '/login'"
   >
     <div class="container mx-auto ">

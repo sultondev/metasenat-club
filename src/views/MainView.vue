@@ -35,18 +35,7 @@ import {useSponsorStore} from "@/store/useSponsorsStore";
 const sponsorStore = useSponsorStore()
 </script>
 
-<style>
-
-
-.router-link-active {
-  background-color: #3366FF;
-  color: #fff;
-  transition: all 0.3s;
-}
-
-.router-link-active:hover {
-  background: #3366FF;
-}
+<style scoped>
 
 
 </style>

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import Tablet from "@/components/UI/InputTablets.vue";
+import Tablet from "@/components/UI/Tablets.vue";
 import {ref} from "vue";
 
 const tablets = ref([
@@ -22,3 +22,7 @@ const tablets = ref([
 ])
 
 </script>
+
+<style scoped>
+
+</style>

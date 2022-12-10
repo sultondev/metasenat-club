@@ -12,7 +12,7 @@
           v-if="isDropdownOpen">
       <ul class="multiselect-list w-full">
         <li class="multiselect-list__item w-full"
-            :class="{activeBg: value.includes(option.label)}"
+            :class="{activeBg: value === option.label}"
             v-for="(option, idx) in options">
           <input type="checkbox" :value="option.label"
                  class="hidden multiselect-label__box appearance-none"
@@ -102,7 +102,7 @@ interface Emits {
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
-const value: any = ref()
+const value: any = ref("")
 const {numberWithSpaces, titleCase} = useSponsors()
 
 
