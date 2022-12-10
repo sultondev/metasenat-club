@@ -1,9 +1,9 @@
 <template>
-  <Tablet :tablets="tablets"></Tablet>
+  <Tablet :tablets="tablets" :variant="1"></Tablet>
 </template>
 
 <script setup lang="ts">
-import Tablet from "@/components/UI/Tablet.vue";
+import Tablet from "@/components/UI/InputTablets.vue";
 import {ref} from "vue";
 
 const tablets = ref([

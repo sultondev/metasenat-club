@@ -14,7 +14,7 @@
         Ariza holati
       </h6>
       <MultiSelect :options="applicationOptions" :variant="1" v-model="selectedApplications"
-                   inp-type="checkbox" :reset-value="selectedApplications"></MultiSelect>
+                   inp-type="checkbox" :reset-value="selectedApplications" :hide-all="true"></MultiSelect>
     </div>
     <div class="mb-[28px]">
       <h6 class="text-xs uppercase font-medium mb-[16px]">

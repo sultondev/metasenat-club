@@ -33,26 +33,10 @@
   <div class="relative" v-else-if="variant === 2">
     <form @submit.prevent class="">
       <ul class="grid grid-cols-4 gap-[12px]">
-        <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded-[5px]" v-if="hideAll"
-            :class="{'border-[2px] !border-[#2E5BFF]': value.includes('barchasi')}">
-          <input type="checkbox" value="barchasi"
-                 class="hidden multiselect-label__box appearance-none"
-                 v-model="value"
-                 name="item"
-                 id="all">
-          <label for="all"
-                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center">
-            Barchasi
-          </label>
-          <span class="absolute -top-2 -right-2">
-          <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-               v-show="value.includes('barchasi')">
-          </span>
-        </li>
         <li class="relative max-w-[124px] border-[2px] border-[#E0E7FF] rounded-[5px]"
-            :class="{'border-[2px] border-[#2E5BFF]': value.includes(option.label)}"
+            :class="{'border-[2px] border-[#2E5BFF]': value === option.label}"
             v-for="(option, idx) in options">
-          <input type="checkbox" :value="option.label"
+          <input type="radio" :value="option.label"
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
@@ -64,12 +48,12 @@
           </label>
           <span class="absolute -top-2 -right-2">
           <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-               v-show="value.includes(option.label)">
+               v-show="value === option.label">
           </span>
         </li>
         <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded-[5px]" v-if="additional"
-            :class="{'border-[2px] !border-[#2E5BFF]': value.includes('boshqa')}">
-          <input type="checkbox" value="barchasi"
+            :class="{'border-[2px] !border-[#2E5BFF]': value === 'boshqa'}">
+          <input type="radio" value="boshqa"
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
@@ -80,7 +64,7 @@
           </label>
           <span class="absolute -top-2 -right-2">
           <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-               v-show="value.includes('boshqa')">
+               v-show="value ==='boshqa'">
           </span>
         </li>
       </ul>
@@ -118,7 +102,7 @@ interface Emits {
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
-const value: any = ref([])
+const value: any = ref()
 const {numberWithSpaces, titleCase} = useSponsors()
 
 
@@ -158,32 +142,3 @@ watch(() => props.resetValue, () => {
 }
 
 </style>
-
-<!--<template>-->
-<!--  <input type="text" v-model="mValue" :placeholder="placeholder" :class="classes" :id="props.id">-->
-<!--</template>-->
-
-<!--<script setup lang="ts">-->
-<!--import {ref, watch} from "vue";-->
-
-<!--interface Props {-->
-<!--  modelValue: any;-->
-<!--  placeholder?: string;-->
-<!--  classes: string;-->
-<!--  id: string-->
-<!--}-->
-
-<!--interface Emits {-->
-<!--  (e: "update:modelValue", value: string): void-->
-<!--}-->
-
-<!--const props = defineProps<Props>()-->
-<!--const emit = defineEmits<Emits>()-->
-
-<!--const mValue = ref(props.modelValue)-->
-
-<!--watch(() => mValue.value, () => {-->
-<!--  emit("update:modelValue", mValue.value)-->
-<!--})-->
-
-<!--</script>-->

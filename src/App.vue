@@ -18,6 +18,12 @@ body {
   background: #F5F5F7;
 }
 
+#app {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
 * {
   padding: 0;
   margin: 0;

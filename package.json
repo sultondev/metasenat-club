@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "apexcharts": "3.35.4",
+    "apexcharts": "^3.35.4",
     "axios": "^1.2.0",
     "pinia": "^2.0.26",
     "vue": "^3.2.41",

@@ -22,7 +22,15 @@ const chartOptions = ref({
   },
   colors: ['#FF92AE', '#4C6FFF'],
   dataLabels: {
-    enabled: false
+    enabled: false,
+    dropShadow: {
+      enabled: false,
+      top: 1,
+      left: 1,
+      blur: 1,
+      color: '#000',
+      opacity: 0.45
+    }
   },
   title: {
     text: 'Homiylar va talabalar soni',
@@ -59,6 +67,11 @@ const chartOptions = ref({
     style: {
       color: '#B2B7C1'
     }
+  },
+  fill: {
+    opacity: 0,
+    type: 'solid',
+    colors: undefined
   },
   tooltip: {
     // @ts-ignore
@@ -129,7 +142,12 @@ const chartOptions = ref({
     }
   },
   dropShadow: {
-    enabled: false
+    enabled: true,
+    top: 0,
+    left: 0,
+    blur: 3,
+    opacity: 0.5,
+    color: 'yellow'
   }
 
 })

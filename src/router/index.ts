@@ -8,6 +8,7 @@ import SponsorsView from "@/views/Sponsors/SponsorsView.vue"
 import SponsorDetails from "@/views/Sponsors/SponsorDetails.vue"
 import StudentsView from "@/views/StudentsView.vue"
 import PageNotFound from "@/views/PageNotFound.vue"
+import TestView from "@/views/TestView.vue"
 import {useUserStore} from "@/store/userStore";
 
 
@@ -30,6 +31,11 @@ const router = createRouter({
             meta: {
                 requiresGuest: true
             }
+        },
+        {
+            path: "/test",
+            name: 'Test',
+            component: TestView,
         },
         {
             path: "/registration",

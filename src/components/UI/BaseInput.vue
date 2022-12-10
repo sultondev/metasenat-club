@@ -6,16 +6,14 @@
 </template>
 
 <script setup lang="ts">
-
-
 import {ref, watch} from "vue";
 
 interface BaseInputProps {
-  classes?: string | [] | object;
+  classes?: string | [] | object
   hint?: string;
   id?: string;
-  required?: boolean;
-  inpType?: string;
+  required?: boolean
+  inpType?: string
 }
 
 interface Emits {
