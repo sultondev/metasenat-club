@@ -47,6 +47,12 @@ watch(filters, async () => {
       setFilter()
       sponsorStore.loading = false
     }, 400)
+  } else if (route.name === 'students-list') {
+    sponsorStore.loading = true
+    setTimeout(() => {
+      setFilter()
+      sponsorStore.loading = false
+    }, 400)
   }
 })
 </script>

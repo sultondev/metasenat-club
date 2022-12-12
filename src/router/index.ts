@@ -6,7 +6,8 @@ import DashboardView from "@/views/DashboardView.vue"
 import MainView from "@/views/MainView.vue"
 import SponsorsView from "@/views/Sponsors/SponsorsView.vue"
 import SponsorDetails from "@/views/Sponsors/SponsorDetails.vue"
-import StudentsView from "@/views/StudentsView.vue"
+import StudentsView from "@/views/Students/StudentsView.vue"
+import StudentDetails from "@/views/Students/StudentDetails.vue"
 import PageNotFound from "@/views/PageNotFound.vue"
 import {useUserStore} from "@/store/userStore";
 
@@ -42,7 +43,7 @@ const router = createRouter({
             component: MainView,
             children: [
                 {
-                    path: "/main/sponsors",
+                    path: "sponsors",
                     component: SponsorsView,
                     name: "sponsors-list",
                     meta: {
@@ -51,7 +52,6 @@ const router = createRouter({
                 },
                 {
                     path: "dashboard",
-                    props: true,
                     component: DashboardView,
                     meta: {
                         requiresAuth: true,
@@ -61,6 +61,7 @@ const router = createRouter({
                 {
                     path: "students",
                     component: StudentsView,
+                    name: "students-list",
                     meta: {
                         requiresAuth: true
                     },
@@ -78,7 +79,6 @@ const router = createRouter({
             meta: {
                 requiresAuth: true
             },
-            props: true
         },
         {path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound},
     ],
