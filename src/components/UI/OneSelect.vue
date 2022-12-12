@@ -22,8 +22,8 @@
           <label :for="String(option.id)"
                  class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
             <span>{{ titleCase(option.label) }}</span>
-            <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-                 v-show="value.includes(option.label)">
+            <img src="@/assets/icons/website/checked-icon.svg" alt="Checked icon"
+                 v-show="value === option.label">
           </label>
         </li>
       </ul>
@@ -78,7 +78,7 @@
 <script setup lang="ts">
 
 
-import {ref, watch} from "vue";
+import {Ref, ref, watch} from "vue";
 import {useSponsors} from "@/composables/sponsors";
 
 type optionsType = {
@@ -92,15 +92,16 @@ interface BaseInputProps {
   classes?: string | [] | object;
   labelClasses?: string | [] | object;
   hint?: string;
-  resetValue?: string[];
+  resetValue?: string;
   required?: boolean;
   inpType?: string;
   hideAll?: boolean;
   additional?: boolean
+  defaultValue?: string
 }
 
 interface Emits {
-  (e: "update:modelValue", val: string[]): void
+  (e: "update:modelValue", val: string): void
 }
 
 const props = defineProps<BaseInputProps>()
@@ -121,6 +122,11 @@ watch(() => value.value, () => {
 watch(() => props.resetValue, () => {
   value.value = props.resetValue
 })
+
+if (props.defaultValue) {
+  value.value = props.defaultValue
+  emit("update:modelValue", value.value)
+}
 
 </script>
 

@@ -18,13 +18,13 @@
       </div>
       <div>
         <BaseFormGroup id="phoneNumber" label-title="Telefon raqamingiz" label-classes="block text-xs mb-2 uppercase">
-          <BaseInput v-model="application.phoneNumber" id="phoneNumber"
+          <BaseInput v-model="application.phoneNumber" id="phoneNumber" inp-type="text"
                      class="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
                      hint="+998 00 000-00-00"
-                     v-maska:[inputTelMaskOpt]
+                     v-maska:[masks.tel]
                      default-value="+998"
                      :required="true"
-                     :min-len="10"
+                     minlength="14"
           />
         </BaseFormGroup>
       </div>
@@ -32,6 +32,7 @@
         <BaseFormGroup id="none" label-title="To‘lov summasi" label-classes="block text-xs mb-3 uppercase">
           <OneSelect v-model="application.sums" :variant="2" :hide-all="false"
                      :options="generousSums" :additional="true"
+                     default-value="1000000"
                      label-classes="select-none py-5 px-9 cursor-pointer hover:bg-[#E0E7FF] transition-all ease-linear overflow-hidden"></OneSelect>
         </BaseFormGroup>
       </div>
@@ -78,12 +79,11 @@ import InputTablets from "@/components/UI/InputTablets.vue"
 import {reactive} from "vue"
 import {vMaska} from "maska"
 
-const inputTelMaskOpt: any = reactive({
-  mask: "+99 8 ## ###-##-##",
-})
 
-const inputSumMaskOpt: any = ref({
-  mask: "## ### ###"
+const masks = reactive({
+  tel: {
+    mask: "+99 8 ## ###-##-##",
+  }
 })
 
 

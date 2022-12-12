@@ -1,7 +1,7 @@
 <template>
   <section class="welcome" v-cloak>
     <div class="bg-white absolute xl:w-[56%] ex-sm:w-full xl:h-screen ex-sm:h-full -z-10"></div>
-    <div class="max-w-[1200px] mx-auto py-[48px]">
+    <div class="container mx-auto py-[48px] px-16">
       <div
           class="flex justify-between xl:flex-row xl:items-start ex-sm:flex-col-reverse ex-sm:items-center">
         <div class="xl:mx-0 xl:my-0 ex-sm:my-10 min-w-[586px]">

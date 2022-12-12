@@ -2,7 +2,7 @@
   <header class="header py-[12px] relative bg-white xl:px-0 ex-sm:px-6"
           v-if="$route.name !== '/login'"
   >
-    <div class="mx-auto max-w-[1200px] mx-auto">
+    <div class="container px-16 mx-auto">
       <nav class="nav ">
         <ul class="nav-list flex justify-between">
           <li class="nav-list__item flex items-center">

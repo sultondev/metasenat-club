@@ -135,11 +135,10 @@ const fetchSponsorsData = async () => {
 
 const filterSponsorsByName = computed(() => {
   if (filters.value.length > 0) {
-    const filtered = listOfSponsors.value.filter((item: sponsorsListType) => {
+    return listOfSponsors.value.filter((item: sponsorsListType) => {
       const lowVer = item.full_name.toLowerCase()
       return lowVer.includes(filters.value.toLowerCase())
     })
-    return filtered
   } else {
     return listOfSponsors.value
   }
