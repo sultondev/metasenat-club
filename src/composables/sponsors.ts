@@ -11,7 +11,7 @@ export function useSponsors() {
         if (!isNaN(Number(x))) {
             return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         }
-        return undefined
+        return false
     }
 
     function titleCase(arg: string) {

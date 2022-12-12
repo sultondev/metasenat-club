@@ -39,7 +39,8 @@ const bannerList = computed(() => [
     imgPath: "money-1",
     sums: dashboardFields.value.total_paid,
     currency: "UZS",
-    bgClr: "ban1"
+    bgClr: "ban1",
+    icon: 'bg-red'
   },
   {
     text: "Jami so‘ralgan summa",

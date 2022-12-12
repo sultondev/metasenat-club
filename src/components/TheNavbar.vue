@@ -1,8 +1,8 @@
 <template>
-  <header class="header py-[12px] custom:px-[120px] sm:px-[20px] relative bg-white"
-          v-if="this.$route.name !== '/login'"
+  <header class="header py-[12px] relative bg-white xl:px-0 ex-sm:px-6"
+          v-if="$route.name !== '/login'"
   >
-    <div class="container mx-auto ">
+    <div class="mx-auto max-w-[1200px] mx-auto">
       <nav class="nav ">
         <ul class="nav-list flex justify-between">
           <li class="nav-list__item flex items-center">

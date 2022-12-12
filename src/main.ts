@@ -10,7 +10,6 @@ import ApexCharts from 'apexcharts';
 const app = createApp(App)
 const pinia = createPinia()
 app.config.globalProperties.$apexcharts = ApexCharts;
-
 app.use(pinia)
 app.use(router)
 app.use(VueApexCharts)

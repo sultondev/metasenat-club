@@ -4,9 +4,15 @@
 
 <script setup lang="ts">
 import Tablet from "@/components/UI/Tablets.vue";
-import {ref} from "vue";
+import {Ref, ref} from "vue";
 
-const tablets = ref([
+
+type TabletObj = {
+  title: string,
+  link: string
+}
+
+const tablets: Ref<TabletObj[]> = ref([
   {
     title: "dashboard",
     link: "/main/dashboard",

@@ -1,17 +1,19 @@
 <template>
   <section class="welcome" v-cloak>
-    <div class="bg-white absolute xl:w-[60%] ex-sm:w-full h-screen -z-10"></div>
-    <div class="custom:px-[120px] sm:px-[60px] py-[48px]">
-      <div class="flex xl:justify-between ex-sm:justify-center">
-        <div class="">
+    <div class="bg-white absolute xl:w-[56%] ex-sm:w-full xl:h-screen ex-sm:h-full -z-10"></div>
+    <div class="max-w-[1200px] mx-auto py-[48px]">
+      <div
+          class="flex justify-between xl:flex-row xl:items-start ex-sm:flex-col-reverse ex-sm:items-center">
+        <div class="xl:mx-0 xl:my-0 ex-sm:my-10 min-w-[586px]">
           <SendApplication></SendApplication>
         </div>
-        <div class="xl:block ex-sm:hidden">
+        <div class="xl:block ">
           <div class="relative mb-[24px]">
-            <div class="absolute -z-10 -left-6 -top-2">
+            <div class="absolute -z-10 -left-6 -top-6">
               <img src="@/assets/icons/website/double-quote.svg" alt="">
             </div>
-            <p class="max-w-[436px] font-medium text-justify">Yuqori sinflarda bolalar shaxs boʻlib, jamoa
+            <p class="custom:w-[436px] ex-sm:w-[392px] font-medium text-justify">Yuqori sinflarda bolalar shaxs boʻlib,
+              jamoa
               boʻlib shakllanadi. Ayni oʻsha paytda ularni oʻzlari
               oʻrgangan muhitdan ajratib qoʻymaslik kerak.
             </p>

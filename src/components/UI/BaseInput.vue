@@ -1,12 +1,17 @@
 <template>
-  <input :type="inpType??'text'" class="w-full text-[15px] py-[8px]" minlength="2" :required="required ?? true" :id="id"
+  <input :type="inpType??'text'" class="w-full text-[15px] py-[8px] appearance-none"
+         :required="required ?? true" :id="id"
          :class="classes"
          :placeholder="hint"
-         v-model="value"/>
+         v-model="value"
+         :maxlength="maxLen"
+         :minlength="minLen"
+         ref="baseInput"
+  />
 </template>
 
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {Ref, ref, watch} from "vue";
 
 interface BaseInputProps {
   classes?: string | [] | object
@@ -14,6 +19,10 @@ interface BaseInputProps {
   id?: string;
   required?: boolean
   inpType?: string
+  maxLen?: string | number
+  minLen?: string | number
+  onlyNum?: boolean
+  defaultValue?: any
 }
 
 interface Emits {
@@ -22,43 +31,34 @@ interface Emits {
 
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
-
-const value = ref<string>("")
+const baseInput = ref("")
+const value: Ref<string> = ref("")
 
 watch(() => value.value, () => {
+  if (props.onlyNum) {
+    value.value = value.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')
+  }
   emit("update:modelValue", value.value)
 })
+
+if (props.defaultValue) {
+  value.value = props.defaultValue
+  emit("update:modelValue", value.value)
+}
+
+
 </script>
 
 <style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
 
 </style>
-
-<!--<template>-->
-<!--  <input type="text" v-model="mValue" :placeholder="placeholder" :class="classes" :id="props.id">-->
-<!--</template>-->
-
-<!--<script setup lang="ts">-->
-<!--import {ref, watch} from "vue";-->
-
-<!--interface Props {-->
-<!--  modelValue: any;-->
-<!--  placeholder?: string;-->
-<!--  classes: string;-->
-<!--  id: string-->
-<!--}-->
-
-<!--interface Emits {-->
-<!--  (e: "update:modelValue", value: string): void-->
-<!--}-->
-
-<!--const props = defineProps<Props>()-->
-<!--const emit = defineEmits<Emits>()-->
-
-<!--const mValue = ref(props.modelValue)-->
-
-<!--watch(() => mValue.value, () => {-->
-<!--  emit("update:modelValue", mValue.value)-->
-<!--})-->
-
-<!--</script>-->

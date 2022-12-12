@@ -31,44 +31,47 @@
   </div>
 
   <div class="relative" v-else-if="variant === 2">
-    <form @submit.prevent class="">
-      <ul class="grid grid-cols-4 gap-[12px]">
-        <li class="relative max-w-[124px] border-[2px] border-[#E0E7FF] rounded-[5px]"
-            :class="{'border-[2px] border-[#2E5BFF]': value === option.label}"
-            v-for="(option, idx) in options">
-          <input type="radio" :value="option.label"
-                 class="hidden multiselect-label__box appearance-none"
-                 v-model="value"
-                 name="item"
-                 :id="String(option.id)">
-          <label :for="String(option.id)"
-                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] flex">
-            <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
-            <span class="text-[#2E5BFF]"> UZS</span>
-          </label>
-          <span class="absolute -top-2 -right-2">
+    <ul class="grid grid-cols-3 gap-[12px]">
+      <li class="relative"
+          v-for="(option, idx) in options">
+        <input type="radio" :value="option.label"
+               class="hidden multiselect-label__box appearance-none"
+               v-model="value"
+               name="item"
+               required
+               :id="String(option.id)">
+        <label :for="String(option.id)"
+               class=" w-full font-medium  border ease-linear transition-all border-[#E0E7FF] rounded-[5px] text-[12px] block text-[14px] py-[12px] px-[16px] flex justify-center"
+               :class="[{'border border-[#2E5BFF]': value === option.label}, labelClasses]"
+        >
+          <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
+          <span class="text-[#2E5BFF]"> UZS</span>
+        </label>
+        <span class="absolute -top-2 -right-2">
           <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
                v-show="value === option.label">
           </span>
-        </li>
-        <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded-[5px]" v-if="additional"
-            :class="{'border-[2px] !border-[#2E5BFF]': value === 'boshqa'}">
-          <input type="radio" value="boshqa"
-                 class="hidden multiselect-label__box appearance-none"
-                 v-model="value"
-                 name="item"
-                 id="all">
-          <label for="all"
-                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center">
-            BOSHQA
-          </label>
-          <span class="absolute -top-2 -right-2">
+      </li>
+      <li class="relative border border-[transparent] bg-[#E0E7FF] ease-linear transition-all rounded-[5px]"
+          v-if="additional"
+          :class="{'border !border-[#2E5BFF]': value === 'boshqa'}">
+        <input type="radio" value="boshqa"
+               class="hidden multiselect-label__box appearance-none"
+               v-model="value"
+               name="item"
+               id="all">
+        <label for="all"
+               class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center"
+               :class="labelClasses"
+        >
+          BOSHQA
+        </label>
+        <span class="absolute -top-2 -right-2">
           <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
                v-show="value ==='boshqa'">
           </span>
-        </li>
-      </ul>
-    </form>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -87,6 +90,7 @@ interface BaseInputProps {
   options: optionsType[];
   variant: number;
   classes?: string | [] | object;
+  labelClasses?: string | [] | object;
   hint?: string;
   resetValue?: string[];
   required?: boolean;
@@ -117,6 +121,7 @@ watch(() => value.value, () => {
 watch(() => props.resetValue, () => {
   value.value = props.resetValue
 })
+
 </script>
 
 <style>

@@ -13,11 +13,11 @@
 
 type TabletObj = {
   title: string,
-  link?: string
+  link: string
 }
 
 interface TabletProps {
-  tablets?: TabletObj[]
+  tablets: TabletObj[]
   variant: number
 }
 
