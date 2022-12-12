@@ -93,6 +93,11 @@ type optionType = {
   id: string
 }
 
+type generousSumsType = {
+  label: string;
+  id: number
+}
+
 type applicationType = {
   fullName: string;
   phoneNumber: string
@@ -102,7 +107,7 @@ type applicationType = {
   sponsorFirm: string
 }
 
-const generousSums: any = ref<object[]>([
+const generousSums: Ref<generousSumsType[]> = ref([
   {
     label: "1000000",
     id: 1291820
@@ -151,7 +156,7 @@ const application: Ref<applicationType> = ref({
 const {numberWithSpaces} = useSponsors()
 
 function onSubmit() {
-  console.log(application)
+  console.log(application.value)
 }
 </script>
 
