@@ -1,6 +1,6 @@
 <template>
   <TheHeader
-      left-classes="flex items-center overflow-hidden box-content rounded-[6px] text-[12px] border-[2px] border-[#E0E7FF]"
+      left-classes="flex items-center overflow-hidden box-content rounded-[6px] text-[12px] border-[2px] border-[#E0E7FF] w-fit"
       right-classes="flex gap-[20px] items-center">
     <template #left>
       <HeaderTablet/>
@@ -16,9 +16,9 @@
   </main>
 
   <teleport to="#modal">
-    <TheModal @close-modal="sponsorStore.toggleFilterModal" :show="sponsorStore.filterModalOpen"
-              :is-modal-open="sponsorStore.filterModalOpen">
-      <SponsorsFilterModal @close-modal="sponsorStore.toggleFilterModal"></SponsorsFilterModal>
+    <TheModal @close-modal="mainStore.toggleFilterModal" :show="mainStore.filterModalOpen"
+              :is-modal-open="mainStore.filterModalOpen">
+      <SponsorsFilterModal @close-modal="mainStore.toggleFilterModal"></SponsorsFilterModal>
     </TheModal>
   </teleport>
 </template>
@@ -30,9 +30,9 @@ import HeaderTablet from "@/components/HeaderTablet.vue"
 import HeaderFilter from "@/components/HeaderFilter.vue"
 import TheModal from "@/components/UI/TheModal.vue"
 import SponsorsFilterModal from "@/components/ModalContents/Sponsors/SponsorsFilterModal.vue"
-import {useSponsorStore} from "@/store/useSponsorsStore";
+import {useMainStore} from "@/store/useMainStore";
 
-const sponsorStore = useSponsorStore()
+const mainStore: any = useMainStore()
 </script>
 
 <style scoped>

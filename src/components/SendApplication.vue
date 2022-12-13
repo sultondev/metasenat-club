@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full grow">
+  <div class="w-full bg-transparent">
     <h4 class="font-bold text-[40px] max-w-[423px] mb-10 ">
       Homiy sifatida ariza topshirish
     </h4>
@@ -8,7 +8,8 @@
         <InputTablets :options="options" v-model="application.sponsorType" :default-value="options[1].value"/>
       </div>
       <div>
-        <BaseFormGroup label-title="F.I.Sh. (Familiya Ism Sharifingiz)" label-classes="block text-xs mb-2 uppercase"
+        <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
+                       label-classes="block text-xs mb-2 uppercase"
                        id="fullName">
           <BaseInput v-model="application.fullName" id="fullName" hint="Abdullayev Abdulla Abdulla o’g’li"
                      classes="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
@@ -17,19 +18,25 @@
         </BaseFormGroup>
       </div>
       <div>
-        <BaseFormGroup id="phoneNumber" label-title="Telefon raqamingiz" label-classes="block text-xs mb-2 uppercase">
-          <BaseInput v-model="application.phoneNumber" id="phoneNumber" inp-type="text"
-                     class="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
-                     hint="+998 00 000-00-00"
-                     v-maska:[masks.tel]
-                     default-value="+998"
-                     :required="true"
-                     minlength="14"
-          />
+        <BaseFormGroup variant="1" id="phoneNumber" label-title="Telefon raqamingiz"
+                       label-classes="block text-xs mb-2 uppercase">
+          <BaseFormGroup id="phoneNumber" variant="2"
+                         label-classes="flex items-center bg-[#E0E7FF33] border border-[#E0E7FF] py-3 px-4 focus-within:bg-[#E0E7FF] rounded-md outline-none text-[15px]">
+            <template #defVal>
+              <span class="mr-1">+998</span>
+            </template>
+            <BaseInput v-model="application.phoneNumber" id="phoneNumber" inp-type="text"
+                       class="bg-transparent outline-0 text-[15px]"
+                       hint="00 000-00-00"
+                       v-maska:[masks.tel]
+                       :required="true"
+                       minlength="14"
+            />
+          </BaseFormGroup>
         </BaseFormGroup>
       </div>
       <div class="">
-        <BaseFormGroup id="none" label-title="To‘lov summasi" label-classes="block text-xs mb-3 uppercase">
+        <BaseFormGroup variant="1" id="none" label-title="To‘lov summasi" label-classes="block text-xs mb-3 uppercase">
           <OneSelect v-model="application.sums" :variant="2" :hide-all="false"
                      :options="generousSums" :additional="true"
                      default-value="1000000"
@@ -52,11 +59,11 @@
       </Transition>
       <Transition>
         <div class="" v-show="application.sponsorType === options[1].value">
-          <BaseFormGroup id="firmName" label-title="Tashkilot nomi" label-classes="block mb-2 uppercase text-xs">
+          <BaseFormGroup variant="1" id="firmName" label-title="Tashkilot nomi"
+                         label-classes="block mb-2 uppercase text-xs">
             <BaseInput v-model="application.sponsorFirm" id="firmName"
                        classes="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
                        hint="Orient group"
-                       :required="true"
             >
             </BaseInput>
           </BaseFormGroup>
@@ -70,19 +77,19 @@
 </template>
 
 <script setup lang="ts">
-import {Ref, ref} from "vue";
+import {Ref, ref,} from "vue";
 import {useSponsors} from "@/composables/sponsors";
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import OneSelect from "@/components/UI/OneSelect.vue";
 import InputTablets from "@/components/UI/InputTablets.vue"
 import {reactive} from "vue"
+import {publicApi} from "@/plugins/axios";
 import {vMaska} from "maska"
-
 
 const masks = reactive({
   tel: {
-    mask: "+99 8 ## ###-##-##",
+    mask: "## ###-##-##",
   }
 })
 
@@ -147,7 +154,7 @@ const options: Ref<optionType[]> = ref([
 
 const application: Ref<applicationType> = ref({
   fullName: "",
-  phoneNumber: "+9989",
+  phoneNumber: "",
   sums: "",
   yourSums: "0",
   sponsorFirm: "",
@@ -155,8 +162,26 @@ const application: Ref<applicationType> = ref({
 })
 const {numberWithSpaces} = useSponsors()
 
-function onSubmit() {
-  console.log(application.value)
+async function onSubmit() {
+  const {fullName, phoneNumber, sponsorType, sponsorFirm, sums, yourSums} = application.value;
+
+  const submitData = {
+    full_name: fullName,
+    phone: '+9989' + phoneNumber,
+    sum: sums || yourSums,
+    payment_type: [44],
+    firm: sponsorFirm,
+    spent: 0,
+    comment: ""
+  }
+
+  try {
+    const response = await publicApi.post('/sponsor-create/', submitData)
+    console.log(response.status)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 

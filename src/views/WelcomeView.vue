@@ -1,18 +1,32 @@
 <template>
   <section class="welcome" v-cloak>
-    <div class="bg-white absolute xl:w-[56%] ex-sm:w-full xl:h-screen ex-sm:h-full -z-10"></div>
-    <div class="container mx-auto py-[48px] px-16">
+    <div class="bg-white absolute lg:w-[56%] xs:w-full xl:h-screen xs:h-full -z-10"></div>
+    <div class="container mx-auto py-[48px] 2xl:px-[120px] xs:px-4 ">\
+      <button @click="toggle">
+        Toggle
+      </button>
       <div
-          class="flex justify-between xl:flex-row xl:items-start ex-sm:flex-col-reverse ex-sm:items-center">
-        <div class="xl:mx-0 xl:my-0 ex-sm:my-10 min-w-[586px]">
-          <SendApplication></SendApplication>
+          class="flex justify-between lg:flex-row lg:items-start lg:justify-between xs:justify-center">
+        <div class=" lg:min-w-[45%] xs:min-w-[587px]">
+          <Transition name="firstStep">
+            <div v-show="cond">
+              <SendApplication></SendApplication>
+            </div>
+          </Transition>
+          <Transition name="secondStep">
+            <div v-show="!cond" class="">
+              <div class="">
+                <h1 class="">Hellllllooooooooo</h1>
+              </div>
+            </div>
+          </Transition>
         </div>
-        <div class="xl:block ">
+        <div class="lg:block xs:hidden">
           <div class="relative mb-[24px]">
             <div class="absolute -z-10 -left-6 -top-6">
               <img src="@/assets/icons/website/double-quote.svg" alt="">
             </div>
-            <p class="custom:w-[436px] ex-sm:w-[392px] font-medium text-justify">Yuqori sinflarda bolalar shaxs boʻlib,
+            <p class="custom:w-[436px] xs:w-[392px] font-medium text-justify">Yuqori sinflarda bolalar shaxs boʻlib,
               jamoa
               boʻlib shakllanadi. Ayni oʻsha paytda ularni oʻzlari
               oʻrgangan muhitdan ajratib qoʻymaslik kerak.
@@ -39,19 +53,48 @@
         </div>
       </div>
     </div>
+    <img src="@/assets/images/website/banner-01.svg"
+         class="absolute transition-all ease-linear lg:block xs:hidden -bottom-48 -right-96 -z-20"
+         alt="">
   </section>
-  <img src="@/assets/images/website/banner-01.svg" class="absolute xl:block ex-sm:hidden -bottom-48 -right-96 -z-20"
-       alt="">
 </template>
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
 import SendApplication from "@/components/SendApplication.vue"
+import {ref} from "vue";
 
 const userStore = useUserStore()
+const cond = ref(true)
+const toggle = () => cond.value = !cond.value
+
+
 </script>
 
 <style>
-.welcome {
+.firstStep-enter-active,
+.firstStep-leave-active {
+  transition: all 0.5s linear;
+}
+
+
+.firstStep-enter-from,
+.firstStep-leave-to {
+  opacity: 0;
+  transform: translateY(-50%);
+  /*transform: scale(0.8);*/
+}
+
+.secondStep-enter-active,
+.secondStep-leave-active {
+  transition: all 0.5s linear;
+}
+
+
+.secondStep-enter-from,
+.secondStep-leave-to {
+  opacity: 0;
+  transform: translateY(50%);
+  /*transform: scale(0.8);*/
 }
 </style>

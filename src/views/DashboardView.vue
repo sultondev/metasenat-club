@@ -39,7 +39,7 @@ const bannerList = computed(() => [
     imgPath: "money-1",
     sums: dashboardFields.value.total_paid,
     currency: "UZS",
-    bgClr: "ban1",
+    bgClr: "bg-banner-01",
     icon: 'bg-red'
   },
   {
@@ -47,14 +47,14 @@ const bannerList = computed(() => [
     imgPath: "money-2",
     sums: dashboardFields.value.total_need,
     currency: "UZS",
-    bgClr: "ban2"
+    bgClr: "bg-banner-02"
   },
   {
     text: "To'lanishi kerak summa",
     imgPath: "money-3",
     sums: dashboardFields.value.total_must_pay,
     currency: "UZS",
-    bgClr: "ban3"
+    bgClr: "bg-banner-03"
   }
 ])
 

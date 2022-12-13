@@ -1,9 +1,9 @@
 <template>
   <section class="students" v-cloak>
-    <div class="mx-auto ex-sm:w-full ">
+    <div class="mx-auto xs:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
         <div class="mx-auto"
-             v-if="listOfStudents.length === 0 && !fetchError.error || studentsStore.loading">
+             v-if="listOfStudents.length === 0 && !fetchError.error || mainStore.loading">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else-if="listOfStudents.length > 0">
@@ -20,18 +20,6 @@
                 <th class=" px-4">Amallar</th>
               </tr>
             </template>
-            "id": 269,
-            "full_name": "Abdullayev Abdulla Abdullayevichh",
-            "type": 1,
-            "phone": "+998 99 973-72-72",
-            "institute": {
-            "id": 355,
-            "name": "Toshkent davlat pedagogika universiteti"
-            },
-            "contract": 560000,
-            "given": 281222,
-            "get_status_display": "Yangi"
-            },
             <template #tbody>
               <tr v-for="(student, idx) in filterStudentsByName"
                   :key="student.id" class="border-spacing-y-3 border-separate text-sm">
@@ -101,8 +89,8 @@ import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
 import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
-import {useStudentsStore} from "@/store/useStudentsStore";
 import {studentsListType} from "@/typing/types/students";
+import {useMainStore} from "@/store/useMainStore";
 
 
 const {numberWithSpaces, statusColor} = useSponsors()
@@ -120,12 +108,12 @@ const sponsorListLength = ref(listOfStudents.value.length)
 const sponsorListEnd = computed(() => (listOfStudents.value.length >= size.value || sponsorListLength.value === listOfStudents.value.length ?
     listOfStudents.value.length * page.value : totalCount))
 
-const studentsStore = useStudentsStore()
+const mainStore = useMainStore()
 
 const fetchSponsorsData = async () => {
   setTimeout(() => {
-    studentsStore.loading = false
-  }, 400)
+    mainStore.loading = false
+  }, 600)
   try {
     const response = await fetchData(`/student-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
     if (response.status === 200) {

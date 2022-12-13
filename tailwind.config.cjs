@@ -7,7 +7,7 @@ module.exports = {
     ],
     theme: {
         screens: {
-            'ex-sm': '320px',
+            'xs': '320px',
 
             'sm': '640px',
             // => @media (min-width: 640px) { ... }
@@ -29,26 +29,33 @@ module.exports = {
         },
         extend: {
             colors: {
-                // gray: {
-                //     DEFAULT: '',
-                //     blue: ''
-                // },
-                'gray': '#F5F5F7',
-                'gray-blue': '#DFE3E8',
-                'dark-gray': '#E8E8E8',
+                gray: {
+                    DEFAULT: '#F5F5F7',
+                    blue: '#DFE3E8'
+                },
+                dark: {
+                    blue: '#28293D',
+                    silver: '#979797',
+                },
+                light: {
+                    purple: '#E0E7FF',
+                    silver: '#C4CDD5'
+                },
+                banner: {
+                    '01': '#4C6FFF1A',
+                    '02': '#EDC7001A',
+                    '03': '#ED72001A',
+                },
                 'smoke': '#F1F1F3',
                 'primary': '#2E5BFF',
-                'dark-blue': '#28293D',
                 'black': '#1D1D1F',
-                'light-purple': '#E0E7FF',
                 'silver': '#B1B1B8',
-                'light-silver': '#C4CDD5',
-                'dark-silver': '#979797',
                 'gold': '#FFA445',
                 'dodgerblue': '#5BABF2',
                 'my-green': '#00CF83',
                 'white': '#fff',
             },
+
             backgroundColor: {
                 skin: {
                     ban1: withoutOpacity("--color-ban-1"),

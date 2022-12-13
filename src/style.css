@@ -1,9 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
     --color-ban-1: #4C6FFF1A;
     --color-ban-2: #EDC7001A;
     --color-ban-3: #ED72001A;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

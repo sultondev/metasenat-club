@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 
-export const useSponsorStore = defineStore('useSponsorStore', () => {
+export const useMainStore = defineStore('useMainStore', () => {
     const loading = ref(true)
     const filterModalOpen = ref(false)
     const detailsModal = ref(false)

@@ -14,7 +14,7 @@
   </label>
   <button
       class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px] hover:bg-[#E0E7FF]"
-      @click="sponsorStore.toggleFilterModal">
+      @click="mainStore.toggleFilterModal">
             <span
                 class="icon-filter mr-[20px] text-[13px] ">
             </span>
@@ -25,15 +25,16 @@
 <script setup lang="ts">
 import {ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {useSponsorStore} from "@/store/useSponsorsStore";
+import {useMainStore} from "@/store/useMainStore";
+
 
 const router = useRouter()
 const route = useRoute()
 const filters = ref(route.query.filters || "")
-const sponsorStore = useSponsorStore()
+const mainStore: any = useMainStore()
 
 const setFilter = () => {
-  router.push({path: "/main/sponsors", query: {...route.query, filters: filters.value}})
+  router.push({path: route.path, query: {...route.query, filters: filters.value}})
 }
 
 const clearFilter = () => {
@@ -41,17 +42,11 @@ const clearFilter = () => {
 }
 
 watch(filters, async () => {
-  if (route.name === 'sponsors-list') {
-    sponsorStore.loading = true
+  mainStore.loading = true
+  if (route.name === 'sponsors-list' || route.name === 'students-list') {
     setTimeout(() => {
       setFilter()
-      sponsorStore.loading = false
-    }, 400)
-  } else if (route.name === 'students-list') {
-    sponsorStore.loading = true
-    setTimeout(() => {
-      setFilter()
-      sponsorStore.loading = false
+      mainStore.loading = false
     }, 400)
   }
 })

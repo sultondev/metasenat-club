@@ -1,7 +1,7 @@
 <template>
   <section class="login flex items-center flex-col bg-[#F5F5F7]">
     <div class="mx-auto">
-      <h2 class="login__header justify-center flex gap-3 mb-[48px] items-center ex-sm:text-2xl">
+      <h2 class="login__header justify-center flex gap-3 mb-[48px] items-center xs:text-2xl">
         <img src="@/assets/images/logo/logo.svg" alt="Logo">
         METASENAT
       </h2>

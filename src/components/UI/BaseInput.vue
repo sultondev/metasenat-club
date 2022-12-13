@@ -1,5 +1,5 @@
 <template>
-  <input :type="inpType??'text'" class="w-full text-[15px] py-[8px] appearance-none"
+  <input :type="inpType??'text'" class="w-full text-[15px] appearance-none"
          :required="required ?? true" :id="id"
          :class="classes"
          :placeholder="hint"

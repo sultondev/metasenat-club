@@ -1,10 +1,10 @@
 <template>
   <section class="sponsors" v-cloak>
-    <div class="mx-auto ex-sm:w-full ">
+    <div class="mx-auto xs:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
 
         <div class="mx-auto"
-             v-if="listOfSponsors.length === 0 && !fetchError.error || sponsorStore.loading">
+             v-if="listOfSponsors.length === 0 && !fetchError.error || mainStore.loading">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else-if="listOfSponsors.length > 0">
@@ -93,7 +93,7 @@ import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
 import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
-import {useSponsorStore} from "@/store/useSponsorsStore";
+import {useMainStore} from "@/store/useMainStore";
 import {sponsorsListType} from "@/typing/types/sponsor";
 
 
@@ -112,11 +112,11 @@ const sponsorListLength = ref(listOfSponsors.value.length)
 const sponsorListEnd = computed(() => (listOfSponsors.value.length >= size.value || sponsorListLength.value === listOfSponsors.value.length ?
     listOfSponsors.value.length * page.value : totalCount))
 
-const sponsorStore = useSponsorStore()
+const mainStore = useMainStore()
 
 const fetchSponsorsData = async () => {
   setTimeout(() => {
-    sponsorStore.loading = false
+    mainStore.loading = false
   }, 400)
   try {
     const response = await fetchData(`/sponsor-list/?page=${route.query.page || page.value}&page_size=${route.query.size || size.value}`)
