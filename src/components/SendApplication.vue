@@ -3,9 +3,11 @@
     <h4 class="font-bold text-[40px] max-w-[423px] mb-10 ">
       Homiy sifatida ariza topshirish
     </h4>
-    <form class="flex flex-col gap-[28px] grow" @submit.prevent="onSubmit">
+    <form class="flex flex-col gap-[28px] grow" @submit.prevent="$emit('dataSubmit')">
       <div class="">
-        <InputTablets :options="options" v-model="application.sponsorType" :default-value="options[1].value"/>
+        <InputTablets :options="options" v-model="application.sponsorType"
+                      :default-value="SPONSOR.LEGALENTITY"/>
+        {{ application.sponsorType }}
       </div>
       <div>
         <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
@@ -43,12 +45,12 @@
                      label-classes="select-none py-5 px-9 cursor-pointer hover:bg-[#E0E7FF] transition-all ease-linear overflow-hidden"></OneSelect>
         </BaseFormGroup>
       </div>
-      <Transition>
-        <div v-show="application.sums === 'boshqa'" class="ease-linear transition-all">
+      <Transition mode="out-in">
+        <div v-show="application.sums === 'boshqa'" class="">
           <BaseInput v-model="application.yourSums"
                      hint="0"
                      class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
-                     max-len="12"
+                     max-len="9"
                      :only-num="true"
           />
           <span>{{
@@ -57,13 +59,14 @@
                 class="text-sm text-[#2E5BFF] font-medium">UZS</span></span>
         </div>
       </Transition>
-      <Transition>
-        <div class="" v-show="application.sponsorType === options[1].value">
+      <Transition mode="out-in">
+        <div class="" v-if="application.sponsorType === SPONSOR.LEGALENTITY">
           <BaseFormGroup variant="1" id="firmName" label-title="Tashkilot nomi"
                          label-classes="block mb-2 uppercase text-xs">
             <BaseInput v-model="application.sponsorFirm" id="firmName"
                        classes="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
                        hint="Orient group"
+                       required
             >
             </BaseInput>
           </BaseFormGroup>
@@ -77,14 +80,16 @@
 </template>
 
 <script setup lang="ts">
-import {Ref, ref,} from "vue";
+
+import {reactive, ref, Ref,} from "vue";
 import {useSponsors} from "@/composables/sponsors";
+import {SPONSOR} from "@/typing/enums/sponsor";
+import {generousSumsType, optionType} from "@/typing/types/sponsor";
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import OneSelect from "@/components/UI/OneSelect.vue";
 import InputTablets from "@/components/UI/InputTablets.vue"
-import {reactive} from "vue"
-import {publicApi} from "@/plugins/axios";
+import {useSponsorStore} from "@/store/useSponsorStore";
 import {vMaska} from "maska"
 
 const masks = reactive({
@@ -93,26 +98,6 @@ const masks = reactive({
   }
 })
 
-
-type optionType = {
-  title: string
-  value: string
-  id: string
-}
-
-type generousSumsType = {
-  label: string;
-  id: number
-}
-
-type applicationType = {
-  fullName: string;
-  phoneNumber: string
-  sums: string
-  yourSums: string
-  sponsorType: string
-  sponsorFirm: string
-}
 
 const generousSums: Ref<generousSumsType[]> = ref([
   {
@@ -136,53 +121,24 @@ const generousSums: Ref<generousSumsType[]> = ref([
     id: 2995
   }
 ])
-const selectedOpt = ref("Jismoniy shaxs")
 // this id fields should be unique
 // and these fields should be many to many
 const options: Ref<optionType[]> = ref([
   {
     id: "rsad",
     title: "Jismoniy shaxs",
-    value: "Jismoniy shaxs"
+    value: SPONSOR.INDIVIDUAL
   },
   {
     id: "dwa",
     title: "Yuridik shaxs",
-    value: "Yuridik shaxs"
+    value: SPONSOR.LEGALENTITY
   }
 ])
 
-const application: Ref<applicationType> = ref({
-  fullName: "",
-  phoneNumber: "",
-  sums: "",
-  yourSums: "0",
-  sponsorFirm: "",
-  sponsorType: ""
-})
+const {application} = useSponsorStore()
 const {numberWithSpaces} = useSponsors()
 
-async function onSubmit() {
-  const {fullName, phoneNumber, sponsorType, sponsorFirm, sums, yourSums} = application.value;
-
-  const submitData = {
-    full_name: fullName,
-    phone: '+9989' + phoneNumber,
-    sum: sums || yourSums,
-    payment_type: [44],
-    firm: sponsorFirm,
-    spent: 0,
-    comment: ""
-  }
-
-  try {
-    const response = await publicApi.post('/sponsor-create/', submitData)
-    console.log(response.status)
-    console.log(response)
-  } catch (error) {
-    console.log(error)
-  }
-}
 </script>
 
 <style scoped>
@@ -198,9 +154,3 @@ async function onSubmit() {
 }
 
 </style>
-
-<!--declare module '@vue/runtime-core' {-->
-<!--interface ComponentCustomProperties {-->
-<!--$apexcharts: typeof ApexCharts;-->
-<!--}-->
-<!--}-->

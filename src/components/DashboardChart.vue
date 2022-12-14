@@ -76,9 +76,6 @@ const chartOptions = ref({
   tooltip: {
     // @ts-ignore
     custom: function ({series, seriesIndex, dataPointIndex, w}) {
-      console.log('Series', series)
-      console.log('dataPoint', dataPointIndex)
-      console.log('W', w)
       // '<span>' + w.globals.labels[dataPointIndex] + series[seriesIndex][dataPointIndex] + '</span>' +
       return '<div class="arrow_box flex flex-col pt-[10px] pb-[8px] px-[12px]">' +
           '<p class="text-center text-xl">'

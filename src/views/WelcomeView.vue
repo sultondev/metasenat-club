@@ -1,23 +1,53 @@
 <template>
   <section class="welcome" v-cloak>
     <div class="bg-white absolute lg:w-[56%] xs:w-full xl:h-screen xs:h-full -z-10"></div>
-    <div class="container mx-auto py-[48px] 2xl:px-[120px] xs:px-4 ">\
-      <button @click="toggle">
-        Toggle
-      </button>
+    <div class="container mx-auto py-[48px] 2xl:px-[120px] xs:px-4 ">
       <div
           class="flex justify-between lg:flex-row lg:items-start lg:justify-between xs:justify-center">
         <div class=" lg:min-w-[45%] xs:min-w-[587px]">
           <Transition name="firstStep">
-            <div v-show="cond">
-              <SendApplication></SendApplication>
+            <div v-show="steps === STEPS.INIT">
+              <SendApplication @data-submit="onSubmit"></SendApplication>
             </div>
           </Transition>
           <Transition name="secondStep">
-            <div v-show="!cond" class="">
+            <div v-if="steps === STEPS.SUCCESS" class="">
               <div class="">
-                <h1 class="">Hellllllooooooooo</h1>
+                <div class="mb-8">
+                  <Vue3Lottie
+                      :animationData="SuccessLottie"
+                      :height="120"
+                      :width="120"
+                      :delay="1000"
+                      :loop="false"
+                      :speed="1.2"
+                  />
+                </div>
+                <p class="text-sm font-medium text-[#2E384D] text-center mb-2">Ma’lumotlar tekshirish uchun
+                  yuborildi.</p>
+                <p class="text-xs font-medium text-[#B2B7C1] text-center max-w-[300px] mx-auto">Tez orada siz bilan
+                  operatorimiz
+                  bog’lanib,
+                  barcha
+                  ma’lumotlarni
+                  aniqlashtiradi.</p>
               </div>
+            </div>
+          </Transition>
+          <Transition>
+            <div class="" v-if="steps===STEPS.ERROR">
+              <Vue3Lottie
+                  :animationData="ErrorLottie"
+                  :height="120"
+                  :width="120"
+                  :delay="1000"
+                  :loop="false"
+                  :speed="1"
+              />
+              <p class="text-sm font-medium text-[#2E384D] text-center mb-2">Eyy aytkim kelmagandi</p>
+              <p class="text-xs font-medium text-[#B2B7C1] text-center max-w-[300px] mx-auto">
+                Tizimda qandaydir hatolik yuz berdi hammasiga back-end chilar aybdor.
+              </p>
             </div>
           </Transition>
         </div>
@@ -60,21 +90,45 @@
 </template>
 
 <script setup lang="ts">
-import {useUserStore} from "@/store/userStore";
 import SendApplication from "@/components/SendApplication.vue"
-import {ref} from "vue";
+import SuccessLottie from "@/assets/lotties/success-lottie.json"
+import ErrorLottie from "@/assets/lotties/error-lottie.json"
+import {Ref, ref} from "vue";
+import {publicApi} from "@/plugins/axios";
+import {useSponsorStore} from "@/store/useSponsorStore";
+import {STEPS} from "@/typing/enums/stepper";
 
-const userStore = useUserStore()
-const cond = ref(true)
-const toggle = () => cond.value = !cond.value
+
+const {application} = useSponsorStore()
+const steps: Ref<STEPS> = ref('INIT' as STEPS.INIT)
 
 
+async function onSubmit() {
+  const {fullName, phoneNumber, sponsorType, sponsorFirm, sums, yourSums} = application;
+  const submitData = {
+    full_name: fullName,
+    phone: '+9989' + phoneNumber,
+    sum: sums !== 'boshqa' || yourSums,
+    payment_type: [44],
+    firm: sponsorFirm,
+    spent: 0,
+    comment: ""
+  }
+
+  try {
+    const response = await publicApi.post('/sponsor-create/', submitData)
+    steps.value = STEPS.SUCCESS
+  } catch (error) {
+    console.log(error)
+    steps.value = STEPS.ERROR
+  }
+}
 </script>
 
 <style>
 .firstStep-enter-active,
 .firstStep-leave-active {
-  transition: all 0.5s linear;
+  transition: all 0.8s linear;
 }
 
 
@@ -87,7 +141,7 @@ const toggle = () => cond.value = !cond.value
 
 .secondStep-enter-active,
 .secondStep-leave-active {
-  transition: all 0.5s linear;
+  transition: all 1s linear;
 }
 
 

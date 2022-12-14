@@ -19,7 +19,7 @@
       <button
           class="text-[14px] border border-[#DFE3E8] h-full  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF] "
           @click="selectPage(1)"
-          v-if="page === pagesSizeAmount">
+          v-if="pageSize < count && page === pagesSizeAmount">
         {{ 1 }}
       </button>
       <div v-for="p in pagesSizeAmount - 1 > page ? 2 : 1" :key="p">
@@ -33,7 +33,7 @@
         </button>
       </div>
       <div class="text-[14px] border border-[#DFE3E8]  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF]"
-           v-if="pagesSizeAmount - 1 > page || pagesSizeAmount === page">
+           v-if="pageSize < count && pagesSizeAmount - 1 > page || ( pageSize < count && pagesSizeAmount === page)">
         ...
       </div>
       <button
@@ -47,7 +47,7 @@
       <button
           class="border  hover:bg-[#E0E7FF] border-[#DFE3E8] flex justify-center items-center bg-white rounded-[5px] disabled:bg-[#DFE3E8]"
           @click="selectPage('next')"
-          :disabled="page === pagesSizeAmount"
+          :disabled="pageSize > count || page === pagesSizeAmount"
       >
         <img src="@/assets/icons/website/right.svg" class="min-w-[22px]" alt="">
       </button>
@@ -75,6 +75,7 @@ const mainStore = useMainStore()
 const pagesSizeAmount = computed(() => {
   return Math.ceil(props.count / pageSize.value)
 })
+console.log(pageSize.value < props.count)
 
 
 function selectPage(arg: number | string = 1) {

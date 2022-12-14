@@ -1,3 +1,5 @@
+import {SPONSOR} from "@/typing/enums/sponsor";
+
 export type sponsorsListType = {
     created_at: string;
     firm: string;
@@ -8,4 +10,26 @@ export type sponsorsListType = {
     phone: string
     spent: string
     sum: string
+}
+
+
+export type applicationType = {
+    fullName: string;
+    phoneNumber: string
+    sums: string
+    yourSums: string
+    sponsorType: SPONSOR.LEGALENTITY
+    sponsorFirm: string
+}
+
+
+export type optionType = {
+    title: string
+    value: string
+    id: string
+}
+
+export type generousSumsType = {
+    label: string;
+    id: number
 }

@@ -77,11 +77,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@thedoctor0/vue-input-mask@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@thedoctor0/vue-input-mask/-/vue-input-mask-1.0.10.tgz#bb48d636ce6a5b690995e28c371c1e67a8898c5d"
-  integrity sha512-RZQs9DO/O9i5BdxSDq22xPPJ9G0JbFmXRmiSx6DtXCfO86vI7xX8jbeS5Dv8BvTp0GpldHeU2X2ifxv0P99L6g==
-
 "@types/json-schema@^7.0.9":
   version "7.0.11"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
@@ -1242,7 +1237,7 @@ lodash@^4.17.21:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-lottie-web@^5.1.9:
+lottie-web@^5.8.1:
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.10.0.tgz#72563f22efdcf2b8f7e8359743514930ebaf5f8c"
   integrity sha512-q2hfqKrGXNkwjSSZjKxf3fWMi0e3ZBc03qBkVWoGbwUJ7BcG+9YXjMPtmmhitzk8Nc6VQ5PRnh9yInPdfq0PZg==
@@ -1846,13 +1841,6 @@ vue-eslint-parser@^9.0.0, vue-eslint-parser@^9.0.1, vue-eslint-parser@^9.1.0:
     lodash "^4.17.21"
     semver "^7.3.6"
 
-vue-lottie@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/vue-lottie/-/vue-lottie-0.2.1.tgz#f9f62c34a276e6834255406118fb05b51f765e4b"
-  integrity sha512-zInUX69Ij8MhVR3XArpu4PqqBoufwKxS5UMutWCPm59VUaB5H6GtnaIzf9M+l6aYU+Kr8gF/W9dzWLgRuU6V+Q==
-  dependencies:
-    lottie-web "^5.1.9"
-
 vue-recaptcha@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-2.0.3.tgz#7e035d4302cff921d53d320e237ed1912985d922"
@@ -1887,6 +1875,14 @@ vue3-apexcharts@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/vue3-apexcharts/-/vue3-apexcharts-1.4.1.tgz#ea561308430a1c5213b7f17c44ba3c845f6c490d"
   integrity sha512-96qP8JDqB9vwU7bkG5nVU+E0UGQn7yYQVqUUCLQMYWDuQyu2vE77H/UFZ1yI+hwzlSTBKT9BqnNG8JsFegB3eg==
+
+vue3-lottie@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/vue3-lottie/-/vue3-lottie-2.4.0.tgz#84fecd68d22beae808a9cc0ee89112435347e242"
+  integrity sha512-arNBADu3vW+1Lf+Pw32mU9T6X7c1bMn1tBvJ0/uo+W0G/0UxHyCwoXzyYIKZWB0WoeEvdo5x7HCf8VH0J7rLsw==
+  dependencies:
+    lodash "^4.17.21"
+    lottie-web "^5.8.1"
 
 vue@^2.6.10:
   version "2.7.14"

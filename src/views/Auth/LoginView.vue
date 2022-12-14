@@ -14,7 +14,7 @@
         </p>
         <div class="flex flex-col gap-[22px]">
           <div class="flex flex-col">
-            <BaseFormGroup id="login" label-title="LOGIN" label-classes="mb-[8px]">
+            <BaseFormGroup id="login" variant="1" label-title="LOGIN" label-classes="mb-[8px]">
               <BaseInput v-model="loginField"
                          classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
                          id="login"

@@ -1,14 +1,14 @@
 import {createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized} from "vue-router"
-import WelcomeView from "@/views/WelcomeView.vue"
-import LoginView from "@/views/Auth/LoginView.vue"
-import RegistrationView from "@/views/Auth/RegistrationView.vue"
-import DashboardView from "@/views/DashboardView.vue"
-import MainView from "@/views/MainView.vue"
-import SponsorsView from "@/views/Sponsors/SponsorsView.vue"
-import SponsorDetails from "@/views/Sponsors/SponsorDetails.vue"
-import StudentsView from "@/views/Students/StudentsView.vue"
-import StudentDetails from "@/views/Students/StudentDetails.vue"
-import PageNotFound from "@/views/PageNotFound.vue"
+
+const WelcomeView = () => import("@/views/WelcomeView.vue")
+const LoginView = () => import("@/views/Auth/LoginView.vue")
+const DashboardView = () => import("@/views/DashboardView.vue")
+const MainView = () => import("@/views/MainView.vue")
+const SponsorsView = () => import("@/views/Sponsors/SponsorsView.vue")
+const SponsorDetails = () => import("@/views/Sponsors/SponsorDetails.vue")
+const StudentsView = () => import("@/views/Students/StudentsView.vue")
+const StudentDetails = () => import("@/views/Students/StudentDetails.vue")
+const PageNotFound = () => import("@/views/PageNotFound.vue")
 import {useUserStore} from "@/store/userStore";
 
 
@@ -31,11 +31,6 @@ const router = createRouter({
             meta: {
                 requiresGuest: true
             }
-        },
-        {
-            path: "/registration",
-            name: "Registration",
-            component: RegistrationView,
         },
         {
             path: "/main",
@@ -76,6 +71,14 @@ const router = createRouter({
             path: "/main/sponsors/:id",
             component: SponsorDetails,
             name: "sponsor-details",
+            meta: {
+                requiresAuth: true
+            },
+        },
+        {
+            path: "/main/student/:id",
+            component: StudentDetails,
+            name: "student-details",
             meta: {
                 requiresAuth: true
             },

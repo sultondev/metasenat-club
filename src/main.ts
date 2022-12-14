@@ -6,6 +6,7 @@ import {createPinia} from "pinia"
 import {authProtectedApi, fetchData, publicApi} from "@/plugins/axios"
 import VueApexCharts from 'vue3-apexcharts'
 import ApexCharts from 'apexcharts';
+import Vue3Lottie from 'vue3-lottie'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -13,8 +14,7 @@ app.config.globalProperties.$apexcharts = ApexCharts;
 app.use(pinia)
 app.use(router)
 app.use(VueApexCharts)
-
-app.component('apexchart', VueApexCharts)
+app.use(Vue3Lottie)
 app.provide("axios", publicApi)
 app.provide("fetchData", fetchData)
 app.provide("protectedApi", authProtectedApi)

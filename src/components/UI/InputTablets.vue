@@ -40,12 +40,12 @@ const value: Ref<string> = ref(props.defaultValue ?? "")
 
 watch(() => value.value, () => {
   emit("update:modelValue", value.value)
+  console.log(value.value)
 })
 
 if (props.defaultValue) {
   value.value = props.defaultValue
   emit("update:modelValue", value.value)
-  console.log('shit it rans every time')
 }
 
 

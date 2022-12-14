@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
 import TheNavbar from "@/components/TheNavbar.vue"
+import 'vue3-lottie/dist/style.css'
 
 const userStore = useUserStore()
 userStore.Init()

@@ -9,16 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@thedoctor0/vue-input-mask": "^1.0.10",
     "apexcharts": "^3.35.4",
     "axios": "^1.2.0",
     "maska": "^2.1.1",
     "pinia": "^2.0.26",
     "vue": "^3.2.41",
-    "vue-lottie": "^0.2.1",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "4",
-    "vue3-apexcharts": "^1.4.1"
+    "vue3-apexcharts": "^1.4.1",
+    "vue3-lottie": "^2.4.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
