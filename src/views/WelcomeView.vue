@@ -108,7 +108,7 @@ async function onSubmit() {
   const submitData = {
     full_name: fullName,
     phone: '+9989' + phoneNumber,
-    sum: sums !== 'boshqa' || yourSums,
+    sum: sums !== 'boshqa' ? sums : yourSums,
     payment_type: [44],
     firm: sponsorFirm,
     spent: 0,
