@@ -1,11 +1,12 @@
 <template>
   <label
       class="main__wrapper relative flex items-center bg-[#E8E8E8] focus-within:bg-[#E0E7FF] items-center rounded-[6px] p-[10px] min-w-[284px] max-h-[40px]"
+      :class="{'cursor-not-allowed': $route.path === '/main/dashboard', 'hover:bg-[#E0E7FF]': $route.path !== '/main/dashboard'}"
       id="filter">
     <img src="@/assets/icons/website/search.svg" alt="Search Icon"
          class="icon-filter w-[20px] h-[20px] mr-[8px]">
-    <input id="filter" class="main-filter__input bg-transparent outline-0 text-[15px]"
-           placeholder="Izlash" v-model="filters"/>
+    <input id="filter" class="main-filter__input bg-transparent outline-0 text-[15px] disabled:cursor-not-allowed"
+           placeholder="Izlash" v-model="filters" :disabled="$route.path === '/main/dashboard' ?? true"/>
     <span v-if="filters.length > 0 ">
       <button class="absolute right-2 top-[24%]" @click="clearFilter">
         <img src="@/assets/icons/website/close-icon.svg" class="w-[20px]" alt="close">
@@ -41,13 +42,18 @@ const clearFilter = () => {
   filters.value = ""
 }
 
+watch(() => route.name, async () => {
+  clearFilter()
+})
+
 watch(filters, async () => {
   mainStore.loading = true
   if (route.name === 'sponsors-list' || route.name === 'students-list') {
     setTimeout(() => {
       setFilter()
       mainStore.loading = false
-    }, 400)
+    }, 1000)
   }
 })
+
 </script>

@@ -76,7 +76,7 @@ const router = createRouter({
             },
         },
         {
-            path: "/main/student/:id",
+            path: "/main/students/:id",
             component: StudentDetails,
             name: "student-details",
             meta: {
@@ -91,7 +91,7 @@ function guardAuth(to: RouteLocationNormalized, from: RouteLocationNormalized, n
     const userStore = useUserStore()
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
-        // if not, redirect to login page.
+        // if not to redirect to login page.
         if (!userStore.isLoggedIn && !localStorage.getItem("accessToken")) {
             next({name: 'Login'})
         } else if (userStore.isLoggedIn) {

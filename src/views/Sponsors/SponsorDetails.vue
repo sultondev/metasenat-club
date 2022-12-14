@@ -15,17 +15,17 @@
     </TheHeader>
 
     <section class="details py-[40px]" v-if="user.id">
-      <div class="bg-white rounded-[12px] p-[32px] max-w-[793px] w-full  mx-auto">
+      <div class="bg-white rounded-xl p-8 max-w-[793px] w-full  mx-auto">
         <div class="flex justify-between items-center mb-[32px]">
           <h6 class="text-2xl">Homiy haqida</h6>
-          <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"
-                  @click="toggleModal">
-            <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">
-            Tahrirlash
-          </button>
+          <!--          <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"-->
+          <!--                  @click="toggleModal">-->
+          <!--            <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">-->
+          <!--            Tahrirlash-->
+          <!--          </button>-->
         </div>
         <div class="flex items-center mb-[24px]">
-          <div class="px-[18px] py-[16px] bg-[#EAECF0] mr-[20px] w-fit rounded-[5px]">
+          <div class="px-[18px] py-4 bg-[#EAECF0] mr-[20px] w-fit rounded-[5px]">
             <img src="@/assets/icons/website/user-picture.svg" alt="">
           </div>
           <h6 class="max-w-[183px] text-xl font-medium">
@@ -47,7 +47,7 @@
     <div class="mx-auto my-[32px]" v-else>
       <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
     </div>
-    <div class="fixed left-1/2 translate-x-[-50%] ">
+    <div class="fixed left-1/2 translate-x-[-50%]">
       <img src="@/assets/images/website/banner-01.svg" class="w-auto" alt="">
     </div>
   </div>

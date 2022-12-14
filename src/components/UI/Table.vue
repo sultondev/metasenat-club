@@ -1,5 +1,5 @@
 <template>
-  <table :class="'table ' + props.classes ">
+  <table :class="'table ' + props.classes " :classes="classes">
     <thead>
     <slot name="thead"></slot>
     </thead>

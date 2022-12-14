@@ -1,7 +1,7 @@
 <template>
   <div class="relative" v-if="variant === 1">
     <button
-        class="py-[12px] border-2 text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-[12px] bg-[#F9FAFF]"
+        class="py-[12px] border-2 text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-4 rounded-xl bg-[#F9FAFF]"
         :class="{'border-[#2E5BFF]': isDropdownOpen}"
         @click="toggleDropdown">
       <span>{{ value.length > 0 ? value.length + ' ta tanlangan' : "Arizalar holatlarni tanlang" }}</span>

@@ -7,8 +7,7 @@
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else-if="listOfStudents.length > 0">
-
-          <Table classes="w-full table-auto border-separate border-spacing-y-4">
+          <Table classes="w-full table-auto border-separate border-spacing-y-4 container mx-auto">
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
@@ -27,7 +26,10 @@
                   {{ (page - 1) * size + idx + 1 }}
                 </td>
                 <td class="py-[23px]  bg-white font-bold text-ellipsis">{{ student.full_name }}</td>
-                <td class="py-[23px]  bg-white text-center whitespace-nowrap">Bakalavr</td>
+                <td class="py-[23px]  bg-white text-center whitespace-nowrap capitalize">{{
+                    getDiplomaType(student.type)
+                  }}
+                </td>
                 <td class="py-[23px]  bg-white text-center whitespace-nowrap font-medium">
                   <span class="font-medium text-slate-700">
                     {{ student.institute.name }}
@@ -91,9 +93,14 @@ import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
 import {studentsListType} from "@/typing/types/students";
 import {useMainStore} from "@/store/useMainStore";
+import {StudentTypes} from "@/typing/enums/student";
+import {useStudents} from "@/composables/student";
 
 
 const {numberWithSpaces, statusColor} = useSponsors()
+const {getDiplomaType} = useStudents()
+const mainStore = useMainStore()
+
 const fetchData: any = inject("fetchData")
 const fetchError: any = ref({})
 const router = useRouter()
@@ -103,12 +110,10 @@ const page = ref(+route.query.page! || 1)
 const size = ref(+route.query.size! || 15)
 const filters: any = ref(route.query.filters || "")
 const totalCount = ref(0)
-
 const sponsorListLength = ref(listOfStudents.value.length)
 const sponsorListEnd = computed(() => (listOfStudents.value.length >= size.value || sponsorListLength.value === listOfStudents.value.length ?
     listOfStudents.value.length * page.value : totalCount))
 
-const mainStore = useMainStore()
 
 const fetchSponsorsData = async () => {
   setTimeout(() => {

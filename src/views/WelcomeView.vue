@@ -117,7 +117,9 @@ async function onSubmit() {
 
   try {
     const response = await publicApi.post('/sponsor-create/', submitData)
-    steps.value = STEPS.SUCCESS
+    if (response.status === 201) {
+      steps.value = STEPS.SUCCESS
+    }
   } catch (error) {
     console.log(error)
     steps.value = STEPS.ERROR

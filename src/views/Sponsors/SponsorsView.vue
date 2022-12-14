@@ -9,7 +9,7 @@
         </div>
         <div class="" v-else-if="listOfSponsors.length > 0">
 
-          <Table classes="w-full table-auto border-separate border-spacing-y-4">
+          <Table classes="w-full table-auto border-separate border-spacing-y-4 container mx-auto">
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>

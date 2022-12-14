@@ -1,20 +1,21 @@
 <template>
   <div class="relative" v-if="variant === 1">
     <button
-        class="py-[12px] border-2 text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-[12px] bg-[#F9FAFF]"
+        class="py-[12px] border text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-xl bg-[#F9FAFF]"
         :class="{'border-[#2E5BFF]': isDropdownOpen}"
         @click="toggleDropdown">
-      <span>{{ value.length > 0 ? value.length + ' ta tanlangan' : "Arizalar holatlarni tanlang" }}</span>
-      <span class="transition-all" :class="{'rotate-180':isDropdownOpen}"><img
-          src="@/assets/icons/website/arrow-down.svg" alt=""></span>
+      <span>{{ title }}</span>
+      <span class="transition-all" :class="{'rotate-180':isDropdownOpen}">
+        <img src="@/assets/icons/website/arrow-down.svg" alt="">
+      </span>
     </button>
-    <form @submit.prevent class="multiselect transition-all dropdown absolute top-[56px] z-[1000] bg-white w-full"
-          v-if="isDropdownOpen">
-      <ul class="multiselect-list w-full">
+    <div class="multiselect transition-all dropdown absolute top-[56px] z-[1000] bg-white w-full rounded-xl"
+         v-if="isDropdownOpen">
+      <ul class="multiselect-list w-full overflow-y-scroll max-h-80 rounded-xl">
         <li class="multiselect-list__item w-full"
-            :class="{activeBg: value === option.label}"
+            :class="{activeBg: value === option.id}"
             v-for="(option, idx) in options">
-          <input type="checkbox" :value="option.label"
+          <input type="radio" :value="option.id"
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
@@ -23,11 +24,11 @@
                  class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
             <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Checked icon"
-                 v-show="value === option.label">
+                 v-show="value === option.id">
           </label>
         </li>
       </ul>
-    </form>
+    </div>
   </div>
 
   <div class="relative" v-else-if="variant === 2">
@@ -98,6 +99,8 @@ interface BaseInputProps {
   hideAll?: boolean;
   additional?: boolean
   defaultValue?: string
+  title: string
+
 }
 
 interface Emits {
@@ -110,6 +113,16 @@ const isDropdownOpen = ref(false)
 const value: any = ref("")
 const {numberWithSpaces, titleCase} = useSponsors()
 
+
+const getLabel = () => {
+  // searching index of option to show label field
+  const index = props.options.findIndex(item => (item.id === value.value))
+  if (!isNaN(index)) {
+    return props.options[index].label
+  } else {
+    return false
+  }
+}
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value

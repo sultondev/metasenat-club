@@ -7,7 +7,7 @@
       </h2>
 
       <form @submit.prevent="onSubmit"
-            class="login-form bg-white rounded-[12px] p-[32px] flex flex-col gap-[44px]">
+            class="login-form bg-white rounded-xl p-8 flex flex-col gap-[44px]">
         <h2 class="text-left text-3xl font-bold">Kirish</h2>
         <p v-if="loginAlert">
           <span class="text-red-500">Wrong username or password</span>

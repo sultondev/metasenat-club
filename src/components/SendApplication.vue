@@ -7,7 +7,6 @@
       <div class="">
         <InputTablets :options="options" v-model="application.sponsorType"
                       :default-value="SPONSOR.LEGALENTITY"/>
-        {{ application.sponsorType }}
       </div>
       <div>
         <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"

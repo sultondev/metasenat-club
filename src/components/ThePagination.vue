@@ -75,7 +75,6 @@ const mainStore = useMainStore()
 const pagesSizeAmount = computed(() => {
   return Math.ceil(props.count / pageSize.value)
 })
-console.log(pageSize.value < props.count)
 
 
 function selectPage(arg: number | string = 1) {
