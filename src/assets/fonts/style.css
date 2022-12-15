@@ -1,38 +1,51 @@
 @font-face {
-    font-family: 'icomoon';
-    src: url('fonts/icomoon.eot?66itnq');
-    src: url('fonts/icomoon.eot?66itnq#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?66itnq') format('truetype'),
-    url('fonts/icomoon.woff?66itnq') format('woff'),
-    url('fonts/icomoon.svg?66itnq#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?7ny2kb');
+  src:  url('fonts/icomoon.eot?7ny2kb#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?7ny2kb') format('truetype'),
+    url('fonts/icomoon.woff?7ny2kb') format('woff'),
+    url('fonts/icomoon.svg?7ny2kb#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-close:before {
+  content: "\e901";
+}
 .icon-filter:before {
-    content: "\e904";
+  content: "\e902";
 }
-
+.icon-down:before {
+  content: "\e903";
+}
+.icon-edit:before {
+  content: "\e904";
+}
+.icon-increase:before {
+  content: "\e907";
+}
+.icon-eye:before {
+  content: "\e900";
+}
 .icon-exit:before {
-    content: "\e905";
+  content: "\e905";
 }
-
 .icon-money:before {
-    content: "\e906";
+  content: "\e906";
 }

@@ -3,14 +3,14 @@
   <div class="">
     <TheHeader left-classes="flex" right-classes="">
       <template #left>
-        <button class="mr-[24px]" @click="router.back()"><img
+        <button class="mr-6" @click="router.back()"><img
             src="@/assets/icons/website/back-icon.svg"
             alt="Back Icon"></button>
         <h6 class="text-2xl font-bold  mr-[12px]">{{ student.full_name }}</h6>
         <span
-            class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">{{
-            student.get_status_display
-          }}</span>
+            class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">
+            {{ student.get_status_display }}
+        </span>
       </template>
     </TheHeader>
 
@@ -70,7 +70,7 @@
       </div>
       <div class="bg-white rounded-xl p-8 max-w-[793px] w-full  mx-auto">
         <div class="">
-          <div class="flex justify-between items-center mb-[26px] ">
+          <div class="flex justify-between items-center ">
             <h6 class="text-2xl font-bold">
               Talabaga homiylar
             </h6>
@@ -81,39 +81,41 @@
               Homiy qo‘shish
             </button>
           </div>
-          <Table classes="w-full table-auto border-separate border-spacing-y-4">
-            <template #thead>
-              <tr class="text-xs text-[#B1B1B8] uppercase text-center">
-                <th class="text-left px-4">#</th>
-                <th class=" text-left">F.I.SH.</th>
-                <th class="">Ajratilingan summa</th>
-                <th class="">Amallar</th>
-              </tr>
-            </template>
-            <template #tbody>
-              <tr v-for="(sponsor, idx) in sponsors"
-                  :key="sponsor"
-                  class="border-spacing-y-4 border-separate text-sm border-[#FBFBFC]">
-                <td class="py-[23px] bg-[#FBFBFC] rounded-l-xl px-4 border-y border-l">
-                  {{ idx + 1 }}
-                </td>
-                <td class="py-[23px]  bg-[#FBFBFC] font-bold text-ellipsis border-y">{{
-                    sponsor.sponsor.full_name
-                  }}
-                </td>
+          <div class="mt-[26px]" v-if="sponsors.length > 0">
+            <Table classes="w-full table-auto border-separate border-spacing-y-4">
+              <template #thead>
+                <tr class="text-xs text-[#B1B1B8] uppercase text-center">
+                  <th class="text-left px-4">#</th>
+                  <th class=" text-left">F.I.SH.</th>
+                  <th class="">Ajratilingan summa</th>
+                  <th class="">Amallar</th>
+                </tr>
+              </template>
+              <template #tbody>
+                <tr v-for="(sponsor, idx) in sponsors"
+                    :key="sponsor"
+                    class="border-spacing-y-4 border-separate text-sm border-[#FBFBFC]">
+                  <td class="py-[23px] bg-[#FBFBFC] rounded-l-xl px-4 border-y border-l">
+                    {{ idx + 1 }}
+                  </td>
+                  <td class="py-[23px]  bg-[#FBFBFC] font-bold text-ellipsis border-y">{{
+                      sponsor.sponsor.full_name
+                    }}
+                  </td>
 
-                <td class="py-[23px]  bg-[#FBFBFC] text-center whitespace-nowrap px-4 border-y">
+                  <td class="py-[23px]  bg-[#FBFBFC] text-center whitespace-nowrap px-4 border-y">
                   <span class="font-medium text-slate-700 mr-1">
                     {{ numberWithSpaces(sponsor.summa) }}
                   </span>
-                  <span class="text-[#B2B7C1]">UZS</span>
-                </td>
-                <td class="py-[23px]  bg-[#FBFBFC] text-center rounded-r-[12px] px-4 border-y border-r">
-                  {{ sponsor.sponsor.id }}
-                </td>
-              </tr>
-            </template>
-          </Table>
+                    <span class="text-[#B2B7C1]">UZS</span>
+                  </td>
+                  <td class="py-[23px]  bg-[#FBFBFC] text-center rounded-r-[12px] px-4 border-y border-r">
+                    {{ sponsor.sponsor.id }}
+                  </td>
+                </tr>
+              </template>
+            </Table>
+          </div>
 
         </div>
       </div>
@@ -136,67 +138,48 @@
   <teleport to="#modal">
     <TheModal :is-modal-open="isAddModalOpen" @close-modal="toggleModal" :window-num="2">
       <AddSponsorModal @close-modal="toggleModal(2)" :student-id="student.id"
-                       @data-submit="addSponsor"></AddSponsorModal>
+                       @data-submit="addSponsor" :input-error="inputErrors"></AddSponsorModal>
     </TheModal>
   </teleport>
 </template>
 
 <script setup lang="ts">
 import {Ref, ref} from "vue";
+// third package funcs
 import {useRoute, useRouter} from "vue-router";
+import {fetchData, publicApi} from "@/plugins/axios";
+
+// composables
 import {useSponsors} from "@/composables/sponsors";
+import {useStudents} from "@/composables/student";
+
+// components
+import Table from "@/components/UI/Table.vue"
 import TheHeader from "@/components/TheHeader.vue"
 import TheModal from "@/components/UI/TheModal.vue"
-import Table from "@/components/UI/Table.vue"
 import SponsorDetailsModal from "@/components/ModalContents/Sponsors/SponsorDetailsModal.vue"
-import {fetchData, publicApi} from "@/plugins/axios";
-import {useStudents} from "@/composables/student";
 import AddSponsorModal from "@/components/ModalContents/Students/AddSponsorModal.vue";
 
-type instituteType = {
-  id: number
-  name: string
-}
+// constant
+import {defaultInputFields} from "@/constants/students";
 
-type sponsorType = {
-  id: number,
-  full_name: string,
-  sponsor: {
-    "id": number,
-    "full_name": string
-  },
-  "summa": number
-}
+// types
+import {inputErrorsType} from "@/typing/types/sponsor";
+import {studentSponsorType, studentType} from "@/typing/types/students";
 
-
-type studentType = {
-  id: number,
-  full_name: string,
-  phone: string,
-  institute: instituteType
-  get_status_display: string
-  contract: number
-  given: number
-}
-
-type sponsorStudentType = {
-  id: number,
-  full_name: string,
-  given: number,
-  get_status_display: string,
-  sponsors: sponsorType[]
-}
 
 const router = useRouter()
 const route = useRoute()
 const student: studentType | any = ref({})
+const inputErrors: Ref<inputErrorsType> = ref(defaultInputFields)
+
 const isEditModalOpen = ref(false)
 const isAddModalOpen = ref(false)
 // @ts-ignore
-const sponsors: Ref<sponsorStudentType> = ref<[]>([])
+const sponsors: Ref<studentSponsorType[]> = ref()
 
 const {numberWithSpaces} = useSponsors()
-const {getDiplomaType} = useStudents()
+const {getDiplomaType, validateInputAll, sponsorIdValidation, sumsValidation, transformSums} = useStudents()
 
 fetchTheUser(route.params.id)
 
@@ -241,19 +224,29 @@ async function fetchSponsors(id: any) {
   }
 }
 
-async function addSponsor(sponId: number | string, sum: number | string) {
+async function addSponsor(sponId: number | string, sum: string) {
   try {
-    const response = await publicApi.post('/sponsor-summa-create/', {
-      sponsor: sponId,
-      summa: sum,
-      student: student.value.id
-    })
-    if (response) {
-      await fetchSponsors(student.value.id)
-      isAddModalOpen.value = false
+    if (validateInputAll(sponId, sum)) {
+      const response = await publicApi.post('/sponsor-summa-create/', {
+        sponsor: sponId,
+        summa: transformSums(sum),
+        student: student.value.id
+      })
+      if (response.status === 201) {
+        isAddModalOpen.value = false
+        await fetchSponsors(student.value.id)
+      }
+    } else {
+      inputErrors.value.sponsorId.status = !sponsorIdValidation(sponId)
+      inputErrors.value.sums.status = !sumsValidation(sum)
     }
-  } catch (error) {
+  } catch (error: any) {
+    const {response} = error
     console.log(error)
+    if (response.status === 400) {
+      inputErrors.value.sponsorSumLimit.status = true
+      console.log(response)
+    }
   }
 }
 

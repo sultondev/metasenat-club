@@ -9,15 +9,15 @@
            placeholder="Izlash" v-model="filters" :disabled="$route.path === '/main/dashboard' ?? true"/>
     <span v-if="filters.length > 0 ">
       <button class="absolute right-2 top-[24%]" @click="clearFilter">
-        <img src="@/assets/icons/website/close-icon.svg" class="w-[20px]" alt="close">
+        <span class="icon-close"></span>
       </button>
     </span>
   </label>
   <button
-      class="rounded-[5px] w-[123px] min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px] hover:bg-[#E0E7FF]"
+      class="rounded-[5px] w-[123px] flex items-center justify-center min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px] hover:bg-[#E0E7FF]"
       @click="mainStore.toggleFilterModal">
             <span
-                class="icon-filter mr-[20px] text-[13px] ">
+                class="icon-filter mr-[20px] text-2xl font-bold ">
             </span>
     <span class="font-medium text-[14px]">Filter</span>
   </button>

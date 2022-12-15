@@ -5,7 +5,7 @@
         Filter
       </h6>
       <button class="" @click="$emit('close-modal')">
-        <img src="@/assets/icons/website/close.svg" alt="">
+        <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600"></span>
       </button>
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>

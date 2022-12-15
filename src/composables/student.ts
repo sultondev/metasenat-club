@@ -15,5 +15,22 @@ export const useStudents = () => {
         }
     }
 
-    return {getDiplomaType}
+    function validateInputAll(sponsorId: number | string, sums: string) {
+        return sponsorIdValidation(sponsorId) && sumsValidation(sums);
+    }
+
+    function transformSums(sums: string) {
+        return Number(sums.replace(/ /g, ''))
+    }
+
+    function sumsValidation(sums: string) {
+        const sum = transformSums(sums)
+        return sum > 1000000 && sum <= 9000000;
+    }
+
+    function sponsorIdValidation(sponsorId: number | string) {
+        return Boolean(sponsorId);
+    }
+
+    return {getDiplomaType, validateInputAll, sponsorIdValidation, sumsValidation, transformSums}
 }

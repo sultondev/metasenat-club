@@ -9,6 +9,7 @@ const SponsorDetails = () => import("@/views/Sponsors/SponsorDetails.vue")
 const StudentsView = () => import("@/views/Students/StudentsView.vue")
 const StudentDetails = () => import("@/views/Students/StudentDetails.vue")
 const PageNotFound = () => import("@/views/PageNotFound.vue")
+import AddStudent from "@/views/Students/CreateStudent.vue"
 import {useUserStore} from "@/store/userStore";
 
 
@@ -62,12 +63,17 @@ const router = createRouter({
                     },
                 }
             ],
-
             meta: {
                 requiresAuth: true
             },
             beforeEnter: guardAuth
-        }, {
+        },
+        {
+            path: "/students/create",
+            name: "student-add",
+            component: AddStudent,
+        },
+        {
             path: "/main/sponsors/:id",
             component: SponsorDetails,
             name: "sponsor-details",

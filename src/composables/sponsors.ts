@@ -1,4 +1,4 @@
-import {fetchData} from "@/plugins/axios";
+import {fetchData, publicApi} from "@/plugins/axios";
 
 export function useSponsors() {
     function formatDateTime(arg: string) {
@@ -14,13 +14,15 @@ export function useSponsors() {
         return false
     }
 
+
     function titleCase(arg: string) {
         return arg[0].toUpperCase() + arg.slice(1, -1)
     }
 
     function fetchUserById(id: any) {
-        return fetchData(`/sponsor-detail/${id}/`)
+        return fetchData(`/student-detail/${id}/`)
     }
+
 
     const statusColor = (value: string) => {
         value = value.toLowerCase();

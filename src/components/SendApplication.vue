@@ -38,7 +38,7 @@
       </div>
       <div class="">
         <BaseFormGroup variant="1" id="none" label-title="To‘lov summasi" label-classes="block text-xs mb-3 uppercase">
-          <OneSelect v-model="application.sums" :variant="2" :hide-all="false"
+          <OneSelect v-model="application.sums" :variant="2" :hide-all="false" hint="" required classes="" title=""
                      :options="generousSums" :additional="true"
                      default-value="1000000"
                      label-classes="select-none py-5 px-9 cursor-pointer hover:bg-[#E0E7FF] transition-all ease-linear overflow-hidden"></OneSelect>
@@ -90,6 +90,7 @@ import OneSelect from "@/components/UI/OneSelect.vue";
 import InputTablets from "@/components/UI/InputTablets.vue"
 import {useSponsorStore} from "@/store/useSponsorStore";
 import {vMaska} from "maska"
+import {publicApi} from "@/plugins/axios";
 
 const masks = reactive({
   tel: {
@@ -134,9 +135,9 @@ const options: Ref<optionType[]> = ref([
     value: SPONSOR.LEGALENTITY
   }
 ])
-
 const {application} = useSponsorStore()
 const {numberWithSpaces} = useSponsors()
+
 
 </script>
 

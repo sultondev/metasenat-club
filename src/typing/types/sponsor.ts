@@ -1,5 +1,6 @@
 import {SPONSOR} from "@/typing/enums/sponsor";
 
+
 export type sponsorsListType = {
     created_at: string;
     firm: string;
@@ -32,4 +33,19 @@ export type optionType = {
 export type generousSumsType = {
     label: string;
     id: number
+}
+
+export type inputErrorsType = {
+    sponsorId: {
+        status: boolean,
+        message: string
+    },
+    sums: {
+        status: boolean,
+        message: string
+    },
+    sponsorSumLimit: {
+        status: boolean,
+        message: string
+    }
 }

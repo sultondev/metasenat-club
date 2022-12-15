@@ -10,9 +10,9 @@
       </span>
     </button>
     <div class="multiselect transition-all dropdown absolute top-[56px] z-[1000] bg-white w-full rounded-xl"
-         v-if="isDropdownOpen">
+         v-if="isDropdownOpen" :class="dropdownClass">
       <ul class="multiselect-list w-full overflow-y-scroll max-h-80 rounded-xl">
-        <li class="multiselect-list__item w-full"
+        <li class="multiselect-list__item w-full hover:bg-[#e9e9ff] transition-all ease-linear"
             :class="{activeBg: value === option.id}"
             v-for="(option, idx) in options">
           <input type="radio" :value="option.id"
@@ -21,7 +21,7 @@
                  name="item"
                  :id="String(option.id)">
           <label :for="String(option.id)"
-                 class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
+                 class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between cursor-pointer">
             <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Checked icon"
                  v-show="value === option.id">
@@ -92,6 +92,7 @@ interface BaseInputProps {
   variant: number;
   classes?: string | [] | object;
   labelClasses?: string | [] | object;
+  dropdownClass?: string | [] | object
   hint?: string;
   resetValue?: string;
   required?: boolean;
@@ -129,6 +130,7 @@ const toggleDropdown = () => {
 }
 
 watch(() => value.value, () => {
+  isDropdownOpen.value = false
   emit("update:modelValue", value.value)
 })
 

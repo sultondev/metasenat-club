@@ -3,7 +3,7 @@
   <div class="">
     <TheHeader left-classes="flex" right-classes="2">
       <template #left>
-        <button class="mr-[24px]" @click="router.back()"><img
+        <button class="mr-6" @click="router.back()"><img
             src="@/assets/icons/website/back-icon.svg"
             alt="Back Icon"></button>
         <h6 class="text-2xl font-bold  mr-[12px]">{{ user.full_name }}</h6>

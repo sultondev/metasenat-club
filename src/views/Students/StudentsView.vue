@@ -1,7 +1,14 @@
 <template>
   <section class="students" v-cloak>
     <div class="mx-auto xs:w-full ">
-      <div class="overflow-x-scroll mb-[6px]">
+      <div class="w-full">
+        <router-link to="/students/create"
+                     class="py-[10px] bg-[#3366FF] w-fit flex items-center px-8 text-white text-sm rounded">
+          <span class="icon-increase text-base mr-2.5"></span>
+          <span>Talaba qo'shish</span>
+        </router-link>
+      </div>
+      <div class="overflow-x-scroll mb-1.5">
         <div class="mx-auto"
              v-if="listOfStudents.length === 0 && !fetchError.error || mainStore.loading">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
@@ -26,11 +33,12 @@
                   {{ (page - 1) * size + idx + 1 }}
                 </td>
                 <td class="py-[23px]  bg-white font-bold text-ellipsis">{{ student.full_name }}</td>
-                <td class="py-[23px]  bg-white text-center whitespace-nowrap capitalize">{{
+                <td class="py-[23px]  bg-white text-center whitespace-nowrap capitalize">
+                  {{
                     getDiplomaType(student.type)
                   }}
                 </td>
-                <td class="py-[23px]  bg-white text-center whitespace-nowrap font-medium">
+                <td class="py-[23px]  bg-white text-center font-medium">
                   <span class="font-medium text-slate-700">
                     {{ student.institute.name }}
                   </span>
@@ -81,6 +89,7 @@
       </div>
     </div>
   </section>
+
 </template>
 
 <script setup lang="ts">
@@ -95,6 +104,7 @@ import {studentsListType} from "@/typing/types/students";
 import {useMainStore} from "@/store/useMainStore";
 import {StudentTypes} from "@/typing/enums/student";
 import {useStudents} from "@/composables/student";
+import BaseButton from "@/components/UI/BaseButton.vue"
 
 
 const {numberWithSpaces, statusColor} = useSponsors()
@@ -111,6 +121,7 @@ const size = ref(+route.query.size! || 15)
 const filters: any = ref(route.query.filters || "")
 const totalCount = ref(0)
 const sponsorListLength = ref(listOfStudents.value.length)
+const isAddStudentModalOpen = ref(false)
 const sponsorListEnd = computed(() => (listOfStudents.value.length >= size.value || sponsorListLength.value === listOfStudents.value.length ?
     listOfStudents.value.length * page.value : totalCount))
 
@@ -145,6 +156,9 @@ const filterStudentsByName = computed(() => {
   }
 })
 
+const toggleModal = () => {
+  isAddStudentModalOpen.value = !isAddStudentModalOpen.value
+}
 onMounted(async () => {
   await fetchSponsorsData()
 })

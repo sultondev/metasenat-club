@@ -1,5 +1,5 @@
 <template>
-  <div v-if="variant  == 1">
+  <div v-if="variant  == 1" class="w-full">
     <label :for="id" class="text-xs font-medium" :class="labelClasses">
       {{ labelTitle }}
     </label>
