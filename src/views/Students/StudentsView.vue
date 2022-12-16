@@ -1,14 +1,14 @@
 <template>
   <section class="students" v-cloak>
     <div class="mx-auto xs:w-full ">
-      <div class="w-full">
+      <div class="w-full flex justify-end">
         <router-link to="/students/create"
                      class="py-[10px] bg-[#3366FF] w-fit flex items-center px-8 text-white text-sm rounded">
           <span class="icon-increase text-base mr-2.5"></span>
           <span>Talaba qo'shish</span>
         </router-link>
       </div>
-      <div class="overflow-x-scroll mb-1.5">
+      <div class="overflow-x-scroll mb-1.5 mt-3">
         <div class="mx-auto"
              v-if="listOfStudents.length === 0 && !fetchError.error || mainStore.loading">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">

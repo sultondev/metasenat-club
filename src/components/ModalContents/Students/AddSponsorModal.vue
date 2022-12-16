@@ -25,7 +25,7 @@
     </div>
     <div class="mb-7">
       <div class="text-red-600 max-w-[500px]">
-        <span class="whitespace-normal">{{ inputErrors.sums.status ? inputErrors.sums.message : '' }}</span>
+        <span class="whitespace-normal">{{ inputErrors.sums.status > 0 ? inputErrors.sums.message : '' }}</span>
         <span class="whitespace-normal">
           {{
             inputErrors.sponsorSumLimit.status ? inputErrors.sponsorSumLimit.message : ''
@@ -36,7 +36,7 @@
                      label-classes="font-medium text-xs uppercase mb-2">
         <BaseInput id="summa" classes=""
                    class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
-                   v-model="chosenSums" :required="true"
+                   v-model="chosenSums" :required="false"
                    :max-len="10" hint="Summani kiriting" v-maska:[maskaOpt]/>
       </BaseFormGroup>
     </div>

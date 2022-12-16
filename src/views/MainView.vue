@@ -11,7 +11,7 @@
   </TheHeader>
 
 
-  <main class="main py-[48px] custom:px-[120px] sm:px-[20px]">
+  <main class="main mb-[84px] mt-7 custom:px-[120px] sm:px-5">
     <router-view></router-view>
   </main>
 

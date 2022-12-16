@@ -16,7 +16,7 @@
                          label-classes="block text-xs mb-2 uppercase w-full"
                          id="student-create-name">
             <BaseInput v-model="application.full_name" id="student-create-name" hint="Abdullayev Abdulla Abdulla o’g’li"
-                       classes="bg-[#E0E7FF33] border border-[#E0E7FF] w-full focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
+                       classes="bg-[#E0E7FF33] border border-[#E0E7FF] w-full focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
                        :required="true" :max-len="100" :min-len="5"
             />
           </BaseFormGroup>
@@ -24,7 +24,7 @@
           <BaseFormGroup variant="1" id="student-create-phone" label-title="Telefon raqamingiz"
                          label-classes="block text-xs mb-2 uppercase">
             <BaseFormGroup id="student-create-phone" variant="2"
-                           label-classes="flex items-center bg-[#E0E7FF33] border border-[#E0E7FF] py-3 px-4 focus-within:bg-[#E0E7FF] rounded-md outline-none text-[15px]">
+                           label-classes="flex items-center bg-[#E0E7FF33] border border-[#E0E7FF] py-3 px-4 focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] rounded-md outline-none text-[15px]">
               <template #defVal>
                 <span class="mr-1">+998</span>
               </template>
@@ -56,7 +56,7 @@
           <BaseFormGroup id="" variant="1" label-title="Kontrakt summa"
                          label-classes="block text-xs mb-2 uppercase w-full">
             <BaseInput id="summa" classes=""
-                       class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
+                       class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF]"
                        v-model="application.contract" :required="true"
                        :max-len="10" hint="Summani kiriting" v-maska:[maskaOpt]
             />
@@ -78,20 +78,25 @@
 </template>
 
 <script setup lang="ts">
-import TheHeader from "@/components/TheHeader.vue"
+import {useVuelidate} from '@vuelidate/core'
+import {required, email} from '@vuelidate/validators'
+
 
 import {useRouter} from "vue-router"
 import {reactive, Ref, ref} from "vue";
 
+import {studentType} from "@/typing/types/students";
+import {StudentTypes} from "@/typing/enums/student";
+
+import TheHeader from "@/components/TheHeader.vue"
 import OneSelect from "@/components/UI/OneSelect.vue"
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import BaseButton from "@/components/UI/BaseButton.vue"
-import {studentType} from "@/typing/types/students";
+
 import {publicApi} from "@/plugins/axios";
-import {StudentTypes} from "@/typing/enums/student";
-import {vMaska} from "maska";
 import {useStudents} from "@/composables/student";
+import {vMaska} from "maska";
 
 fetchInstitutes()
 
