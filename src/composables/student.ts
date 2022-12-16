@@ -1,4 +1,6 @@
 import {StudentTypes} from "@/typing/enums/student";
+import {publicApi} from "@/plugins/axios";
+import {ref} from "vue";
 
 export const useStudents = () => {
 
@@ -12,6 +14,20 @@ export const useStudents = () => {
                 return StudentTypes.doktorantura
             default:
                 return StudentTypes.bakalavr
+        }
+    }
+
+    const getInstitute = async (id: any) => {
+        const institute = ref({})
+        try {
+            const response = await publicApi.get('institute-list')
+            if (response.status === 200) {
+                const index = response.data.findIndex((item: any) => item.id === id)
+                institute.value = response.data[index.value]
+                return institute.value
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -32,5 +48,5 @@ export const useStudents = () => {
         return Boolean(sponsorId);
     }
 
-    return {getDiplomaType, validateInputAll, sponsorIdValidation, sumsValidation, transformSums}
+    return {getDiplomaType, validateInputAll, sponsorIdValidation, sumsValidation, transformSums, getInstitute}
 }

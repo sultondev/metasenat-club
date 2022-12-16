@@ -2,7 +2,7 @@
   <div class="relative" v-if="variant === 1">
     <button
         class="oneselect__button py-[12px] border text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-xl bg-[#F9FAFF]">
-      <span>{{ title }}</span>
+      <span>{{ value > 0 ? findLabel() : title }}</span>
       <span class="down-up transition-all">
         <img src="@/assets/icons/website/arrow-down.svg" alt="">
       </span>
@@ -114,13 +114,14 @@ const {numberWithSpaces, titleCase} = useSponsors()
 
 const getLabel = () => {
   // searching index of option to show label field
-  const index = props.options.findIndex(item => (item.id === value.value))
+  const index = props.options.findIndex(item => (item.id == value.value))
   if (!isNaN(index)) {
     return props.options[index].label
   } else {
     return false
   }
 }
+
 
 const toggleDropdown = () => {
 }
@@ -136,6 +137,11 @@ watch(() => props.resetValue, () => {
 if (props.defaultValue) {
   value.value = props.defaultValue
   emit("update:modelValue", value.value)
+}
+
+function findLabel() {
+  const index = props.options.findIndex((item: any) => item.id == value.value)
+  return props.options[index].label
 }
 
 </script>

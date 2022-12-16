@@ -3,7 +3,9 @@
     <div class="mx-auto xs:w-full ">
       <div class="w-full flex justify-end">
         <router-link to="/students/create"
-                     class="py-[10px] bg-[#3366FF] w-fit flex items-center px-8 text-white text-sm rounded">
+                     class="py-[10px] bg-[#3366FF] w-fit flex items-center px-8 text-white text-sm rounded"
+                     :class="[hoverForButtons]"
+        >
           <span class="icon-increase text-base mr-2.5"></span>
           <span>Talaba qo'shish</span>
         </router-link>
@@ -124,7 +126,7 @@ const sponsorListLength = ref(listOfStudents.value.length)
 const isAddStudentModalOpen = ref(false)
 const sponsorListEnd = computed(() => (listOfStudents.value.length >= size.value || sponsorListLength.value === listOfStudents.value.length ?
     listOfStudents.value.length * page.value : totalCount))
-
+import {hoverForButtons} from "@/constants/UI-styles"
 
 const fetchSponsorsData = async () => {
   setTimeout(() => {

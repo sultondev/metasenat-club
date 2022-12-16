@@ -34,6 +34,7 @@
                          v-maska:[masks.tel]
                          :required="true"
                          minlength="14"
+                         autocomplete="off"
               />
             </BaseFormGroup>
           </BaseFormGroup>
@@ -42,14 +43,14 @@
         <div class="mb-7">
           <BaseFormGroup id="otm" :variant="1" label-title="OTM" label-classes="block text-xs mb-2 uppercase w-full">
             <OneSelect :variant="1" :options="instituteOptions" label-classes=""
-                       :title='instituteOptions.length > 0 ? "Institut tanlangan" : "Institut tanlanmagan"'
+                       title="Institut tanlanmagan"
                        v-model="application.institute.id" required/>
           </BaseFormGroup>
         </div>
         <div class="flex gap-x-7">
           <BaseFormGroup id="student-type" variant="1" label-title="Talabalik turi"
                          label-classes="block text-xs mb-2 uppercase w-full">
-            <OneSelect :title='instituteOptions.length > 0 ? "Talim turi tanlangan" : "Talim turi tanlanmagan"'
+            <OneSelect title="Talim turi tanlanmagan"
                        :options="studyType" :variant="1" required v-model="application.type"
                        dropdown-class="z-[10]"></OneSelect>
           </BaseFormGroup>
@@ -65,7 +66,8 @@
         <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
         <div class="flex justify-end">
           <BaseButton action-name="create-student"
-                      classes="flex items-center py-2.5 px-8 bg-[#3366FF] rounded text-sm font-medium  text-white gap-3"
+                      classes='flex items-center py-2.5 px-8 bg-[#3366FF] rounded text-sm font-medium  text-white gap-3'
+                      :class="[hoverForButtons]"
                       text="Qo'shish"
                       @create-student="createStudent"
           >
@@ -93,14 +95,16 @@ import OneSelect from "@/components/UI/OneSelect.vue"
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import BaseButton from "@/components/UI/BaseButton.vue"
-
+import {hoverForButtons} from "@/constants/UI-styles"
 import {publicApi} from "@/plugins/axios";
 import {useStudents} from "@/composables/student";
 import {vMaska} from "maska";
 
 fetchInstitutes()
 
-const {transformSums} = useStudents()
+// composables destructuring
+const {transformSums, getDiplomaType, getInstitute} = useStudents()
+
 const maskaOpt = {
   mask: '# ### ###',
 }
@@ -115,25 +119,24 @@ type optionsType = {
   label: string;
   id: number;
 }
-
 const instituteOptions: Ref<optionsType[]> = ref([])
-const studyType = ref([
+const studyType = reactive([
   {
     id: 1,
-    label: StudentTypes.bakalavr,
+    label: 'Bakalavr',
   },
   {
     id: 2,
-    label: StudentTypes.magistratura
+    label: 'Magistratura',
   },
   {
     id: 3,
-    label: StudentTypes.doktorantura
+    label: 'Doktorantura'
   }
 ])
 const router = useRouter()
 // @ts-ignore
-const application: Ref<studentType> = ref({
+const application: studentType = reactive({
   id: 0,
   full_name: "",
   phone: "",
@@ -165,18 +168,19 @@ function sortInstitutesByABC(value: any) {
   return value.sort((a: any, b: any) => a.label.localeCompare(b.label))
 }
 
-function findInstituteName() {
-  return instituteOptions.value.findIndex(item => item.id === application.value.institute.id);
+function findInstituteName(id: any) {
+  const index = instituteOptions.value.findIndex(item => item.id === id);
+  return instituteOptions.value[index].label
 }
 
 async function createStudent() {
   const data = {
-    full_name: application.value.full_name,
-    type: Number(application.value.type),
-    phone: application.value.phone,
-    institute: Number(application.value.institute.id),
-    contract: transformSums(String(application.value.contract)),
-    given: Number(application.value.given)
+    full_name: application.full_name,
+    type: Number(application.type),
+    phone: application.phone,
+    institute: Number(application.institute.id),
+    contract: transformSums(String(application.contract)),
+    given: Number(application.given)
   }
   try {
     const response = await publicApi.post("/student-create/", data)

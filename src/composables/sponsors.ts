@@ -16,7 +16,7 @@ export function useSponsors() {
 
 
     function titleCase(arg: string) {
-        return arg[0].toUpperCase() + arg.slice(1, -1)
+        return arg[0].toUpperCase() + arg.slice(1)
     }
 
     function fetchUserById(id: any) {

@@ -1,5 +1,5 @@
 export enum StudentTypes {
     bakalavr = 'bakalavr',
-    magistratura = 'magistr',
-    doktorantura = 'doktor'
+    magistratura = 'magistratura',
+    doktorantura = 'doktorantura'
 }
