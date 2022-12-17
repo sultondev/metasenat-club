@@ -1,3 +1,8 @@
+import {sponsorshipValidation} from "@/plugins/vuelidate";
+import {useSponsors} from "@/composables/sponsors";
+
+const {numberWithSpaces} = useSponsors()
+
 export const defaultInputFields = {
     sponsorId: {
         status: false,
@@ -5,7 +10,7 @@ export const defaultInputFields = {
     },
     sums: {
         status: false,
-        message: "Kiritilayotgan summa 1 000 000 so'mdan kam yoki 9 000 000 mln so'mdan ko'p bo'la olmaydi"
+        message: `Kiritilayotgan summa ${numberWithSpaces(sponsorshipValidation.minSum)} so'mdan kam yoki ${numberWithSpaces(sponsorshipValidation.maxSum)} mln so'mdan ko'p bo'la olmaydi`
     },
     sponsorSumLimit: {
         status: false,

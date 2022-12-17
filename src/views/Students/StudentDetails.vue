@@ -3,7 +3,7 @@
   <div class="">
     <TheHeader left-classes="flex" right-classes="">
       <template #left>
-        <button class="mr-6" @click="router.back()"><img
+        <button class="mr-6" @click="router.push({path: '/main/students'})"><img
             src="@/assets/icons/website/back-icon.svg"
             alt="Back Icon"></button>
         <h6 class="text-2xl font-bold  mr-[12px]">{{ student.full_name }}</h6>
@@ -18,11 +18,11 @@
       <div class="bg-white rounded-xl p-8 max-w-[793px] w-full mx-auto mb-10">
         <div class="flex justify-between items-center mb-8">
           <h6 class="text-2xl">Talaba haqida</h6>
-          <!--          <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"-->
-          <!--                  @click="toggleModal">-->
-          <!--            <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">-->
-          <!--            Tahrirlash-->
-          <!--          </button>-->
+          <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"
+                  @click="toggleModal">
+            <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">
+            Tahrirlash
+          </button>
         </div>
         <div class="flex items-center mb-6">
           <span class="text-xs text-[#3366FF] bg-[#E5EBFF] px-3 whitespace-nowrap font-medium">Asosiy ma’lumotlar</span>
@@ -166,6 +166,7 @@ import {defaultInputFields} from "@/constants/students";
 // types
 import {inputErrorsType} from "@/typing/types/sponsor";
 import {studentSponsorType, studentType} from "@/typing/types/students";
+import {sponsorshipValidation} from "@/plugins/vuelidate";
 
 
 const router = useRouter()
@@ -179,21 +180,21 @@ const isAddModalOpen = ref(false)
 const sponsors: Ref<studentSponsorType[]> = ref()
 
 const {numberWithSpaces} = useSponsors()
-const {getDiplomaType, validateInputAll, sponsorIdValidation, sumsValidation, transformSums} = useStudents()
+const {
+  getDiplomaType,
+  validateInputAll,
+  sponsorIdValidation,
+  sumsValidation,
+  transformSums,
+  sponsorSumValidation
+} = useStudents()
 
 fetchTheUser(route.params.id)
 
 function toggleModal(key: number) {
-  switch (key) {
-    case 1:
-      isEditModalOpen.value = !isEditModalOpen.value
-      break;
-    case 2:
-      isAddModalOpen.value = !isAddModalOpen.value
-      break;
-    default:
-      isEditModalOpen.value = !isEditModalOpen
-  }
+  if (key === 1) isEditModalOpen.value = !isEditModalOpen.value
+  else if (key === 2) isAddModalOpen.value = !isAddModalOpen.value
+  else isEditModalOpen.value = !isEditModalOpen
 }
 
 async function fetchTheUser(id: any) {
@@ -226,10 +227,10 @@ async function fetchSponsors(id: any) {
 
 async function addSponsor(sponId: number | string, sum: string) {
   try {
-    if (validateInputAll(sponId, sum)) {
+    if (sponsorIdValidation(sponId) && sponsorSumValidation(sum)) {
       const response = await publicApi.post('/sponsor-summa-create/', {
         sponsor: sponId,
-        summa: transformSums(sum),
+        summa: transformSums(sum) ?? 0,
         student: student.value.id
       })
       if (response.status === 201) {
@@ -238,7 +239,7 @@ async function addSponsor(sponId: number | string, sum: string) {
       }
     } else {
       inputErrors.value.sponsorId.status = !sponsorIdValidation(sponId)
-      inputErrors.value.sums.status = !sumsValidation(sum)
+      inputErrors.value.sums.status = !sponsorSumValidation(sum)
     }
   } catch (error: any) {
     const {response} = error

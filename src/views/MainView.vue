@@ -16,7 +16,7 @@
   </main>
 
   <teleport to="#modal">
-    <TheModal @close-modal="mainStore.toggleFilterModal" :show="mainStore.filterModalOpen"
+    <TheModal @close-modal="mainStore.filterModalOpen = false" :show="mainStore.filterModalOpen"
               :is-modal-open="mainStore.filterModalOpen">
       <SponsorsFilterModal @close-modal="mainStore.toggleFilterModal"></SponsorsFilterModal>
     </TheModal>

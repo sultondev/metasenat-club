@@ -1,20 +1,15 @@
 import {StudentTypes} from "@/typing/enums/student";
 import {publicApi} from "@/plugins/axios";
 import {ref} from "vue";
+import {contractValidation, sponsorshipValidation} from "@/plugins/vuelidate";
 
 export const useStudents = () => {
 
     const getDiplomaType = (type: number | string) => {
-        switch (type) {
-            case 1:
-                return StudentTypes.bakalavr
-            case 2:
-                return StudentTypes.magistratura
-            case 3:
-                return StudentTypes.doktorantura
-            default:
-                return StudentTypes.bakalavr
-        }
+        if (type == 1) return StudentTypes.bakalavr
+        else if (type == 2) return StudentTypes.magistratura
+        else if (type == 3) return StudentTypes.doktorantura
+        else return StudentTypes.bakalavr
     }
 
     const getInstitute = async (id: any) => {
@@ -41,12 +36,25 @@ export const useStudents = () => {
 
     function sumsValidation(sums: string) {
         const sum = transformSums(sums)
-        return sum > 1000000 && sum <= 9000000;
+        return sum > contractValidation.minContract && sum <= contractValidation.maxContract;
+    }
+
+    function sponsorSumValidation(sums: any) {
+        const sum = transformSums(sums)
+        return sum > sponsorshipValidation.minSum && sum < sponsorshipValidation.maxSum
     }
 
     function sponsorIdValidation(sponsorId: number | string) {
         return Boolean(sponsorId);
     }
 
-    return {getDiplomaType, validateInputAll, sponsorIdValidation, sumsValidation, transformSums, getInstitute}
+    return {
+        getDiplomaType,
+        validateInputAll,
+        sponsorIdValidation,
+        sumsValidation,
+        transformSums,
+        getInstitute,
+        sponsorSumValidation
+    }
 }

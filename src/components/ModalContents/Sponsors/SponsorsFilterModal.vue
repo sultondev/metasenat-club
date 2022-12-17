@@ -5,7 +5,7 @@
         Filter
       </h6>
       <button class="" @click="$emit('close-modal')">
-        <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600"></span>
+        <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600 transition-all ease-linear"></span>
       </button>
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
@@ -44,9 +44,10 @@
           <img src="@/assets/icons/website/clean-modal.svg" alt="Eye white"></span>
         <span class="text-sm text-[#B2B7C1]">Tozalash</span>
       </button>
-      <button class="bg-[#3366FF] text-white flex items-center py-[9px] px-[32px] rounded-[5px] hover:bg-[#364575]">
-        <span class="mr-[20px]">
-          <img src="@/assets/icons/website/eye-white.svg" alt="Eye white"></span>
+      <button class="bg-[#3366FF] text-white flex items-center py-[9px] px-[32px] rounded-[5px]"
+              :class="[hoverForButtons]"
+      >
+        <span class="icon-eye mr-5 text-2xl"></span>
         <span class="text-sm">Natijalarini ko'rish</span>
       </button>
     </div>
@@ -56,6 +57,7 @@
 <script setup lang="ts">
 import {Ref, ref} from "vue";
 import MultiSelect from "@/components/UI/MultiSelect.vue"
+import {hoverForButtons} from "@/constants/UI-styles"
 
 type optionsType = {
   label: string;

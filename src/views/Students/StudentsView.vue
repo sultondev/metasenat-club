@@ -1,7 +1,7 @@
 <template>
   <section class="students" v-cloak>
     <div class="mx-auto xs:w-full ">
-      <div class="w-full flex justify-end">
+      <div class="container mx-auto w-full flex justify-end">
         <router-link to="/students/create"
                      class="py-[10px] bg-[#3366FF] w-fit flex items-center px-8 text-white text-sm rounded"
                      :class="[hoverForButtons]"
