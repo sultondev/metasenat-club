@@ -15,20 +15,23 @@
           <div class="w-full">
             <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
                            label-classes="block text-xs mb-2 uppercase w-full"
-                           id="student-create-name">
+                           id="student-create-name" :is-wrong="inputErrors.full_name">
               <BaseInput v-model="application.full_name" id="student-create-name"
                          hint="Abdullayev Abdulla Abdulla o’g’li"
                          classes="bg-[#E0E7FF33] border border-[#E0E7FF] w-full focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
-                         :required="false" :max-len="25" :min-len="5"
+                         :required="false" maxlength="25" minlen="5"
+                         :is-wrong="inputErrors.full_name"
               />
             </BaseFormGroup>
-            <span class="text-red-600" v-show="v$.full_name.$invalid">Iltimos, bu maydonni to'ldiring</span>
+            <span class="text-red-600 text-xs" v-show="inputErrors.full_name">Iltimos, bu maydonni to'ldiring</span>
           </div>
           <div class="w-full">
             <BaseFormGroup variant="1" id="student-create-phone" label-title="Telefon raqamingiz"
                            label-classes="block text-xs mb-2 uppercase">
               <BaseFormGroup id="student-create-phone" variant="2"
-                             label-classes="flex items-center bg-[#E0E7FF33] border border-[#E0E7FF] py-3 px-4 focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] rounded-md outline-none text-[15px]">
+                             label-classes="flex items-center bg-[#E0E7FF33] border border-[#E0E7FF] py-3 px-4 focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] rounded-md outline-none text-[15px]"
+                             :is-wrong="inputErrors.phone"
+              >
                 <template #defVal>
                   <span class="mr-1">+998</span>
                 </template>
@@ -41,55 +44,46 @@
                            autocomplete="off"
                 />
               </BaseFormGroup>
-              <span class="text-red-600" v-show="v$.phone.$invalid">Iltimos, bu maydonni to'ldiring</span>
+              <span class="text-red-600 text-xs" v-show="inputErrors.phone">Iltimos, bu maydonni to'ldiring</span>
             </BaseFormGroup>
           </div>
 
 
         </div>
         <div class="mb-7">
-          <BaseFormGroup id="otm" :variant="1" label-title="OTM" label-classes="block text-xs mb-2 uppercase w-full">
+          <BaseFormGroup id="otm" variant="1" label-title="OTM" label-classes="block text-xs mb-2 uppercase w-full">
             <OneSelect :variant="1" :options="instituteOptions" label-classes=""
                        title="Institut tanlanmagan"
-                       v-model="application.institute" required/>
+                       v-model="application.institute" required
+                       :is-wrong="inputErrors.institute"
+            />
           </BaseFormGroup>
-          <span class="text-red-600" v-show="v$.institute.$invalid">Institut tanlanmagan</span>
+          <span class="text-red-600 text-xs" v-show="inputErrors.institute">Institut tanlanmagan</span>
         </div>
         <div class="flex gap-x-7">
           <div class="w-full">
             <BaseFormGroup id="student-type" variant="1" label-title="Talabalik turi"
-                           label-classes="block text-xs mb-2 uppercase w-full">
+                           label-classes="block text-xs mb-2 uppercase w-full" :is-wrong="inputErrors.type"
+                           :wrong-data="studyTypeError">
               <OneSelect title="Talim turi tanlanmagan"
-                         :options="studyType" :variant="1" required v-model="application.type"
-                         dropdown-class="z-[10]">
+                         :options="studyTypes" :variant="1" required v-model="application.type"
+                         dropdown-class="z-[10]" :is-wrong="inputErrors.type">
               </OneSelect>
             </BaseFormGroup>
-            <span class="text-red-600" v-show="v$.type.$invalid">Student O'qish turi tanlanishi shart</span>
           </div>
           <div class="w-full">
             <BaseFormGroup id="" variant="1" label-title="Kontrakt summa"
-                           label-classes="block text-xs mb-2 uppercase w-full">
+                           label-classes="block text-xs mb-2 uppercase w-full"
+                           :is-wrong="inputErrors.contract.error"
+                           :wrong-data="contractError"
+            >
               <BaseInput id="summa" classes=""
                          class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF]"
                          v-model="application.contract" :required="false"
                          hint="Summani kiriting" v-maska:[masks.sums]
+                         :is-wrong="v$.contract.$error"
               />
             </BaseFormGroup>
-            <div class=""></div>
-            <span class="text-red-600"
-                  v-show="v$.contract.$error && v$.contract.checkMax.$invalid">Maximum kontrakt narxi {{
-                contractValidation.maxContract
-              }} mlni tashkil etadi</span>
-
-            <span class="text-red-600"
-                  v-show="v$.contract.$error &&
-                  v$.contract.checkMin.$invalid">Minumum kontrakt narxi {{
-                contractValidation.minContract
-              }} mlni tashkil etadi</span>
-
-            <span class="text-red-600" v-show="v$.contract.notEmpty.$invalid">
-              Summma kiriting
-            </span>
           </div>
         </div>
         <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
@@ -112,7 +106,7 @@
 <script setup lang="ts">
 
 import {useRouter} from "vue-router"
-import {reactive, Ref, ref} from "vue";
+import {computed, reactive, Ref, ref} from "vue";
 
 import TheHeader from "@/components/TheHeader.vue"
 import OneSelect from "@/components/UI/OneSelect.vue"
@@ -124,50 +118,35 @@ import {publicApi} from "@/plugins/axios";
 import {useStudents} from "@/composables/student";
 import {minLength, required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
-import {useSponsors} from "@/composables/sponsors";
 import {contractValidation} from "@/plugins/vuelidate";
 // @ts-ignore
 import {vMaska} from "maska"
+import {checkMin, checkMax} from "@/plugins/vuelidate";
+import {transformSums} from "@/helpers/sum";
+import {optionsType} from "@/typing/types/oneSelect";
+import {studyTypes} from "@/constants/institute"
 
 fetchInstitutes()
 
 // composables destructuring
-const {numberWithSpaces} = useSponsors()
-const {transformSums, getDiplomaType, getInstitute, sumsValidation} = useStudents()
+
+const {getInstitute, sumsValidation} = useStudents()
 
 
-type optionsType = {
-  label: string;
-  id: number;
-}
 const instituteOptions: Ref<optionsType[]> = ref([])
-const studyType = reactive([
-  {
-    id: 1,
-    label: 'Bakalavr',
-  },
-  {
-    id: 2,
-    label: 'Magistratura',
-  },
-  {
-    id: 3,
-    label: 'Doktorantura'
-  }
-])
 const router = useRouter()
 // @ts-ignore
 const application: any = reactive({
   full_name: "",
   phone: "",
-  contract: null,
-  type: null,
-  institute: null,
+  contract: "",
+  type: "",
+  institute: "",
 })
 
 
 function notEmpty(value: any) {
-  return value
+  return Boolean(value)
 }
 
 
@@ -180,18 +159,6 @@ const masks = reactive({
   }
 })
 
-const shouldBeChosen = (value: any) => {
-  return value > 0
-}
-
-
-function checkMin(num: any) {
-  return transformSums(num) ? transformSums(num) > contractValidation.minContract : true
-}
-
-function checkMax(num: any) {
-  return transformSums(num) < contractValidation.maxContract
-}
 
 const rules = {
   full_name: {required, minlength: minLength(4)},
@@ -209,6 +176,45 @@ const rules = {
 }
 
 const v$ = useVuelidate(rules, application)
+
+const inputErrors = computed(() => {
+  return {
+    full_name: v$.value.full_name.$error,
+    phone: v$.value.phone.$error,
+    institute: v$.value.institute.$error,
+    type: v$.value.type.$error,
+    contract: {
+      error: v$.value.contract.$error,
+      minSum: v$.value.contract.$error && v$.value.contract.checkMin.$invalid,
+      empty: v$.value.contract.$error && v$.value.contract.notEmpty.$invalid,
+      maxSum: v$.value.contract.$error && v$.value.contract.checkMax.$invalid
+    }
+  }
+})
+
+const studyTypeError = computed(() => [{
+  condition: inputErrors.value.type,
+  message: "Student O'qish turi tanlanishi shart"
+}])
+
+const contractError = computed(() => [{
+  condition: inputErrors.value.contract.maxSum,
+  message: `Maximum kontrakt narxi ${contractValidation.maxContract} mlni tashkil etadi`
+}, {
+  condition: inputErrors.value.contract.minSum,
+  message: `Minumum kontrakt narxi ${contractValidation.minContract} mlni tashkil etadi`
+},
+  {
+    condition: inputErrors.value.contract.empty,
+    message: "Summma kiriting"
+  }
+])
+
+
+// Custom validations
+function shouldBeChosen(value: any) {
+  return value > 0
+}
 
 
 async function fetchInstitutes() {

@@ -1,11 +1,9 @@
 <template>
   <input :type="inpType??'text'" class="w-full text-[15px] appearance-none"
          :required="required ?? true" :id="id"
-         :class="classes"
+         :class="[classes, {'border-rose-600': isWrong}]"
          :placeholder="hint"
          v-model="value"
-         :maxlength="maxLen"
-         :minlength="minLen"
          ref="baseInput"
   />
 </template>
@@ -19,10 +17,9 @@ interface BaseInputProps {
   id?: string;
   required?: boolean
   inpType?: string
-  maxLen?: string | number
-  minLen?: string | number
   onlyNum?: boolean
   defaultValue?: any
+  isWrong?: boolean
 }
 
 interface Emits {

@@ -1,4 +1,4 @@
-import {fetchData, publicApi} from "@/plugins/axios";
+import {fetchData} from "@/plugins/axios";
 
 export function useSponsors() {
     function formatDateTime(arg: string) {
@@ -7,20 +7,9 @@ export function useSponsors() {
         return res;
     }
 
-    function numberWithSpaces(x: string | number) {
-        if (!isNaN(Number(x))) {
-            return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        }
-        return false
-    }
-
-
-    function titleCase(arg: string) {
-        return arg[0].toUpperCase() + arg.slice(1)
-    }
 
     function fetchUserById(id: any) {
-        return fetchData(`/student-detail/${id}/`)
+        return fetchData(`/sponsor-detail/${id}/`)
     }
 
 
@@ -33,5 +22,5 @@ export function useSponsors() {
         return '';
     }
 
-    return {formatDateTime, numberWithSpaces, statusColor, titleCase, fetchUserById};
+    return {formatDateTime, statusColor, fetchUserById};
 }

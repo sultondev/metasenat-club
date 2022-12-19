@@ -1,13 +1,13 @@
 <template>
   <section class="welcome" v-cloak>
     <div class="bg-white absolute lg:w-[56%] xs:w-full xl:h-screen xs:h-full -z-10"></div>
-    <div class="container mx-auto py-[48px] 2xl:px-[120px] xs:px-4 ">
+    <div class="container mx-auto py-[48px] xs:px-4 ">
       <div
           class="flex justify-between lg:flex-row lg:items-start lg:justify-between xs:justify-center">
         <div class=" lg:min-w-[45%] xs:min-w-[587px]">
           <Transition name="firstStep">
             <div v-show="steps === STEPS.INIT">
-              <SendApplication @data-submit="onSubmit"></SendApplication>
+              <SendApplication @step-change="setStep"></SendApplication>
             </div>
           </Transition>
           <Transition name="secondStep">
@@ -101,29 +101,31 @@ import {STEPS} from "@/typing/enums/stepper";
 
 const {application} = useSponsorStore()
 const steps: Ref<STEPS> = ref('INIT' as STEPS.INIT)
+const setStep = (value: any) => {
+  steps.value = value
+}
 
-
-async function onSubmit() {
-  const {fullName, phoneNumber, sponsorType, sponsorFirm, sums, yourSums} = application;
-  const submitData = {
-    full_name: fullName,
-    phone: '+9989' + phoneNumber,
-    sum: sums !== 'boshqa' ? sums : yourSums,
-    payment_type: [44],
-    firm: sponsorFirm,
-    spent: 0,
-    comment: ""
-  }
-
-  try {
-    const response = await publicApi.post('/sponsor-create/', submitData)
-    if (response.status === 201) {
-      steps.value = STEPS.SUCCESS
-    }
-  } catch (error) {
-    console.log(error)
-    steps.value = STEPS.ERROR
-  }
+async function onSubmit(args: any) {
+  // const {fullName, phoneNumber, sponsorType, sponsorFirm, sums, yourSums} = application;
+  // const submitData = {
+  //   full_name: fullName,
+  //   phone: '+9989' + phoneNumber,
+  //   sum: sums !== 'boshqa' ? sums : yourSums,
+  //   payment_type: [44],
+  //   firm: sponsorFirm,
+  //   spent: 0,
+  //   comment: ""
+  // }
+  console.log(args)
+  // try {
+  //   const response = await publicApi.post('/sponsor-create/', submitData)
+  //   if (response.status === 201) {
+  //     steps.value = STEPS.SUCCESS
+  //   }
+  // } catch (error) {
+  //   console.log(error)
+  //   steps.value = STEPS.ERROR
+  // }
 }
 </script>
 

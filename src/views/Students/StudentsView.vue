@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="" v-if="listOfStudents.length > 1">
-        <div class="flex justify-between items-center gap-[40px] ">
+        <div class="container mx-auto flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ totalCount }} tadan
             {{ (page - 1) * size + 1 }}-{{ sponsorListEnd }}
@@ -100,17 +100,13 @@ import {computed, inject, onMounted, Ref, ref, watch} from "vue";
 import Table from "@/components/UI/Table.vue"
 import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
+
 import {useRoute, useRouter} from "vue-router";
-import {useSponsors} from "@/composables/sponsors";
 import {studentsListType} from "@/typing/types/students";
 import {useMainStore} from "@/store/useMainStore";
-import {StudentTypes} from "@/typing/enums/student";
-import {useStudents} from "@/composables/student";
-import BaseButton from "@/components/UI/BaseButton.vue"
+import {getDiplomaType} from "@/helpers/institute"
+import {numberWithSpaces} from "@/helpers/sum"
 
-
-const {numberWithSpaces, statusColor} = useSponsors()
-const {getDiplomaType} = useStudents()
 const mainStore = useMainStore()
 
 const fetchData: any = inject("fetchData")

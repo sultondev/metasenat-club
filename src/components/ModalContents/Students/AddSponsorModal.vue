@@ -8,35 +8,36 @@
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
     <div class="mb-7">
-      <div class="text-red-600">
-        <span>{{ inputErrors.sponsorId.status ? inputErrors.sponsorId.message : '' }}</span>
-      </div>
       <BaseFormGroup variant="1" label-classes="font-medium text-xs uppercase mb-2"
                      label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
-                     id="none">
+                     id="none" :is-wrong="inputErrors.sponsorId.status">
         <OneSelect :title='state.chosenSponsor ? "Homiy tanlangan" : "Homiy qo‘shish"' label-classes=""
                    :variant="1" required
                    default-value=""
                    v-model="state.chosenSponsor"
                    classes=""
                    :options="sponsorsOptions"
+                   :is-wrong="inputErrors.sponsorId.status"
         />
       </BaseFormGroup>
+      <div class="text-red-600">
+        <span v-show="inputErrors.sponsorId.status">{{ inputErrors.sponsorId.message }}</span>
+      </div>
     </div>
     <div class="mb-7">
-      <div class="text-red-600 max-w-[500px]">
-        <span class="whitespace-normal">{{ inputErrors.sums.status > 0 ? inputErrors.sums.message : '' }}</span>
-        <span class="whitespace-normal">{{
-            inputErrors.sponsorSumLimit.status ? inputErrors.sponsorSumLimit.message : ''
-          }}</span>
-      </div>
-      <BaseFormGroup id="summa" :variant="1" label-title="Ajratilingan summa"
+      <BaseFormGroup id="summa" variant="1" label-title="Ajratilingan summa"
                      label-classes="font-medium text-xs uppercase mb-2">
         <BaseInput id="summa" classes=""
                    class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
                    v-model="state.chosenSums" :required="false"
-                   hint="Summani kiriting" v-maska:[masks.sums]/>
+                   hint="Summani kiriting" v-maska:[masks.sums]
+        />
       </BaseFormGroup>
+      <div class="text-red-600 max-w-[500px]">
+        <span class="whitespace-normal" v-show="inputErrors.sums.status">{{ inputErrors.sums.message }}</span>
+        <span class="whitespace-normal"
+              v-show="inputErrors.sponsorSumLimit.status">{{ inputErrors.sponsorSumLimit.message }}</span>
+      </div>
     </div>
     <div class="separate__line mb-7 w-full h-[2px] bg-[#F5F5F7]"></div>
 
@@ -78,7 +79,7 @@ interface AddSponsorModalProps {
 
 const masks = {
   sums: {
-    mask: (value: any) => value.length > 9 ? '## ### ###' : '# ### ###',
+    mask: (value: any) => value.length < 8 ? "### ###" : value.length > 9 ? '## ### ###' : '# ### ###',
   }
 }
 
@@ -91,8 +92,6 @@ const state = reactive({
 })
 
 const sponsorName = ref("")
-const {numberWithSpaces} = useSponsors()
-const {sponsorIdValidation, sumsValidation} = useStudents()
 const props = defineProps<AddSponsorModalProps>()
 
 const inputErrors = ref(props.inputError)

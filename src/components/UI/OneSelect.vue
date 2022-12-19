@@ -1,7 +1,9 @@
 <template>
   <div class="relative" v-if="variant === 1">
     <button
-        class="oneselect__button py-[12px] border text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-xl bg-[#F9FAFF]">
+        class="oneselect__button py-[12px] border text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-xl bg-[#F9FAFF]"
+        :class="{'border-rose-600': isWrong}"
+    >
       <span>{{ value > 0 ? findLabel() : title }}</span>
       <span class="down-up transition-all">
         <img src="@/assets/icons/website/arrow-down.svg" alt="">
@@ -77,8 +79,9 @@
 <script setup lang="ts">
 
 
-import {Ref, ref, watch} from "vue";
-import {useSponsors} from "@/composables/sponsors";
+import {ref, watch} from "vue";
+import {numberWithSpaces} from "@/helpers/sum"
+import {titleCase} from "@/helpers/stringFuncs";
 
 type optionsType = {
   label: string;
@@ -88,7 +91,6 @@ type optionsType = {
 interface BaseInputProps {
   options: optionsType[];
   variant: number;
-  classes?: string | [] | object;
   labelClasses?: string | [] | object;
   dropdownClass?: string | [] | object
   hint?: string;
@@ -98,8 +100,8 @@ interface BaseInputProps {
   hideAll?: boolean;
   additional?: boolean
   defaultValue?: string
-  title: string
-
+  title?: string
+  isWrong?: boolean
 }
 
 interface Emits {
@@ -109,7 +111,6 @@ interface Emits {
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const value: any = ref("")
-const {numberWithSpaces, titleCase} = useSponsors()
 
 
 const getLabel = () => {

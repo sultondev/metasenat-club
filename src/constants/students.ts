@@ -1,7 +1,5 @@
 import {sponsorshipValidation} from "@/plugins/vuelidate";
-import {useSponsors} from "@/composables/sponsors";
-
-const {numberWithSpaces} = useSponsors()
+import {numberWithSpaces} from "@/helpers/sum"
 
 export const defaultInputFields = {
     sponsorId: {

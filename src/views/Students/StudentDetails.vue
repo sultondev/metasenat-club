@@ -109,8 +109,11 @@
                   </span>
                     <span class="text-[#B2B7C1]">UZS</span>
                   </td>
-                  <td class="py-[23px]  bg-[#FBFBFC] text-center rounded-r-[12px] px-4 border-y border-r">
-                    {{ sponsor.sponsor.id }}
+                  <td class="py-[23px]  bg-[#FBFBFC] text-center rounded-r-[12px] cursor-pointer px-4 border-y border-r">
+                    <button @click="selectSponsor(sponsor.sponsor.id)" class="cursor-pointer">
+                      <span class="icon-edit text-2xl text-blue-600"></span>
+                      {{ sponsor.sponsor.id }}
+                    </button>
                   </td>
                 </tr>
               </template>
@@ -129,25 +132,34 @@
   </div>
 
 
-  <teleport to="#modal">
-    <TheModal :is-modal-open="isEditModalOpen" @close-modal="toggleModal" :window-num="1">
-      <SponsorDetailsModal></SponsorDetailsModal>
-    </TheModal>
-  </teleport>
+  <!--  <teleport to="#modal">-->
+  <!--    <TheModal :is-modal-open="isEditModalOpen" @close-modal="toggleModal" :window-num="1">-->
+  <!--      <SponsorDetailsModal></SponsorDetailsModal>-->
+  <!--    </TheModal>-->
+  <!--  </teleport>-->
 
   <teleport to="#modal">
-    <TheModal :is-modal-open="isAddModalOpen" @close-modal="toggleModal" :window-num="2">
+    <TheModal :is-modal-open="modals.isAddModalOpen" @close-modal="toggleModal" :window-num="2">
       <AddSponsorModal @close-modal="toggleModal(2)" :student-id="student.id"
                        @data-submit="addSponsor" :input-error="inputErrors"></AddSponsorModal>
     </TheModal>
   </teleport>
+
+  <teleport to="#modal">
+    <TheModal :is-modal-open="modals.isEditSponsorModalOpen" @close-modal="toggleModal" :window-num="3">
+      <EditSponsorModal @close-modal="toggleModal(3)" :sponsor-id="selectedSponsor"
+                        @data-submit="addSponsor"></EditSponsorModal>
+    </TheModal>
+  </teleport>
+
 </template>
 
 <script setup lang="ts">
-import {Ref, ref} from "vue";
 // third package funcs
+import {reactive, Ref, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {fetchData, publicApi} from "@/plugins/axios";
+import {getDiplomaType} from "@/helpers/institute"
 
 // composables
 import {useSponsors} from "@/composables/sponsors";
@@ -157,8 +169,8 @@ import {useStudents} from "@/composables/student";
 import Table from "@/components/UI/Table.vue"
 import TheHeader from "@/components/TheHeader.vue"
 import TheModal from "@/components/UI/TheModal.vue"
-import SponsorDetailsModal from "@/components/ModalContents/Sponsors/SponsorDetailsModal.vue"
 import AddSponsorModal from "@/components/ModalContents/Students/AddSponsorModal.vue";
+import EditSponsorModal from "@/components/ModalContents/Students/EditSponsorModal.vue";
 
 // constant
 import {defaultInputFields} from "@/constants/students";
@@ -167,34 +179,42 @@ import {defaultInputFields} from "@/constants/students";
 import {inputErrorsType} from "@/typing/types/sponsor";
 import {studentSponsorType, studentType} from "@/typing/types/students";
 import {sponsorshipValidation} from "@/plugins/vuelidate";
+import {transformSums, numberWithSpaces} from "@/helpers/sum";
 
 
 const router = useRouter()
 const route = useRoute()
 const student: studentType | any = ref({})
 const inputErrors: Ref<inputErrorsType> = ref(defaultInputFields)
+const selectedSponsor = ref(0)
 
-const isEditModalOpen = ref(false)
-const isAddModalOpen = ref(false)
+
+const modals = reactive({
+  isEditModalOpen: false,
+  isAddModalOpen: false,
+  isEditSponsorModalOpen: false,
+})
 // @ts-ignore
 const sponsors: Ref<studentSponsorType[]> = ref()
 
-const {numberWithSpaces} = useSponsors()
 const {
-  getDiplomaType,
   validateInputAll,
   sponsorIdValidation,
   sumsValidation,
-  transformSums,
   sponsorSumValidation
 } = useStudents()
 
 fetchTheUser(route.params.id)
 
+function selectSponsor(id: any) {
+  selectedSponsor.value = id
+  toggleModal(3)
+}
+
 function toggleModal(key: number) {
-  if (key === 1) isEditModalOpen.value = !isEditModalOpen.value
-  else if (key === 2) isAddModalOpen.value = !isAddModalOpen.value
-  else isEditModalOpen.value = !isEditModalOpen
+  if (key === 1) modals.isEditModalOpen = !modals.isEditModalOpen
+  else if (key === 2) modals.isAddModalOpen = !modals.isAddModalOpen
+  else if (key === 3) modals.isEditSponsorModalOpen = !modals.isEditSponsorModalOpen
 }
 
 async function fetchTheUser(id: any) {
@@ -234,7 +254,7 @@ async function addSponsor(sponId: number | string, sum: string) {
         student: student.value.id
       })
       if (response.status === 201) {
-        isAddModalOpen.value = false
+        modals.isAddModalOpen = false
         await fetchSponsors(student.value.id)
       }
     } else {

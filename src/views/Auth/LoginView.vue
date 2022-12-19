@@ -9,26 +9,30 @@
       <form @submit.prevent="onSubmit"
             class="login-form bg-white rounded-xl p-8 flex flex-col gap-[44px]">
         <h2 class="text-left text-3xl font-bold">Kirish</h2>
-        <p v-if="loginAlert">
-          <span class="text-red-500">Wrong username or password</span>
-        </p>
         <div class="flex flex-col gap-[22px]">
           <div class="flex flex-col">
-            <BaseFormGroup id="login" variant="1" label-title="LOGIN" label-classes="mb-[8px]">
-              <BaseInput v-model="loginField"
-                         classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
+            <div v-show="loginAlert" class="text-rose-600 text-center">
+              Login yoki parol nato'g'ri
+            </div>
+            <BaseFormGroup id="login" variant="1" label-title="LOGIN" label-classes="mb-2" :wrong-data="loginErrors">
+              <BaseInput v-model="authSubmit.username"
+                         classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] focus-within:border-[#E0E7FF]black outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
                          id="login"
                          hint="adm8904"
+                         :is-wrong="inputErrors.username.$error || loginAlert"
+                         :required="true"
+                         maxlength="20"
               />
             </BaseFormGroup>
           </div>
           <div class="flex flex-col">
             <label for="password" class="font-medium text-[12px] mb-[8px]">PAROL</label>
-            <BaseInput v-model="passwordField" inp-type="password"
-                       classes="border  border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
+            <BaseInput v-model="authSubmit.password" inp-type="password"
+                       classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] focus-within:border-[#2E5BFF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
                        hint="parol kiriting"
                        id="password"
                        :required="true"
+                       :is-wrong="loginAlert"
             />
           </div>
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
@@ -40,6 +44,7 @@
             {{ loading ? "Checking..." : "Kirish" }}
             </span>
           </button>
+
         </div>
       </form>
     </div>
@@ -47,49 +52,103 @@
 </template>
 
 <script setup lang="ts">
-import {inject, ref, watch} from "vue";
+import {computed, inject, reactive, ref, watch} from "vue";
 import {VueRecaptcha} from "vue-recaptcha";
 import {useUserStore} from "@/store/userStore";
 import router from "@/router";
 import BaseInput from "@/components/UI/BaseInput.vue"
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
+import {useVuelidate} from "@vuelidate/core";
+import {required, minLength, maxLength} from "@vuelidate/validators";
 
-const loginField = ref("")
-const passwordField = ref("")
+const authSubmit = reactive({
+  username: "",
+  password: ""
+})
+
 const loginAlert = ref(false)
 const axios: any = inject("axios")
 const userStore = useUserStore()
 const loading = ref(false)
 const recaptchaTest = ref(false)
 
+
+const rules = {
+  username: {
+    required,
+    minlength: minLength(2),
+    maxlength: maxLength(20),
+    containsSymbols
+  },
+}
+const v$ = useVuelidate(rules, authSubmit)
+const inputErrors = computed(() => ({
+  username: {
+    minlength: v$.value.username.$error && v$.value.username.minlength.$invalid,
+    maxlength: v$.value.username.$error && v$.value.username.maxlength.$invalid,
+    symbols: v$.value.username.$error && v$.value.username.containsSymbols.$invalid,
+    $error: v$.value.username.$error
+  },
+}))
+
+const loginErrors = computed(() => ([
+  {
+    condition: inputErrors.value.username.symbols,
+    message: "Bu maydonga harfdan tashqari bo'lgan belgilarni kiritsh mumkinmas",
+    classes: "max-w-[300px]"
+  },
+  {
+    condition: inputErrors.value.username.minlength,
+    message: "Login 2ta harfdan kam bo'la olmaydi",
+  },
+  {
+    condition: inputErrors.value.username.maxlength,
+    message: "Login 20ta harfdan oshilmaydi"
+  }
+]))
+
+function containsSymbols(value: string) {
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+  return !specialChars.test(value);
+}
+
+
 async function onSubmit() {
-  loading.value = true
-  try {
-    const response = await axios.post("/auth/login/", {username: loginField.value, password: passwordField.value})
-    console.log(response)
-    if (response.status === 200) {
-      localStorage.setItem("accessToken", response.data.access)
-      userStore.isAuthenticated = true;
-      await router.push('/main/dashboard')
+  const result = await v$.value.$validate()
+
+  if (result) {
+    loading.value = true
+    try {
+      const response = await axios.post("/auth/login/", authSubmit)
+      console.log(response)
+      if (response.status === 200) {
+        localStorage.setItem("accessToken", response.data.access)
+        userStore.isAuthenticated = true;
+        await router.push('/main/dashboard')
+        loading.value = false
+      }
+    } catch {
+      loginAlert.value = true
       loading.value = false
     }
-  } catch {
+    console.log('post')
+  } else {
+    console.log('reject weakness')
     loginAlert.value = true
-    loading.value = false
   }
 }
 
 
 const updateLoginField = (event: HTMLInputElement) => {
   // @ts-ignore
-  loginField.value = event.target.value
+  authSubmit.username = event.target.value
 }
 
 function testRobot(response: any) {
   recaptchaTest.value = true;
 }
 
-watch([loginField, passwordField], () => {
+watch(authSubmit, () => {
   loginAlert.value = false
 })
 

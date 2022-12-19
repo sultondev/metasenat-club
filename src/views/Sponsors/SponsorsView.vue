@@ -95,9 +95,9 @@ import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
 import {useMainStore} from "@/store/useMainStore";
 import {sponsorsListType} from "@/typing/types/sponsor";
+import {numberWithSpaces} from "@/helpers/sum"
 
-
-const {numberWithSpaces, formatDateTime, statusColor} = useSponsors()
+const {formatDateTime, statusColor} = useSponsors()
 const fetchData: any = inject("fetchData")
 const fetchError: any = ref({})
 const router = useRouter()

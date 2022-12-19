@@ -1,7 +1,9 @@
 <template>
   <TheHeader
       left-classes="flex items-center overflow-hidden box-content rounded-[6px] text-[12px] border-[2px] border-[#E0E7FF] w-fit"
-      right-classes="flex gap-[20px] items-center">
+      right-classes="flex gap-[20px] items-center"
+      list-class="gap-y-6"
+  >
     <template #left>
       <HeaderTablet/>
     </template>
@@ -11,7 +13,7 @@
   </TheHeader>
 
 
-  <main class="main mb-[84px] mt-7 custom:px-[120px] sm:px-5">
+  <main class="main mb-[84px] mt-7 sm:px-5">
     <router-view></router-view>
   </main>
 

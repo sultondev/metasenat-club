@@ -1,8 +1,8 @@
 <template>
-  <section class="sect-main py-[24px] custom:px-[120px] sm:px-[20px] bg-white" v-cloak>
+  <section class="sect-main py-[24px] bg-white" v-cloak>
     <div class="container mx-auto ">
-      <ul class="flex xl:justify-between xl:items-center xl:flex-row xs:flex-col md:items-start gap-[24px]"
-          :class="{'gap-0': rightClasses == false}">
+      <ul class="flex xl:justify-between xl:items-center xl:flex-row xs:flex-col md:items-start"
+          :class="listClass">
         <li :class="leftClasses">
           <slot name="left"></slot>
         </li>
@@ -17,8 +17,9 @@
 <script setup lang="ts">
 
 interface TheHeaderProps {
-  leftClasses?: string
-  rightClasses?: string
+  leftClasses?: string | [] | {}
+  rightClasses?: string | [] | {}
+  listClass?: string | [] | {}
 }
 
 defineProps<TheHeaderProps>()

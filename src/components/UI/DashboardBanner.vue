@@ -17,10 +17,7 @@
 </template>
 
 <script setup lang="ts">
-
-import {useSponsors} from "@/composables/sponsors";
-
-const {numberWithSpaces} = useSponsors()
+import {numberWithSpaces} from "@/helpers/sum"
 
 interface BannerProps {
   text: string;

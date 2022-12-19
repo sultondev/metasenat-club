@@ -1,16 +1,18 @@
 <template>
 
   <div class="">
-    <TheHeader left-classes="flex" right-classes="2">
+    <TheHeader left-classes="flex" list-class="xl:flex-row gap-0">
       <template #left>
         <button class="mr-6" @click="router.back()"><img
             src="@/assets/icons/website/back-icon.svg"
             alt="Back Icon"></button>
         <h6 class="text-2xl font-bold  mr-[12px]">{{ user.full_name }}</h6>
         <span
-            class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">{{
+            class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">
+          {{
             user.get_status_display
-          }}</span>
+          }}
+        </span>
       </template>
     </TheHeader>
 
@@ -47,7 +49,7 @@
     <div class="mx-auto my-[32px]" v-else>
       <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
     </div>
-    <div class="fixed left-1/2 translate-x-[-50%]">
+    <div class="relative w-[820px] left-1/2 translate-x-[-50%] -bottom-48 -z-10">
       <img src="@/assets/images/website/banner-01.svg" class="w-auto" alt="">
     </div>
   </div>
@@ -66,7 +68,7 @@ import TheHeader from "@/components/TheHeader.vue"
 import TheModal from "@/components/UI/TheModal.vue"
 import SponsorDetailsModal from "@/components/ModalContents/Sponsors/SponsorDetailsModal.vue"
 import {ref} from "vue";
-
+import {numberWithSpaces} from "@/helpers/sum"
 
 type userType = {
   id: number,
@@ -80,7 +82,7 @@ type userType = {
 const router = useRouter()
 const route = useRoute()
 const user: userType | any = ref({})
-const {fetchUserById, numberWithSpaces} = useSponsors()
+const {fetchUserById} = useSponsors()
 const isModalOpen = ref(false)
 
 fetchTheUser(route.params.id)

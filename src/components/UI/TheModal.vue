@@ -3,7 +3,7 @@
     <div class="modal fixed top-0 w-auto h-auto z-[1000]" v-if="isModalOpen">
       <div
           class="modal__backdrop bg-[#00000080]  w-full h-screen w-screen flex justify-center items-center"
-          @click.self.left="$emit('close-modal', windowNum ?? '')">
+          @click.self.left="$emit('close-modal', windowNum || '')">
         <div class="modal__container bg-white rounded-xl">
           <slot>Default</slot>
         </div>
@@ -27,11 +27,11 @@ defineProps<{
 }
 
 .modal-open-enter-active {
-  transition: opacity 0.6s ease-out;
+  transition: opacity 0.4s ease-out;
 }
 
 .modal-open-leave-active {
-  transition: opacity 0.6s ease-out;
+  transition: opacity 0.4s ease-out;
 }
 
 

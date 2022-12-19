@@ -92,7 +92,8 @@
 
 
 import {ref, watch} from "vue";
-import {useSponsors} from "@/composables/sponsors";
+import {titleCase} from "@/helpers/stringFuncs";
+import {numberWithSpaces} from "@/helpers/sum"
 
 type optionsType = {
   label: string;
@@ -105,10 +106,10 @@ interface BaseInputProps {
   classes?: string | [] | object;
   hint?: string;
   resetValue?: string[];
-  required?: boolean;
   inpType?: string;
   hideAll?: boolean;
-  additional?: boolean
+  additional?: boolean;
+
 }
 
 interface Emits {
@@ -119,7 +120,6 @@ const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
 const value: any = ref([])
-const {numberWithSpaces, titleCase} = useSponsors()
 
 
 const toggleDropdown = () => {
