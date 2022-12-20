@@ -20,7 +20,6 @@
                          id="login"
                          hint="adm8904"
                          :is-wrong="inputErrors.username.$error || loginAlert"
-                         :required="true"
                          maxlength="20"
               />
             </BaseFormGroup>
@@ -31,8 +30,7 @@
                        classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] focus-within:border-[#2E5BFF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
                        hint="parol kiriting"
                        id="password"
-                       :required="true"
-                       :is-wrong="loginAlert"
+                       :is-wrong="inputErrors.password.minlength || loginAlert"
             />
           </div>
           <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
@@ -78,8 +76,13 @@ const rules = {
     required,
     minlength: minLength(2),
     maxlength: maxLength(20),
-    containsSymbols
+    containsSymbols,
+    isEmpty
   },
+  password: {
+    required,
+    minlength: minLength(4)
+  }
 }
 const v$ = useVuelidate(rules, authSubmit)
 const inputErrors = computed(() => ({
@@ -89,6 +92,9 @@ const inputErrors = computed(() => ({
     symbols: v$.value.username.$error && v$.value.username.containsSymbols.$invalid,
     $error: v$.value.username.$error
   },
+  password: {
+    minlength: v$.value.password.$error && v$.value.password.$invalid
+  }
 }))
 
 const loginErrors = computed(() => ([
@@ -107,6 +113,11 @@ const loginErrors = computed(() => ([
   }
 ]))
 
+
+function isEmpty(value: any) {
+  return Boolean(value)
+}
+
 function containsSymbols(value: string) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
   return !specialChars.test(value);
@@ -120,7 +131,6 @@ async function onSubmit() {
     loading.value = true
     try {
       const response = await axios.post("/auth/login/", authSubmit)
-      console.log(response)
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.access)
         userStore.isAuthenticated = true;
@@ -131,10 +141,6 @@ async function onSubmit() {
       loginAlert.value = true
       loading.value = false
     }
-    console.log('post')
-  } else {
-    console.log('reject weakness')
-    loginAlert.value = true
   }
 }
 

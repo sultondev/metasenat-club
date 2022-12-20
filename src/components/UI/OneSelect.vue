@@ -99,7 +99,7 @@ interface BaseInputProps {
   inpType?: string;
   hideAll?: boolean;
   additional?: boolean
-  defaultValue?: string
+  defaultValue?: string | number
   title?: string
   isWrong?: boolean
 }

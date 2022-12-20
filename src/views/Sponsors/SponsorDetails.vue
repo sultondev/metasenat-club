@@ -97,8 +97,6 @@ async function fetchTheUser(id: any) {
     if (response.status === 200) {
       // @ts-ignore
       user.value = response.data
-      console.log(response.data)
-
     }
   } catch (error: any) {
     console.log(error.message)

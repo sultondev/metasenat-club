@@ -1,5 +1,6 @@
 <template>
-  <button :class="classes" @click="$emit(actionName)">
+  <button :class="[classes, 'outline-none transition-all easy flex items-center cursor-pointer']"
+          @click="$emit(actionName)">
     <slot></slot>
     <span>
     {{ text }}
@@ -11,8 +12,8 @@
 
 interface componentProps {
   text: string
-  classes: string
-  actionName: string
+  classes: string | [] | {}
+  actionName?: string
 }
 
 const props = defineProps<componentProps>()

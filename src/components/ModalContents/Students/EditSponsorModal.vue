@@ -6,9 +6,38 @@
       </h6>
     </div>
     <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
-    <!--    <BaseFormGroup id="edit-name" label-title="F.I.Sh. (Familiya Ism Sharifingiz)" variant="1">-->
-    <!--      <OneSelect options="" :variant="1" v-model=""></OneSelect>-->
-    <!--    </BaseFormGroup>-->
+    <div class="" v-if="sponsor.sponsorsOptions.length > 0">
+      <BaseFormGroup id="edit-name" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
+                     variant="1">
+        <OneSelect :options="sponsor.sponsorsOptions" :variant="1" v-model="sponsor.selectedSponsor"
+                   :default-value="props.sponsorId">
+
+        </OneSelect>
+      </BaseFormGroup>
+      <BaseFormGroup id="" variant="1" label-title="Ajratilingan summa">
+        <BaseInput
+            classes="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
+            :default-value="numberWithSpaces(sponsor.sums)" v-maska:[masks.sums] v-model="sponsor.sums"
+            :is-wrong="sponsor.limit.status"/>
+      </BaseFormGroup>
+      <span class="text-rose-600 text-xs" v-if="sponsor.limit.status">Homiyda u miqdordagi summa mavjud emas !</span>
+
+    </div>
+    <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="flex items-center justify-end gap-[17px]">
+      <BaseButton class="gap-2" text="Homiyni O'chirish"
+                  classes="bg-rose-100 hover:bg-[#FF4945] hover:text-white py-[11px] px-8 text-sm  text-[#FF4945] rounded items-center"
+                  @delete-sponsor="deleteSponsor" action-name="deleteSponsor"
+      >
+        <span class="icon-trash text-xl  text-[#FF4945] text-inherit"></span>
+      </BaseButton>
+      <BaseButton class="gap-2" text="Saqlash"
+                  :classes="['py-2.5 px-8 bg-[#3366FF] text-white hover:text-[#3366FF] rounded text-sm', hoverForButtons]"
+                  @save-changes="saveChanges" action-name="saveChanges"
+      >
+        <span class="icon-save text-xl"></span>
+      </BaseButton>
+    </div>
 
   </section>
 </template>
@@ -18,18 +47,116 @@
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import OneSelect from "@/components/UI/OneSelect.vue";
 import {publicApi} from "@/plugins/axios";
-import {sponsorsListType} from "@/typing/types/sponsor";
-import {ref} from "vue";
-
+import {reactive, Ref, ref, watch} from "vue";
+import {studentSponsors} from "@/typing/enums/student";
+import BaseInput from "@/components/UI/BaseInput.vue"
+// @ts-ignore
+import {vMaska} from "maska"
+import BaseButton from "@/components/UI/BaseButton.vue";
+import {hoverForButtons} from "@/constants/UI-styles"
+import {transformSums} from "@/helpers/sum";
+import {numberWithSpaces} from "@/helpers/sum"
 
 interface Props {
   sponsorId: number
+  studentId: number
+}
+
+
+interface Emits {
+  (e: "updateSponsors", val: number): void
+
+  (e: "closeModal", val: number): void
 }
 
 const props = defineProps<Props>()
+const emits = defineEmits<Emits>()
+const sponsors: Ref<studentSponsors[]> = ref([])
+const sponsor = reactive({
+  selectedStudent: props.studentId,
+  selectedSponsor: props.sponsorId,
+  sponsorsOptions: [],
+  sums: "0",
+  index: 0,
+  payIndex: 0,
+  limit: {
+    status: false,
+    message: "Homiyda u miqdordagi summa mavjud emas !"
+  }
+})
 
-const sponsors = ref([])
-const sponsorsOptions = ref([])
+fetchSponsors(props.studentId)
+watch(() => sponsor.sums, () => {
+  sponsor.limit.status = false
+})
+watch(() => sponsor.selectedSponsor, () => {
+  sponsor.index = sponsors.value.findIndex((item: studentSponsors) => item.sponsor.id === sponsor.selectedSponsor)
+  console.log(String(sponsors.value[sponsor.index].summa))
+  sponsor.sums = String(sponsors.value[sponsor.index].summa)
+})
 
+async function fetchSponsors(id: any) {
+  try {
+    const response: any = await publicApi.get(`/student-sponsor/${id}`)
+    if (response.status === 200) {
+      sponsor.sponsorsOptions = response.data.sponsors.map((item: studentSponsors) => ({
+        label: item.sponsor.full_name,
+        id: item.sponsor.id,
+      }))
+      sponsors.value = response.data.sponsors
+      sponsor.index = sponsors.value.findIndex((item: studentSponsors) => item.sponsor.id == sponsor.selectedSponsor)
+      sponsor.sums = String(sponsors.value[sponsor.index].summa)
+      sponsor.payIndex = sponsors.value[sponsor.index].id
+    }
+  } catch (error: any) {
+    console.log(error)
+  }
+}
+
+const masks = reactive({
+  sums: {
+    mask: (value: any) => {
+      if (value.length === 7) return "### ###"
+      else if (value.length === 6) return "## ###"
+      else if (value.length === 9) return "# ### ###"
+      else if (value.length > 9) return "## ### ###"
+      else return "# ### ###"
+    }
+  }
+})
+
+const deleteSponsor = async () => {
+  console.log('deleted', sponsor.payIndex)
+  try {
+    const response = await publicApi.delete(`/sponsor-summa-delete/${sponsor.payIndex}/`)
+    console.log(response)
+    if (response.status === 204) {
+      emits('closeModal', 3)
+      emits('updateSponsors', props.studentId)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const saveChanges = async () => {
+  const data = {
+    sponsor: props.sponsorId,
+    summa: transformSums(sponsor.sums),
+    student: props.studentId
+  }
+  console.log(sponsor.payIndex)
+  try {
+    const response = await publicApi.patch(`/sponsor-summa-update/${sponsor.payIndex}/`, data)
+    if (response.status === 200) {
+      emits('closeModal', 3)
+      emits('updateSponsors', props.studentId)
+      sponsor.limit.status = false
+    }
+  } catch (error: any) {
+    const {response} = error
+    if (response.status) sponsor.limit.status = true
+  }
+}
 
 </script>

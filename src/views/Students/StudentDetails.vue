@@ -19,7 +19,7 @@
         <div class="flex justify-between items-center mb-8">
           <h6 class="text-2xl">Talaba haqida</h6>
           <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"
-                  @click="toggleModal">
+                  @click="toggleModal(1)">
             <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">
             Tahrirlash
           </button>
@@ -109,10 +109,9 @@
                   </span>
                     <span class="text-[#B2B7C1]">UZS</span>
                   </td>
-                  <td class="py-[23px]  bg-[#FBFBFC] text-center rounded-r-[12px] cursor-pointer px-4 border-y border-r">
+                  <td class="py-[23px]  bg-[#FBFBFC] text-center rounded-r-[12px] px-4 border-y border-r">
                     <button @click="selectSponsor(sponsor.sponsor.id)" class="cursor-pointer">
                       <span class="icon-edit text-2xl text-blue-600"></span>
-                      {{ sponsor.sponsor.id }}
                     </button>
                   </td>
                 </tr>
@@ -132,11 +131,11 @@
   </div>
 
 
-  <!--  <teleport to="#modal">-->
-  <!--    <TheModal :is-modal-open="isEditModalOpen" @close-modal="toggleModal" :window-num="1">-->
-  <!--      <SponsorDetailsModal></SponsorDetailsModal>-->
-  <!--    </TheModal>-->
-  <!--  </teleport>-->
+  <teleport to="#modal">
+    <TheModal :is-modal-open="modals.isEditModalOpen" @close-modal="toggleModal" :window-num="1">
+      <EditStudentModal></EditStudentModal>
+    </TheModal>
+  </teleport>
 
   <teleport to="#modal">
     <TheModal :is-modal-open="modals.isAddModalOpen" @close-modal="toggleModal" :window-num="2">
@@ -147,8 +146,8 @@
 
   <teleport to="#modal">
     <TheModal :is-modal-open="modals.isEditSponsorModalOpen" @close-modal="toggleModal" :window-num="3">
-      <EditSponsorModal @close-modal="toggleModal(3)" :sponsor-id="selectedSponsor"
-                        @data-submit="addSponsor"></EditSponsorModal>
+      <EditSponsorModal @close-modal="toggleModal" :sponsor-id="selectedSponsor"
+                        :student-id="student.id" @update-sponsors="fetchSponsors"></EditSponsorModal>
     </TheModal>
   </teleport>
 
@@ -171,6 +170,7 @@ import TheHeader from "@/components/TheHeader.vue"
 import TheModal from "@/components/UI/TheModal.vue"
 import AddSponsorModal from "@/components/ModalContents/Students/AddSponsorModal.vue";
 import EditSponsorModal from "@/components/ModalContents/Students/EditSponsorModal.vue";
+import EditStudentModal from "@/components/ModalContents/Students/EditModal.vue";
 
 // constant
 import {defaultInputFields} from "@/constants/students";
@@ -224,7 +224,6 @@ async function fetchTheUser(id: any) {
     if (response.status === 200) {
       // @ts-ignore
       student.value = response.data
-      console.log(response.data)
     }
   } catch (error: any) {
     console.log(error)
@@ -237,8 +236,6 @@ async function fetchSponsors(id: any) {
     if (response.status === 200) {
       // @ts-ignore
       sponsors.value = response.data.sponsors
-      console.log(response.data)
-      console.log(sponsors)
     }
   } catch (error: any) {
     console.log(error)

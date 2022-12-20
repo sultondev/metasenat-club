@@ -221,7 +221,6 @@ async function fetchInstitutes() {
   try {
     const response = await publicApi.get("/institute-list")
     if (response.status === 200) {
-      console.log(response)
       instituteOptions.value = await sortInstitutesByABC(response.data.map((item: { id: any, name: string }) => ({
         id: item.id,
         label: item.name
@@ -245,15 +244,11 @@ async function createStudent() {
     contract: transformSums(String(application.contract)),
   }
   const result = await v$.value.$validate()
-  console.log(result)
   if (result) {
     try {
       const response = await publicApi.post("/student-create/", data)
       if (response.status == 201) {
-        console.log(response)
         await router.push({path: `/main/students/${response.data.id}`})
-      } else {
-        console.log('bug')
       }
     } catch (error) {
       console.log(error)

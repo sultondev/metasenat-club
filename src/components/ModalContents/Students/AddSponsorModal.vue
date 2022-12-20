@@ -13,7 +13,6 @@
                      id="none" :is-wrong="inputErrors.sponsorId.status">
         <OneSelect :title='state.chosenSponsor ? "Homiy tanlangan" : "Homiy qo‘shish"' label-classes=""
                    :variant="1" required
-                   default-value=""
                    v-model="state.chosenSponsor"
                    classes=""
                    :options="sponsorsOptions"

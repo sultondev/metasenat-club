@@ -38,6 +38,12 @@ watch(() => value.value, () => {
   emit("update:modelValue", value.value)
 })
 
+watch(() => props.defaultValue, () => {
+  if (props.defaultValue) {
+    value.value = props.defaultValue
+  }
+})
+
 if (props.defaultValue) {
   value.value = props.defaultValue
   emit("update:modelValue", value.value)
