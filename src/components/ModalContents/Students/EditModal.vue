@@ -34,7 +34,7 @@
     <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
     <div class="w-full flex justify-end">
       <BaseButton text="Saqlash" @save-changes="saveChanges" action-name="saveChanges"
-                  :classes="[hoverForButtons, 'hover:text-primary hover:bg-transparent text-white bg-primary rounded py-2 px-8 text-sm gap-2']">
+                  :classes="['hover-primary__buttons', 'hover:text-primary hover:bg-transparent text-white bg-primary rounded py-2 px-8 text-sm gap-2']">
         <span class="icon-save text-2xl"></span>
       </BaseButton>
     </div>

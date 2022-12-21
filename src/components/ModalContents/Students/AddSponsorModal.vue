@@ -68,7 +68,7 @@ import {publicApi} from "@/plugins/axios"
 import {useSponsors} from "@/composables/sponsors"
 import {useStudents} from "@/composables/student"
 import {required, email, minLength} from "@vuelidate/validators";
-import {inputErrorsType, sponsorsListType} from "@/typing/types/sponsor";
+import {inputErrorsType, sponsorsListType} from "@/typing/types/sponsors";
 import {hoverForButtons} from "@/constants/UI-styles"
 import {useVuelidate} from "@vuelidate/core";
 

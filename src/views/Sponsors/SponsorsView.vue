@@ -94,7 +94,7 @@ import NotFound from "@/components/UI/NotFound.vue"
 import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
 import {useMainStore} from "@/store/useMainStore";
-import {sponsorsListType} from "@/typing/types/sponsor";
+import {sponsorsListType} from "@/typing/types/sponsors";
 import {numberWithSpaces} from "@/helpers/sum"
 
 const {formatDateTime, statusColor} = useSponsors()

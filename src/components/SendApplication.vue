@@ -91,7 +91,7 @@
 import {reactive, ref, Ref,} from "vue";
 import {useVuelidate} from "@vuelidate/core";
 import {maxLength, minLength, required} from "@vuelidate/validators";
-import {generousSumsType, optionType} from "@/typing/types/sponsor";
+import {generousSumsType, optionType} from "@/typing/types/sponsors";
 
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"

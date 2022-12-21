@@ -46,5 +46,6 @@ export type studentSponsorType = {
     full_name: string,
     given: number,
     get_status_display: string,
-    sponsors: sponsorType[]
+    sponsor: sponsorType
+    summa: ''
 }

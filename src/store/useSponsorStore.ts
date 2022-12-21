@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {ref, Ref} from "vue";
-import {applicationType} from "@/typing/types/sponsor";
+import {applicationType} from "@/typing/types/sponsors";
 import {SPONSOR} from "@/typing/enums/sponsor";
 
 

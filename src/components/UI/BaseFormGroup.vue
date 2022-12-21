@@ -4,8 +4,11 @@
       {{ labelTitle }}
     </label>
     <slot></slot>
-    <div v-for="wrong in wrongData" class="text-red-500 text-xs mt-2" :class="wrong.classes" v-show="wrong.condition">
-      {{ wrong.message }}
+    <div class="" v-if="wrongData">
+      <div v-for="wrong in wrongData" class="text-red-500 text-xs mt-2" :class="wrong.classes"
+           v-show="wrong.condition">
+        {{ wrong.message }}
+      </div>
     </div>
   </div>
   <div v-else-if="variant === '2'">
@@ -16,7 +19,7 @@
       <slot name="defVal"></slot>
       <slot></slot>
     </label>
-    <div class="max-w-full whitespace-normal ">
+    <div class="max-w-full whitespace-normal " v-if="wrongData">
       <div v-for="wrong in wrongData" class="whitespace-normal mt-2
        text-red-500 text-xs" v-show="wrong.condition">{{ wrong.message }}
       </div>
@@ -39,7 +42,7 @@ interface BaseFormProps {
   labelClasses?: string | [] | {};
   labelDefaultValue?: string
   isWrong?: boolean
-  wrongData?: wrongType[] | wrongType
+  wrongData?: wrongType[]
 }
 
 const props = defineProps<BaseFormProps>()

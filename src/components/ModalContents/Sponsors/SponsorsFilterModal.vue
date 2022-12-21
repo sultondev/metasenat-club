@@ -46,8 +46,7 @@
           <img src="@/assets/icons/website/clean-modal.svg" alt="Eye white"></span>
         <span class="text-sm text-[#B2B7C1]">Tozalash</span>
       </button>
-      <button class="bg-[#3366FF] text-white flex items-center py-[9px] px-[32px] rounded-[5px]"
-              :class="[hoverForButtons]"
+      <button class="hover-primary__buttons bg-[#3366FF] text-white flex items-center py-[9px] px-[32px] rounded-[5px]"
       >
         <span class="icon-eye mr-5 text-2xl"></span>
         <span class="text-sm">Natijalarini ko'rish</span>
@@ -59,7 +58,6 @@
 <script setup lang="ts">
 import {reactive, Ref, ref} from "vue";
 import MultiSelect from "@/components/UI/MultiSelect.vue"
-import {hoverForButtons} from "@/constants/UI-styles"
 import OneSelect from "@/components/UI/OneSelect.vue";
 
 type optionsType = {

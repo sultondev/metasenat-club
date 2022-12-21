@@ -50,7 +50,7 @@ import ModalHeaders from "@/components/ModalContents/ModalHeaders.vue"
 import InputTablets from "@/components/UI/InputTablets.vue"
 import {reactive, Ref, ref} from "vue";
 import {SPONSOR} from "@/typing/enums/sponsor";
-import {generousSumsType, optionType} from "@/typing/types/sponsor";
+import {generousSumsType, optionType} from "@/typing/types/sponsors";
 import {generousOptions, sponsorLegalTypes} from "@/constants/sponsor";
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"

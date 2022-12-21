@@ -93,7 +93,7 @@
               </template>
               <template #tbody>
                 <tr v-for="(sponsor, idx) in sponsors"
-                    :key="sponsor"
+                    :key="sponsor.given+idx"
                     class="border-spacing-y-4 border-separate text-sm border-[#FBFBFC]">
                   <td class="py-[23px] bg-[#FBFBFC] rounded-l-xl px-4 border-y border-l">
                     {{ idx + 1 }}
@@ -177,7 +177,7 @@ import EditStudentModal from "@/components/ModalContents/Students/EditModal.vue"
 import {defaultInputFields} from "@/constants/students";
 
 // types
-import {inputErrorsType} from "@/typing/types/sponsor";
+import {inputErrorsType} from "@/typing/types/sponsors";
 import {studentSponsorType, studentType} from "@/typing/types/students";
 import {sponsorshipValidation} from "@/plugins/vuelidate";
 import {transformSums, numberWithSpaces} from "@/helpers/sum";

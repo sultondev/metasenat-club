@@ -72,6 +72,10 @@ body {
   @apply text-xl mr-2.5
 }
 
+.hover-primary__buttons {
+  @apply hover:text-primary hover:bg-transparent border border-primary transition transition-all ease-linear
+}
+
 .modal-wrapper-big {
   @apply py-7 px-8 min-w-[586px]
 }

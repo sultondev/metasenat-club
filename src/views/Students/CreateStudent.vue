@@ -89,8 +89,7 @@
         <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
         <div class="flex justify-end">
           <BaseButton action-name="create-student"
-                      classes='flex items-center py-2.5 px-8 bg-[#3366FF] rounded text-sm font-medium  text-white gap-3'
-                      :class="[hoverForButtons]"
+                      classes='hover-primary__buttons flex items-center py-2.5 px-8 bg-[#3366FF] rounded text-sm font-medium  text-white gap-3'
                       text="Qo'shish"
                       type="submit"
                       @create-student="createStudent"

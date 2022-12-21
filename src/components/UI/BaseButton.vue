@@ -13,7 +13,7 @@
 interface componentProps {
   text: string
   classes?: string | [] | {}
-  actionName?: string
+  actionName: string
 }
 
 const props = defineProps<componentProps>()
