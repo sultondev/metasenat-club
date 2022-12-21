@@ -124,7 +124,7 @@ async function saveChanges() {
   const {sponsorFirm, sponsorType, full_name, phone, sums} = application;
   const data = {
     full_name: full_name,
-    phone: '+9989' + phone,
+    phone: '+998' + phone,
     sum: transformSums(sums),
     is_legal: sponsorType === SPONSOR.LEGALENTITY,
     firm: sponsorType === SPONSOR.LEGALENTITY ? sponsorFirm : "",

@@ -22,6 +22,12 @@ defineProps<{
 
 <style>
 
+#app {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
 .modal__backdrop {
   transition: opacity 0.3s ease;
 }
