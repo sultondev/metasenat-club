@@ -1,7 +1,7 @@
 <template>
   <input :type="inpType??'text'" class="w-full text-[15px] appearance-none"
          :required="required ?? true" :id="id"
-         :class="[classes, {'border-rose-600': isWrong}]"
+         :class="[classes, {'!border-rose-600': isWrong}]"
          :placeholder="hint"
          v-model="value"
          ref="baseInput"

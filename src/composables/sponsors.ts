@@ -8,7 +8,7 @@ export function useSponsors() {
     }
 
 
-    function fetchUserById(id: any) {
+    function fetchSponsorById(id: any) {
         return fetchData(`/sponsor-detail/${id}/`)
     }
 
@@ -22,5 +22,5 @@ export function useSponsors() {
         return '';
     }
 
-    return {formatDateTime, statusColor, fetchUserById};
+    return {formatDateTime, statusColor, fetchSponsorById};
 }

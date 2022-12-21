@@ -30,6 +30,7 @@
                    class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
                    v-model="state.chosenSums" :required="false"
                    hint="Summani kiriting" v-maska:[masks.sums]
+                   :is-wrong="inputErrors.sums.status || inputErrors.sponsorSumLimit.status"
         />
       </BaseFormGroup>
       <div class="text-red-600 max-w-[500px]">

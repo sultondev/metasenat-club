@@ -13,16 +13,18 @@
       <h6 class="text-xs uppercase font-medium mb-[8px]">
         Ariza holati
       </h6>
-      <MultiSelect :options="applicationOptions" :variant="1" v-model="selectedApplications"
-                   inp-type="checkbox" :reset-value="selectedApplications" :hide-all="true"></MultiSelect>
+      <MultiSelect :options="applicationOptions" :variant="1" v-model="detailedFilters.applicationStatuses"
+                   inp-type="checkbox" :reset-value="detailedFilters.applicationStatuses"
+                   :hide-all="true"></MultiSelect>
     </div>
     <div class="mb-[28px]">
       <h6 class="text-xs uppercase font-medium mb-[16px]">
         Homiylik summasi
       </h6>
       <div class="">
-        <MultiSelect :options="generousSums" :variant="2" v-model="selectedSums"
-                     inp-type="checkbox" :reset-value="selectedSums"></MultiSelect>
+        <OneSelect :options="generousSums" :variant="2" v-model="detailedFilters.sum"
+                   inp-type="checkbox" :reset-value="detailedFilters.sum">
+        </OneSelect>
       </div>
     </div>
     <div class="mb-[28px]">
@@ -32,7 +34,7 @@
       <input type="date"
              class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] min-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
              placeholder="jwlai"
-             v-model="date"
+             v-model="detailedFilters.date"
       >
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
@@ -55,9 +57,10 @@
 </template>
 
 <script setup lang="ts">
-import {Ref, ref} from "vue";
+import {reactive, Ref, ref} from "vue";
 import MultiSelect from "@/components/UI/MultiSelect.vue"
 import {hoverForButtons} from "@/constants/UI-styles"
+import OneSelect from "@/components/UI/OneSelect.vue";
 
 type optionsType = {
   label: string;
@@ -87,7 +90,6 @@ const applicationOptions: Ref<optionsType[]> = ref([
     id: 18
   }
 ])
-const selectedApplications = ref<string[]>([])
 const generousSums: any = ref<object[]>([
   {
     label: "1000000",
@@ -114,14 +116,16 @@ const generousSums: any = ref<object[]>([
     id: 28859
   }
 ])
-const selectedSums: any = ref([])
-const date = ref("")
-
+const detailedFilters = reactive({
+  applicationStatuses: [],
+  sum: "",
+  date: "",
+})
 
 function clearAll() {
-  selectedSums.value = []
-  selectedApplications.value = []
-  date.value = ""
+  detailedFilters.applicationStatuses = []
+  detailedFilters.sum = ""
+  detailedFilters.date = ""
 }
 
 </script>

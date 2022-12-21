@@ -11,9 +11,22 @@ export const sponsorshipValidation = {
 }
 
 export function checkMin(num: any) {
-    return transformSums(num) ? transformSums(num) > contractValidation.minContract : true
+    return transformSums(num) ? transformSums(num) > contractValidation.minContract : false
+}
+
+export function minSum(num: any) {
+    return transformSums(num) ? transformSums(num) > sponsorshipValidation.minSum : false
 }
 
 export function checkMax(num: any) {
     return transformSums(num) < contractValidation.maxContract
 }
+
+export function notEmpty(value: any) {
+    return Boolean(value)
+}
+
+export function shouldBeChosen(value: any) {
+    return value > 0
+}
+

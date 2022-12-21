@@ -133,7 +133,8 @@
 
   <teleport to="#modal">
     <TheModal :is-modal-open="modals.isEditModalOpen" @close-modal="toggleModal" :window-num="1">
-      <EditStudentModal></EditStudentModal>
+      <EditStudentModal @close-modal="toggleModal(1)" :student-id="student.id"
+                        @update-student="fetchTheStudent"></EditStudentModal>
     </TheModal>
   </teleport>
 
@@ -204,7 +205,7 @@ const {
   sponsorSumValidation
 } = useStudents()
 
-fetchTheUser(route.params.id)
+fetchTheStudent(route.params.id)
 
 function selectSponsor(id: any) {
   selectedSponsor.value = id
@@ -217,7 +218,7 @@ function toggleModal(key: number) {
   else if (key === 3) modals.isEditSponsorModalOpen = !modals.isEditSponsorModalOpen
 }
 
-async function fetchTheUser(id: any) {
+async function fetchTheStudent(id: any) {
   try {
     const response: any = await publicApi.get(`/student-detail/${id}`)
     const sponsors: any = await fetchSponsors(id)

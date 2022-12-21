@@ -1,5 +1,5 @@
 <template>
-  <div class="relative" v-if="variant === 1">
+  <div class="relative" v-if="variant === 1 && options.length > 0">
     <button
         class="oneselect__button py-[12px] border text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-[16px] rounded-xl bg-[#F9FAFF]"
         :class="{'border-rose-600': isWrong}"
@@ -21,7 +21,7 @@
                  name="items"
                  :id="String(option.id)">
           <label :for="String(option.id)"
-                 class=" w-full block text-[14px] onselect-label py-[12px] px-[16px] flex justify-between cursor-pointer">
+                 class="w-full block text-[14px] onselect-label py-[12px] px-[16px] flex justify-between cursor-pointer">
             <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Checked icon"
                  v-show="value === option.id">
@@ -42,7 +42,7 @@
                required
                :id="String(option.id)">
         <label :for="String(option.id)"
-               class=" w-full font-medium  border ease-linear transition-all border-[#E0E7FF] rounded-[5px] text-[12px] block text-[14px] py-[12px] px-[16px] flex justify-center"
+               class=" w-full font-medium cursor-pointer hover:bg-blue-200 border ease-linear transition-all border-[#E0E7FF] rounded-[5px] text-[12px] block text-[14px] py-[12px] px-[16px] flex justify-center"
                :class="[{'border border-[#2E5BFF]': value === option.label}, labelClasses]"
         >
           <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
@@ -124,15 +124,19 @@ const getLabel = () => {
 }
 
 
-const toggleDropdown = () => {
-}
-
 watch(() => value.value, () => {
   emit("update:modelValue", value.value)
 })
 
 watch(() => props.resetValue, () => {
   value.value = props.resetValue
+})
+
+watch(() => props.defaultValue, () => {
+  if (props.defaultValue) {
+    value.value = props.defaultValue
+    emit("update:modelValue", value.value)
+  }
 })
 
 if (props.defaultValue) {
@@ -150,6 +154,7 @@ function findLabel() {
 <style>
 .oneselect__button {
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .oneselect__button:focus + div {

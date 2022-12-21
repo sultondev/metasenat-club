@@ -125,6 +125,7 @@ import {checkMin, checkMax} from "@/plugins/vuelidate";
 import {transformSums} from "@/helpers/sum";
 import {optionsType} from "@/typing/types/oneSelect";
 import {studyTypes} from "@/constants/institute"
+import {notEmpty, shouldBeChosen} from "@/plugins/vuelidate";
 
 fetchInstitutes()
 
@@ -143,11 +144,6 @@ const application: any = reactive({
   type: "",
   institute: "",
 })
-
-
-function notEmpty(value: any) {
-  return Boolean(value)
-}
 
 
 const masks = reactive({
@@ -209,12 +205,6 @@ const contractError = computed(() => [{
     message: "Summma kiriting"
   }
 ])
-
-
-// Custom validations
-function shouldBeChosen(value: any) {
-  return value > 0
-}
 
 
 async function fetchInstitutes() {

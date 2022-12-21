@@ -12,7 +12,7 @@
 
 interface componentProps {
   text: string
-  classes: string | [] | {}
+  classes?: string | [] | {}
   actionName?: string
 }
 

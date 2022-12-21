@@ -18,7 +18,7 @@
         <BaseInput
             classes="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
             :default-value="numberWithSpaces(sponsor.sums)" v-maska:[masks.sums] v-model="sponsor.sums"
-            :is-wrong="sponsor.limit.status"/>
+            :is-wrong="sponsor.limit.status || v$.sums.$error"/>
       </BaseFormGroup>
       <span class="text-rose-600 text-xs" v-if="sponsor.limit.status">Homiyda u miqdordagi summa mavjud emas !</span>
 
@@ -56,6 +56,11 @@ import BaseButton from "@/components/UI/BaseButton.vue";
 import {hoverForButtons} from "@/constants/UI-styles"
 import {transformSums} from "@/helpers/sum";
 import {numberWithSpaces} from "@/helpers/sum"
+import {useVuelidate} from "@vuelidate/core";
+import {rules, sponsorRules} from "@/constants/vuelidate"
+import {telAndSumMask} from "@/plugins/vmaska"
+import {required} from "@vuelidate/validators";
+import {minSum} from "@/plugins/vuelidate";
 
 interface Props {
   sponsorId: number
@@ -69,10 +74,14 @@ interface Emits {
   (e: "closeModal", val: number): void
 }
 
+
+const masks = {
+  ...telAndSumMask
+}
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 const sponsors: Ref<studentSponsors[]> = ref([])
-const sponsor = reactive({
+const sponsor: any = reactive({
   selectedStudent: props.studentId,
   selectedSponsor: props.sponsorId,
   sponsorsOptions: [],
@@ -85,10 +94,21 @@ const sponsor = reactive({
   }
 })
 
+const rules = {
+  sums: {
+    required,
+    minSum,
+  }
+}
+
+const v$ = useVuelidate(rules, sponsor)
+
 fetchSponsors(props.studentId)
+
 watch(() => sponsor.sums, () => {
   sponsor.limit.status = false
 })
+
 watch(() => sponsor.selectedSponsor, () => {
   sponsor.index = sponsors.value.findIndex((item: studentSponsors) => item.sponsor.id === sponsor.selectedSponsor)
   console.log(String(sponsors.value[sponsor.index].summa))
@@ -113,17 +133,6 @@ async function fetchSponsors(id: any) {
   }
 }
 
-const masks = reactive({
-  sums: {
-    mask: (value: any) => {
-      if (value.length === 7) return "### ###"
-      else if (value.length === 6) return "## ###"
-      else if (value.length === 9) return "# ### ###"
-      else if (value.length > 9) return "## ### ###"
-      else return "# ### ###"
-    }
-  }
-})
 
 const deleteSponsor = async () => {
   console.log('deleted', sponsor.payIndex)
@@ -146,16 +155,20 @@ const saveChanges = async () => {
     student: props.studentId
   }
   console.log(sponsor.payIndex)
-  try {
-    const response = await publicApi.patch(`/sponsor-summa-update/${sponsor.payIndex}/`, data)
-    if (response.status === 200) {
-      emits('closeModal', 3)
-      emits('updateSponsors', props.studentId)
-      sponsor.limit.status = false
+  const result = await v$.value.$validate()
+  console.log(result)
+  if (result) {
+    try {
+      const response = await publicApi.patch(`/sponsor-summa-update/${sponsor.payIndex}/`, data)
+      if (response.status === 200) {
+        emits('closeModal', 3)
+        emits('updateSponsors', props.studentId)
+        sponsor.limit.status = false
+      }
+    } catch (error: any) {
+      const {response} = error
+      if (response.status) sponsor.limit.status = true
     }
-  } catch (error: any) {
-    const {response} = error
-    if (response.status) sponsor.limit.status = true
   }
 }
 

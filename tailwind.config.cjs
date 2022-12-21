@@ -47,7 +47,7 @@ module.exports = {
                     '03': '#ED72001A',
                 },
                 'smoke': '#F1F1F3',
-                'primary': '#2E5BFF',
+                'primary': '#3366FF',
                 'black': '#1D1D1F',
                 'silver': '#B1B1B8',
                 'gold': '#FFA445',

@@ -154,7 +154,7 @@ async function onSubmit(args: any) {
   const submitData = {
     full_name: application.fullName,
     phone: '+9989' + application.phoneNumber,
-    sum: application.sums !== 'boshqa' ? application.sums : application.yourSums,
+    sum: application.sums !== 'boshqa' ? transformSums(application.sums) : transformSums(application.yourSums),
     payment_type: [44],
     firm: application.sponsorFirm,
     spent: 0,
@@ -162,10 +162,12 @@ async function onSubmit(args: any) {
   }
 
   const result = await v$.value.$validate()
+
   if (result && validateSponsorType()) {
     console.log(submitData)
     try {
       const response = await publicApi.post('/sponsor-create/', submitData)
+
       if (response.status === 201) {
         emits('stepChange', STEPS.SUCCESS)
       }

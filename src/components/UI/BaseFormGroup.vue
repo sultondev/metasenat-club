@@ -1,6 +1,6 @@
 <template>
   <div v-if="variant  === '1'" class="w-full">
-    <label :for="id" class="text-xs font-medium focus" :class="[labelClasses]">
+    <label :for="id" class="uppercase block text-xs font-medium focus mb-2" :class="[labelClasses]">
       {{ labelTitle }}
     </label>
     <slot></slot>
@@ -9,7 +9,10 @@
     </div>
   </div>
   <div v-else-if="variant === '2'">
-    <label :for="id" :class="[labelClasses, {'border-rose-600': isWrong}]">
+    <label :for="id" class="uppercase block text-xs font-medium focus mb-2">
+      {{ labelTitle }}
+    </label>
+    <label :for="id" :class="[labelClasses, {'!border-rose-600': isWrong}]">
       <slot name="defVal"></slot>
       <slot></slot>
     </label>
@@ -30,7 +33,7 @@ type wrongType = {
 
 
 interface BaseFormProps {
-  id: string;
+  id?: string;
   variant: number | string
   labelTitle?: string;
   labelClasses?: string | [] | {};

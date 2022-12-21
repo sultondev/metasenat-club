@@ -6,42 +6,46 @@
         <button class="mr-6" @click="router.back()"><img
             src="@/assets/icons/website/back-icon.svg"
             alt="Back Icon"></button>
-        <h6 class="text-2xl font-bold  mr-[12px]">{{ user.full_name }}</h6>
+        <h6 class="text-2xl font-bold  mr-[12px]">{{ sponsor.full_name }}</h6>
         <span
             class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">
           {{
-            user.get_status_display
+            sponsor.get_status_display
           }}
         </span>
       </template>
     </TheHeader>
 
-    <section class="details py-[40px]" v-if="user.id">
+    <section class="details py-[40px]" v-if="sponsor.id">
       <div class="bg-white rounded-xl p-8 max-w-[793px] w-full  mx-auto">
         <div class="flex justify-between items-center mb-[32px]">
           <h6 class="text-2xl">Homiy haqida</h6>
-          <!--          <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"-->
-          <!--                  @click="toggleModal">-->
-          <!--            <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">-->
-          <!--            Tahrirlash-->
-          <!--          </button>-->
+          <BaseButton class="secondary__button" @open-modal="toggleModal" action-name="open-modal" text="Tahrirlash">
+            <span class="icon-edit icons"></span>
+          </BaseButton>
         </div>
         <div class="flex items-center mb-[24px]">
           <div class="px-[18px] py-4 bg-[#EAECF0] mr-[20px] w-fit rounded-[5px]">
             <img src="@/assets/icons/website/user-picture.svg" alt="">
           </div>
           <h6 class="max-w-[183px] text-xl font-medium">
-            {{ user.full_name }}
+            {{ sponsor.full_name }}
           </h6>
         </div>
         <div class="flex">
           <div class="font-medium  mr-[227px]">
-            <h6 class="text-xs text-[#B5B5C3] mb-[12px] uppercase">telfon raqam</h6>
-            <p class="text-xs text-base">{{ user.phone }}</p>
+            <h6 class="text-xs text-[#B5B5C3] mb-2 uppercase">telfon raqam</h6>
+            <p class="text-xs text-base">{{ sponsor.phone }}</p>
           </div>
           <div class="font-medium">
-            <h6 class="text-xs text-[#B5B5C3] mb-[12px] uppercase">homiylik summasi</h6>
-            <p class="text-xs text-base">{{ numberWithSpaces(user.sum) }}</p>
+            <h6 class="text-xs text-[#B5B5C3] mb-2 uppercase">homiylik summasi</h6>
+            <p class="text-xs text-base">{{ numberWithSpaces(sponsor.sum) }}</p>
+          </div>
+        </div>
+        <div class="w-full mt-6" v-if="sponsor.is_legal">
+          <div class="font-medium  mr-[227px]">
+            <h6 class="text-xs text-[#B5B5C3] mb-2 uppercase">Tashkilot nomi</h6>
+            <p class="text-xs text-base">{{ sponsor.firm }}</p>
           </div>
         </div>
       </div>
@@ -53,10 +57,9 @@
       <img src="@/assets/images/website/banner-01.svg" class="w-auto" alt="">
     </div>
   </div>
-
   <teleport to="#modal">
-    <TheModal :is-modal-open="isModalOpen" @close-modal="toggleModal">
-      <SponsorDetailsModal></SponsorDetailsModal>
+    <TheModal :is-modal-open="isModalOpen" @close-modal="closeModal">
+      <EditModal @close-modal="closeModal" @update-sponsor="fetchTheSponsor" :sponsor-id="sponsorId"></EditModal>
     </TheModal>
   </teleport>
 </template>
@@ -66,37 +69,44 @@ import {useRoute, useRouter} from "vue-router";
 import {useSponsors} from "@/composables/sponsors";
 import TheHeader from "@/components/TheHeader.vue"
 import TheModal from "@/components/UI/TheModal.vue"
-import SponsorDetailsModal from "@/components/ModalContents/Sponsors/SponsorDetailsModal.vue"
+import EditModal from "@/components/ModalContents/Sponsors/EditModal.vue"
 import {ref} from "vue";
 import {numberWithSpaces} from "@/helpers/sum"
+import BaseButton from "@/components/UI/BaseButton.vue"
 
-type userType = {
+type sponsorType = {
   id: number,
   full_name: string,
   phone: string,
   sum: number,
   is_legal: boolean
   get_status_display: string
+  firm: string
 }
 
 const router = useRouter()
 const route = useRoute()
-const user: userType | any = ref({})
-const {fetchUserById} = useSponsors()
+const sponsor: sponsorType | any = ref({})
+const {fetchSponsorById} = useSponsors()
 const isModalOpen = ref(false)
+const sponsorId = ref(route.params.id)
 
-fetchTheUser(route.params.id)
+fetchTheSponsor(sponsorId.value)
 
 function toggleModal() {
   isModalOpen.value = !isModalOpen.value
 }
 
-async function fetchTheUser(id: any) {
+function closeModal() {
+  isModalOpen.value = false
+}
+
+async function fetchTheSponsor(id: any) {
   try {
-    const response: any = await fetchUserById(id)
+    const response: any = await fetchSponsorById(id)
     if (response.status === 200) {
       // @ts-ignore
-      user.value = response.data
+      sponsor.value = response.data
     }
   } catch (error: any) {
     console.log(error.message)
