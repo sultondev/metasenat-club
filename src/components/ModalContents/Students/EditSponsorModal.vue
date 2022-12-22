@@ -32,7 +32,7 @@
         <span class="icon-trash text-xl  text-[#FF4945] text-inherit"></span>
       </BaseButton>
       <BaseButton class="gap-2" text="Saqlash"
-                  :classes="['py-2.5 px-8 bg-[#3366FF] text-white hover:text-[#3366FF] rounded text-sm', hoverForButtons]"
+                  :classes="['py-2.5 px-8 bg-[#3366FF] text-white hover:text-[#3366FF] rounded text-sm', 'hover-primary__buttons']"
                   @save-changes="saveChanges" action-name="saveChanges"
       >
         <span class="icon-save text-xl"></span>
@@ -53,7 +53,6 @@ import BaseInput from "@/components/UI/BaseInput.vue"
 // @ts-ignore
 import {vMaska} from "maska"
 import BaseButton from "@/components/UI/BaseButton.vue";
-import {hoverForButtons} from "@/constants/UI-styles"
 import {transformSums} from "@/helpers/sum";
 import {numberWithSpaces} from "@/helpers/sum"
 import {useVuelidate} from "@vuelidate/core";

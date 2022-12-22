@@ -6,7 +6,6 @@
       <div class="modal-wrapper-inputs">
         <InputTablets :options="options" v-model="application.sponsorType"
                       :default-value="application.sponsorType"/>
-        {{ application.sponsorType }}
         <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)">
           <BaseInput v-model="application.full_name" :is-wrong="v$.full_name.$error" class="modal-form__input"
                      :default-value="application.full_name"/>
@@ -51,7 +50,7 @@ import InputTablets from "@/components/UI/InputTablets.vue"
 import {reactive, Ref, ref} from "vue";
 import {SPONSOR} from "@/typing/enums/sponsor";
 import {generousSumsType, optionType} from "@/typing/types/sponsors";
-import {generousOptions, sponsorLegalTypes} from "@/constants/sponsor";
+import {generousOptions, sponsorLegalTypes} from "@/constants/sponsors";
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import BaseButton from "@/components/UI/BaseButton.vue"
@@ -112,7 +111,7 @@ async function fetchSponsor() {
     console.log(response)
     const {full_name, phone, sum, is_legal, firm} = response.data;
     application.full_name = full_name
-    application.phone = phone.slice(5)
+    application.phone = phone.slice(4)
     application.sums = sum
     application.sponsorType = is_legal ? SPONSOR.LEGALENTITY : SPONSOR.INDIVIDUAL
     application.sponsorFirm = is_legal ? firm : ""

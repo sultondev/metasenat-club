@@ -98,7 +98,7 @@ import BaseInput from "@/components/UI/BaseInput.vue"
 import OneSelect from "@/components/UI/OneSelect.vue";
 import InputTablets from "@/components/UI/InputTablets.vue"
 import {telAndSumMask} from "@/plugins/vmaska";
-import {generousOptions, sponsorLegalTypes} from "@/constants/sponsor";
+import {generousOptions, sponsorLegalTypes} from "@/constants/sponsors";
 
 import {SPONSOR} from "@/typing/enums/sponsor";
 import {transformSums} from "@/helpers/sum";

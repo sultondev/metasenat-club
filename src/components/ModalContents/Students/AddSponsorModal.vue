@@ -43,8 +43,7 @@
 
     <div class="flex justify-end">
       <button type="submit" @click="$emit('dataSubmit', state.chosenSponsor, state.chosenSums)"
-              class="flex bg-[#3366FF] text-white py-2.5 px-8 rounded-[5px] items-center gap-x-2.5"
-              :class="hoverForButtons"
+              class="flex bg-[#3366FF] text-white py-2.5 px-8 rounded-[5px] items-center gap-x-2.5 hover-primary__buttons"
       >
         <span class="icon-money"></span>
         <span>
@@ -61,16 +60,11 @@ import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import OneSelect from "@/components/UI/OneSelect.vue"
 
-
+// @ts-ignore
 import {vMaska} from "maska"
 import {reactive, ref, watch} from "vue"
 import {publicApi} from "@/plugins/axios"
-import {useSponsors} from "@/composables/sponsors"
-import {useStudents} from "@/composables/student"
-import {required, email, minLength} from "@vuelidate/validators";
 import {inputErrorsType, sponsorsListType} from "@/typing/types/sponsors";
-import {hoverForButtons} from "@/constants/UI-styles"
-import {useVuelidate} from "@vuelidate/core";
 
 interface AddSponsorModalProps {
   studentId: number

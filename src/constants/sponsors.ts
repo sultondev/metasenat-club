@@ -1,5 +1,28 @@
 import {SPONSOR} from "@/typing/enums/sponsor";
 
+export const sponsorStatuses = [
+    {
+        label: "barchasi",
+        id: 101
+    },
+    {
+        label: "yangi",
+        id: 102
+    },
+    {
+        label: "moderatsiyada",
+        id: 103
+    },
+    {
+        label: "tasdiqlangan",
+        id: 104
+    },
+    {
+        label: "bekor qilingan",
+        id: 105
+    }
+]
+
 export const generousOptions = [
     {
         label: "1000000",

@@ -14,18 +14,32 @@
 
 <script setup lang="ts">
 
-defineProps<{
+import {watch} from "vue";
+
+const modal: any = document.querySelector("#modal")
+console.log(modal)
+const props = defineProps<{
   isModalOpen: boolean
   windowNum?: number
 }>()
+
+
+watch(() => props.isModalOpen, () => {
+  if (props.isModalOpen) {
+    modal.classList.add('modal-open')
+  } else {
+    modal.classList.remove('modal-open')
+  }
+})
+
+
 </script>
 
 <style>
 
-#app {
-  max-width: 100vw;
+.modal-open + div {
   max-height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 .modal__backdrop {

@@ -2,9 +2,8 @@ import {fetchData} from "@/plugins/axios";
 
 export function useSponsors() {
     function formatDateTime(arg: string) {
-        const [year, month, day] = arg.slice(0, 10).split('-').join('-').split('-');
-        const res: any = [day, month, year].join(".")
-        return res;
+        const date = new Date(arg)
+        return [date.getDate(), date.getMonth(), date.getFullYear()].join(".")
     }
 
 

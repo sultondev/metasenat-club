@@ -14,8 +14,9 @@
         Ariza holati
       </h6>
       <MultiSelect :options="applicationOptions" :variant="1" v-model="detailedFilters.applicationStatuses"
-                   inp-type="checkbox" :reset-value="detailedFilters.applicationStatuses"
-                   :hide-all="true"></MultiSelect>
+                   inp-type="checkbox" :default-value="defaults.applicationStatuses"
+                   :hide-all="true">
+      </MultiSelect>
     </div>
     <div class="mb-[28px]">
       <h6 class="text-xs uppercase font-medium mb-[16px]">
@@ -23,7 +24,7 @@
       </h6>
       <div class="">
         <OneSelect :options="generousSums" :variant="2" v-model="detailedFilters.sum"
-                   inp-type="checkbox" :reset-value="detailedFilters.sum">
+                   inp-type="checkbox" :default-value="defaults.sum">
         </OneSelect>
       </div>
     </div>
@@ -31,11 +32,12 @@
       <h6 class="text-xs uppercase font-medium mb-[8px]">
         Sana
       </h6>
-      <input type="date"
-             class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] min-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
-             placeholder="jwlai"
-             v-model="detailedFilters.date"
-      >
+      <BaseInput inp-type="date"
+                 class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] max-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
+                 placeholder="jwlai"
+                 v-model="detailedFilters.date"
+                 :default-value="defaults.date"
+      />
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
     <div class="flex justify-end gap-[16px] transition-all">
@@ -47,6 +49,7 @@
         <span class="text-sm text-[#B2B7C1]">Tozalash</span>
       </button>
       <button class="hover-primary__buttons bg-[#3366FF] text-white flex items-center py-[9px] px-[32px] rounded-[5px]"
+              @click="search"
       >
         <span class="icon-eye mr-5 text-2xl"></span>
         <span class="text-sm">Natijalarini ko'rish</span>
@@ -59,65 +62,31 @@
 import {reactive, Ref, ref} from "vue";
 import MultiSelect from "@/components/UI/MultiSelect.vue"
 import OneSelect from "@/components/UI/OneSelect.vue";
+import {useRoute, useRouter} from "vue-router";
+import {generousOptions, sponsorStatuses} from "@/constants/sponsors";
+import BaseInput from "@/components/UI/BaseInput.vue"
+import {checkArray} from "@/helpers/mainHelpers";
 
 type optionsType = {
   label: string;
   id: number;
 }
 
-
-const applicationOptions: Ref<optionsType[]> = ref([
-  {
-    label: "barchasi",
-    id: 86
-  },
-  {
-    label: "yangi",
-    id: 89
-  },
-  {
-    label: "moderatsiyada",
-    id: 90
-  },
-  {
-    label: "tasdiqlangan",
-    id: 20
-  },
-  {
-    label: "bekor qilingan",
-    id: 18
-  }
-])
-const generousSums: any = ref<object[]>([
-  {
-    label: "1000000",
-    id: 1291820
-  },
-  {
-    label: "5000000",
-    id: 88331
-  },
-  {
-    label: "7000000",
-    id: 24357
-  },
-  {
-    label: "10000000",
-    id: 96884
-  },
-  {
-    label: "30000000",
-    id: 2995
-  },
-  {
-    label: "50000000",
-    id: 28859
-  }
-])
+const router = useRouter()
+const route = useRoute()
+const applicationOptions: Ref<optionsType[]> = ref(sponsorStatuses)
+const generousSums: any = ref<object[]>(generousOptions)
 const detailedFilters = reactive({
   applicationStatuses: [],
   sum: "",
   date: "",
+  statuses: []
+})
+
+const defaults = reactive({
+  sum: route.query.sum || "",
+  date: route.query.date || "",
+  applicationStatuses: checkArray(route.query.statuses) || []
 })
 
 function clearAll() {
@@ -125,6 +94,19 @@ function clearAll() {
   detailedFilters.sum = ""
   detailedFilters.date = ""
 }
+
+async function search() {
+  await router.push({
+    name: 'sponsors-list',
+    query: {
+      ...route.query,
+      statuses: [...detailedFilters.applicationStatuses],
+      sum: detailedFilters.sum,
+      date: detailedFilters.date
+    }
+  })
+}
+
 
 </script>
 

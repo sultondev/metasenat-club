@@ -12,9 +12,9 @@
           v-if="isDropdownOpen">
       <ul class="multiselect-list w-full">
         <li class="multiselect-list__item w-full"
-            :class="{activeBg: value.includes(option.label)}"
+            :class="{activeBg: containValue(value, option.id)}"
             v-for="(option, idx) in options">
-          <input type="checkbox" :value="option.label"
+          <input type="checkbox" :value="option.id"
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
@@ -23,7 +23,7 @@
                  class=" w-full block text-[14px] multiselect-label py-[12px] px-[16px] flex justify-between">
             <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-                 v-show="value.includes(option.label)">
+                 v-show="containValue(value, option.id)">
           </label>
         </li>
       </ul>
@@ -97,7 +97,7 @@ import {numberWithSpaces} from "@/helpers/sum"
 
 type optionsType = {
   label: string;
-  id: number;
+  id: number | string;
 }
 
 interface BaseInputProps {
@@ -105,7 +105,7 @@ interface BaseInputProps {
   variant: number;
   classes?: string | [] | object;
   hint?: string;
-  resetValue?: string[];
+  defaultValue?: string[];
   inpType?: string;
   hideAll?: boolean;
   additional?: boolean;
@@ -119,7 +119,7 @@ interface Emits {
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
 const isDropdownOpen = ref(false)
-const value: any = ref([])
+const value: string[] | number[] | any = ref([])
 
 
 const toggleDropdown = () => {
@@ -128,11 +128,34 @@ const toggleDropdown = () => {
 
 watch(() => value.value, () => {
   emit("update:modelValue", value.value)
+  console.log(value.value)
 })
 
-watch(() => props.resetValue, () => {
-  value.value = props.resetValue
+watch(() => props.defaultValue, () => {
+  if (props.defaultValue) {
+    value.value = props.defaultValue
+    emit("update:modelValue", value.value)
+    console.log(value.value)
+    console.log(props.defaultValue)
+  }
 })
+
+if (props.defaultValue) {
+  emit("update:modelValue", value.value)
+  value.value = props.defaultValue
+  console.log(value.value)
+  console.log(props.defaultValue)
+}
+
+function containValue(theArray: string[] | number[], theValue: string | number) {
+  if (Array.isArray(theArray)) {
+    return theArray.some((item) => item == theValue)
+  } else {
+    return theArray == theValue
+  }
+}
+
+
 </script>
 
 <style>

@@ -48,7 +48,7 @@ import BaseInput from "@/components/UI/BaseInput.vue"
 import {styleInputs, styleBaseFormGroup2, defaultInput} from "@/constants/UI-styles"
 import OneSelect from "@/components/UI/OneSelect.vue"
 import BaseButton from "@/components/UI/BaseButton.vue"
-import {hoverForButtons} from "@/constants/UI-styles"
+
 import {telAndSumMask} from "@/plugins/vmaska"
 // @ts-ignore
 import {vMaska} from "maska";

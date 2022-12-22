@@ -99,7 +99,7 @@ interface BaseInputProps {
   inpType?: string;
   hideAll?: boolean;
   additional?: boolean
-  defaultValue?: string | number
+  defaultValue?: string | number | any
   title?: string
   isWrong?: boolean
 }
@@ -110,7 +110,7 @@ interface Emits {
 
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
-const value: any = ref("")
+const value: any = ref([])
 
 
 const getLabel = () => {

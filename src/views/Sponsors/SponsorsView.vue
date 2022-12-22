@@ -24,7 +24,7 @@
             </template>
 
             <template #tbody>
-              <tr v-for="(sponsor, idx) in filterSponsorsByName"
+              <tr v-for="(sponsor, idx) in filterSponsors"
                   :key="sponsor.id" class="border-spacing-y-3 border-separate text-sm">
                 <td class="py-[23px] bg-white rounded-l-[12px] px-4">
                   {{ (page - 1) * size + idx + 1 }}
@@ -56,7 +56,7 @@
               </tr>
             </template>
           </Table>
-          <NotFound :condition="filterSponsorsByName.length === 0"
+          <NotFound :condition="filterSponsors.length === 0"
                     text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
             <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
           </NotFound>
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, inject, onMounted, Ref, ref, watch} from "vue";
+import {computed, inject, onMounted, reactive, Ref, ref, watch} from "vue";
 import Table from "@/components/UI/Table.vue"
 import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
@@ -96,6 +96,7 @@ import {useSponsors} from "@/composables/sponsors";
 import {useMainStore} from "@/store/useMainStore";
 import {sponsorsListType} from "@/typing/types/sponsors";
 import {numberWithSpaces} from "@/helpers/sum"
+import {formatStatuses} from "@/helpers/mainHelpers";
 
 const {formatDateTime, statusColor} = useSponsors()
 const fetchData: any = inject("fetchData")
@@ -105,7 +106,12 @@ const route = useRoute();
 const listOfSponsors: Ref<sponsorsListType[]> = ref([])
 const page = ref(+route.query.page! || 1)
 const size = ref(+route.query.size! || 15)
-const filters: any = ref(route.query.filters || "")
+
+const filters: any = reactive({
+  name: route.query.filters || "",
+  sum: route.query.sum || "",
+  statuses: route.query.statuses || [route.query.statuses]
+})
 const totalCount = ref(0)
 
 const sponsorListLength = ref(listOfSponsors.value.length)
@@ -133,11 +139,41 @@ const fetchSponsorsData = async () => {
   }
 }
 
-const filterSponsorsByName = computed(() => {
-  if (filters.value.length > 0) {
+const filterSponsors = computed(() => {
+  // if (filters.value.length > 0) {
+  //   return listOfSponsors.value.filter((item: sponsorsListType) => {
+  //     const lowVer = item.full_name.toLowerCase()
+  //     return lowVer.includes(filters.value.toLowerCase())
+  //   })
+  // } else {
+  //   return listOfSponsors.value
+  // }
+  if (userSearching()) {
     return listOfSponsors.value.filter((item: sponsorsListType) => {
+      const status = formatStatuses(item.get_status_display);
+      // console.log(filters.statuses.some((item: any) => item === status))
+      console.log(filters.statuses, status)
+      const statusResult = () => {
+        if (filters.statuses < 1) {
+          return true
+        } else if (Array.isArray(filters.statuses)) {
+          return filters.statuses.some((item: any) => item == status) || filters.statuses.some((item: any) => item == '101')
+        } else {
+          return filters.statuses == status || filters.statuses == 101
+        }
+      }
+      const date = () => {
+        if (filters.date) {
+          const date = new Date()
+          const min = Date.parse("14-9-2021")
+          const search = filters.date
+          const max = Date.parse(Date())
+          return max
+        }
+      }
+      console.log(statusResult())
       const lowVer = item.full_name.toLowerCase()
-      return lowVer.includes(filters.value.toLowerCase())
+      return lowVer.includes(filters.name.toLowerCase()) && item.sum >= filters.sum && statusResult()
     })
   } else {
     return listOfSponsors.value
@@ -150,11 +186,19 @@ onMounted(async () => {
 
 
 watch(route, async () => {
-  filters.value = route.query.filters || ""
+  filters.name = route.query.filters || ""
+  filters.sum = route.query.sum || ""
+  filters.date = route.query.date || ""
+  filters.statuses = route.query.statuses || []
   page.value = +route.query.page! || 1
   size.value = +route.query.size! || 15
   await fetchSponsorsData()
 })
+
+function userSearching() {
+  const {statuses, filters, sum, date} = route.query
+  return Boolean(statuses || filters || sum || date)
+}
 </script>
 
 <style>
