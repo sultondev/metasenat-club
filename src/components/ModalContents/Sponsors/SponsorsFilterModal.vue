@@ -13,8 +13,8 @@
       <h6 class="text-xs uppercase font-medium mb-[8px]">
         Ariza holati
       </h6>
-      <MultiSelect :options="applicationOptions" :variant="1" v-model="detailedFilters.applicationStatuses"
-                   inp-type="checkbox" :default-value="defaults.applicationStatuses"
+      <MultiSelect :options="applicationOptions" :variant="1" v-model="detailedFilters.statuses"
+                   :default-value="detailedFilters.statuses"
                    :hide-all="true">
       </MultiSelect>
     </div>
@@ -24,7 +24,7 @@
       </h6>
       <div class="">
         <OneSelect :options="generousSums" :variant="2" v-model="detailedFilters.sum"
-                   inp-type="checkbox" :default-value="defaults.sum">
+                   :default-value="detailedFilters.sum">
         </OneSelect>
       </div>
     </div>
@@ -36,7 +36,7 @@
                  class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] max-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
                  placeholder="jwlai"
                  v-model="detailedFilters.date"
-                 :default-value="defaults.date"
+                 :default-value="detailedFilters.date"
       />
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
@@ -77,20 +77,13 @@ const route = useRoute()
 const applicationOptions: Ref<optionsType[]> = ref(sponsorStatuses)
 const generousSums: any = ref<object[]>(generousOptions)
 const detailedFilters = reactive({
-  applicationStatuses: [],
-  sum: "",
-  date: "",
-  statuses: []
-})
-
-const defaults = reactive({
   sum: route.query.sum || "",
   date: route.query.date || "",
-  applicationStatuses: checkArray(route.query.statuses) || []
+  statuses: checkArray(route.query.statuses) || []
 })
 
 function clearAll() {
-  detailedFilters.applicationStatuses = []
+  detailedFilters.statuses = []
   detailedFilters.sum = ""
   detailedFilters.date = ""
 }
@@ -100,9 +93,9 @@ async function search() {
     name: 'sponsors-list',
     query: {
       ...route.query,
-      statuses: [...detailedFilters.applicationStatuses],
+      statuses: [...detailedFilters.statuses],
       sum: detailedFilters.sum,
-      date: detailedFilters.date
+      date: String(detailedFilters.date) || ""
     }
   })
 }

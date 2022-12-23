@@ -106,6 +106,7 @@ import {transformSums} from "@/helpers/sum";
 import {vMaska} from "maska";
 import {publicApi} from "@/plugins/axios";
 import {STEPS} from "@/typing/enums/stepper";
+import {findSumById} from "@/helpers/mainHelpers";
 
 const masks = reactive(telAndSumMask)
 
@@ -153,8 +154,8 @@ const v$ = useVuelidate(rules, application)
 async function onSubmit(args: any) {
   const submitData = {
     full_name: application.fullName,
-    phone: '+9989' + application.phoneNumber,
-    sum: application.sums !== 'boshqa' ? transformSums(application.sums) : transformSums(application.yourSums),
+    phone: '+998' + application.phoneNumber,
+    sum: application.sums !== 'boshqa' ? transformSums(findSumById(application.sums)) : transformSums(application.yourSums),
     payment_type: [44],
     firm: application.sponsorFirm,
     spent: 0,

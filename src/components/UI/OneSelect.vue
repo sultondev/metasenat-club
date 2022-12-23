@@ -13,7 +13,7 @@
          :class="dropdownClass">
       <ul class="onselect-list w-full transition-all ease-linear overflow-y-scroll max-h-80 rounded-xl">
         <li class="onselect-list__item w-full hover:bg-[#e9e9ff] transition-all ease-linear"
-            :class="{activeBg: value === option.id}"
+            :class="{activeBg: value == option.id}"
             v-for="(option, idx) in options">
           <input type="radio" :value="option.id"
                  class="hidden onselect-label__box appearance-none"
@@ -24,7 +24,7 @@
                  class="w-full block text-[14px] onselect-label py-[12px] px-[16px] flex justify-between cursor-pointer">
             <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Checked icon"
-                 v-show="value === option.id">
+                 v-show="value == option.id">
           </label>
         </li>
       </ul>
@@ -35,7 +35,7 @@
     <ul class="grid grid-cols-3 gap-[12px]">
       <li class="relative"
           v-for="(option, idx) in options">
-        <input type="radio" :value="option.label"
+        <input type="radio" :value="option.id"
                class="hidden onselect-label__box appearance-none"
                v-model="value"
                name="item"
@@ -43,14 +43,14 @@
                :id="String(option.id)">
         <label :for="String(option.id)"
                class=" w-full font-medium cursor-pointer hover:bg-blue-200 border ease-linear transition-all border-[#E0E7FF] rounded-[5px] text-[12px] block text-[14px] py-[12px] px-[16px] flex justify-center"
-               :class="[{'border border-[#2E5BFF]': value === option.label}, labelClasses]"
+               :class="[{'border border-[#2E5BFF]': value == option.id}, labelClasses]"
         >
           <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
           <span class="text-[#2E5BFF]"> UZS</span>
         </label>
         <span class="absolute -top-2 -right-2">
           <img src="@/assets/icons/website/checked-icon.svg" alt="Cheked"
-               v-show="value === option.label">
+               v-show="value == option.id">
           </span>
       </li>
       <li class="relative border border-[transparent] bg-[#E0E7FF] ease-linear transition-all rounded-[5px]"
@@ -94,9 +94,7 @@ interface BaseInputProps {
   labelClasses?: string | [] | object;
   dropdownClass?: string | [] | object
   hint?: string;
-  resetValue?: string;
   required?: boolean;
-  inpType?: string;
   hideAll?: boolean;
   additional?: boolean
   defaultValue?: string | number | any
@@ -110,7 +108,7 @@ interface Emits {
 
 const props = defineProps<BaseInputProps>()
 const emit = defineEmits<Emits>()
-const value: any = ref([])
+const value: any = ref()
 
 
 const getLabel = () => {
@@ -128,15 +126,9 @@ watch(() => value.value, () => {
   emit("update:modelValue", value.value)
 })
 
-watch(() => props.resetValue, () => {
-  value.value = props.resetValue
-})
-
 watch(() => props.defaultValue, () => {
-  if (props.defaultValue) {
-    value.value = props.defaultValue
-    emit("update:modelValue", value.value)
-  }
+  value.value = props.defaultValue
+  emit("update:modelValue", value.value)
 })
 
 if (props.defaultValue) {

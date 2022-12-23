@@ -33,7 +33,7 @@ export const useStudents = () => {
 
     function sponsorSumValidation(sums: any) {
         const sum = transformSums(sums)
-        return sum > sponsorshipValidation.minSum && sum < sponsorshipValidation.maxSum
+        return sum >= sponsorshipValidation.minSum && sum <= sponsorshipValidation.maxSum
     }
 
     function sponsorIdValidation(sponsorId: number | string) {

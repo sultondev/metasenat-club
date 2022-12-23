@@ -1,4 +1,4 @@
-import {sponsorStatuses} from "@/constants/sponsors";
+import {generousOptions, sponsorStatuses} from "@/constants/sponsors";
 
 export const formatStatuses = (value: string) => {
     if (value) {
@@ -17,4 +17,11 @@ export const checkArray = (theArray: any) => {
         return [theArray]
     }
     return false
+}
+
+export const findSumById = (arg: any) => {
+    const index = generousOptions.findIndex((item: { id: number }) => item.id == arg)
+    if (arg) {
+        return Number(generousOptions[index].label)
+    } else return 0
 }

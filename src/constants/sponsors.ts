@@ -1,6 +1,7 @@
 import {SPONSOR} from "@/typing/enums/sponsor";
+import {selectorOptions} from "@/typing/types/options";
 
-export const sponsorStatuses = [
+export const sponsorStatuses: selectorOptions[] = [
     {
         label: "barchasi",
         id: 101
@@ -23,10 +24,10 @@ export const sponsorStatuses = [
     }
 ]
 
-export const generousOptions = [
+export const generousOptions: selectorOptions[] = [
     {
         label: "1000000",
-        id: 1291820
+        id: 1291
     },
     {
         label: "5000000",

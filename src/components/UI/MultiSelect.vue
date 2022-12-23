@@ -128,23 +128,18 @@ const toggleDropdown = () => {
 
 watch(() => value.value, () => {
   emit("update:modelValue", value.value)
-  console.log(value.value)
 })
 
 watch(() => props.defaultValue, () => {
   if (props.defaultValue) {
     value.value = props.defaultValue
     emit("update:modelValue", value.value)
-    console.log(value.value)
-    console.log(props.defaultValue)
   }
 })
 
 if (props.defaultValue) {
-  emit("update:modelValue", value.value)
   value.value = props.defaultValue
-  console.log(value.value)
-  console.log(props.defaultValue)
+  emit("update:modelValue", value.value)
 }
 
 function containValue(theArray: string[] | number[], theValue: string | number) {
@@ -181,32 +176,3 @@ function containValue(theArray: string[] | number[], theValue: string | number) 
 }
 
 </style>
-
-<!--<template>-->
-<!--  <input type="text" v-model="mValue" :placeholder="placeholder" :class="classes" :id="props.id">-->
-<!--</template>-->
-
-<!--<script setup lang="ts">-->
-<!--import {ref, watch} from "vue";-->
-
-<!--interface Props {-->
-<!--  modelValue: any;-->
-<!--  placeholder?: string;-->
-<!--  classes: string;-->
-<!--  id: string-->
-<!--}-->
-
-<!--interface Emits {-->
-<!--  (e: "update:modelValue", value: string): void-->
-<!--}-->
-
-<!--const props = defineProps<Props>()-->
-<!--const emit = defineEmits<Emits>()-->
-
-<!--const mValue = ref(props.modelValue)-->
-
-<!--watch(() => mValue.value, () => {-->
-<!--  emit("update:modelValue", mValue.value)-->
-<!--})-->
-
-<!--</script>-->

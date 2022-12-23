@@ -2,19 +2,17 @@
   <section class="sponsors" v-cloak>
     <div class="mx-auto xs:w-full ">
       <div class="overflow-x-scroll mb-[6px]">
-
         <div class="mx-auto"
              v-if="listOfSponsors.length === 0 && !fetchError.error || mainStore.loading">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else-if="listOfSponsors.length > 0">
-
           <Table classes="w-full table-auto border-separate border-spacing-y-4 container mx-auto">
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
                 <th class=" text-left">F.I.SH.</th>
-                <th class="">Tel.Raqami</th>
+                <th class="">Tel.Raqami {{ filters.date }}</th>
                 <th class="px-4 whitespace-nowrap">Homiylik summasi</th>
                 <th class="px-4 whitespace-nowrap">Sarflangan summa</th>
                 <th class="px-4">Sana</th>
@@ -96,7 +94,8 @@ import {useSponsors} from "@/composables/sponsors";
 import {useMainStore} from "@/store/useMainStore";
 import {sponsorsListType} from "@/typing/types/sponsors";
 import {numberWithSpaces} from "@/helpers/sum"
-import {formatStatuses} from "@/helpers/mainHelpers";
+import {findSumById, formatStatuses} from "@/helpers/mainHelpers";
+import {generousOptions} from "@/constants/sponsors";
 
 const {formatDateTime, statusColor} = useSponsors()
 const fetchData: any = inject("fetchData")
@@ -109,8 +108,9 @@ const size = ref(+route.query.size! || 15)
 
 const filters: any = reactive({
   name: route.query.filters || "",
+  date: route.query.date || "20-20-2021",
   sum: route.query.sum || "",
-  statuses: route.query.statuses || [route.query.statuses]
+  statuses: route.query.statuses || [route.query.statuses],
 })
 const totalCount = ref(0)
 
@@ -140,40 +140,11 @@ const fetchSponsorsData = async () => {
 }
 
 const filterSponsors = computed(() => {
-  // if (filters.value.length > 0) {
-  //   return listOfSponsors.value.filter((item: sponsorsListType) => {
-  //     const lowVer = item.full_name.toLowerCase()
-  //     return lowVer.includes(filters.value.toLowerCase())
-  //   })
-  // } else {
-  //   return listOfSponsors.value
-  // }
   if (userSearching()) {
     return listOfSponsors.value.filter((item: sponsorsListType) => {
       const status = formatStatuses(item.get_status_display);
-      // console.log(filters.statuses.some((item: any) => item === status))
-      console.log(filters.statuses, status)
-      const statusResult = () => {
-        if (filters.statuses < 1) {
-          return true
-        } else if (Array.isArray(filters.statuses)) {
-          return filters.statuses.some((item: any) => item == status) || filters.statuses.some((item: any) => item == '101')
-        } else {
-          return filters.statuses == status || filters.statuses == 101
-        }
-      }
-      const date = () => {
-        if (filters.date) {
-          const date = new Date()
-          const min = Date.parse("14-9-2021")
-          const search = filters.date
-          const max = Date.parse(Date())
-          return max
-        }
-      }
-      console.log(statusResult())
       const lowVer = item.full_name.toLowerCase()
-      return lowVer.includes(filters.name.toLowerCase()) && item.sum >= filters.sum && statusResult()
+      return lowVer.includes(filters.name.toLowerCase()) && statusResult(status) && findSumById(filters.sum) <= Number(item.sum) && getParsedTime(item.created_at, '.') >= getParsedTime(filters.date, '-')
     })
   } else {
     return listOfSponsors.value
@@ -199,6 +170,24 @@ function userSearching() {
   const {statuses, filters, sum, date} = route.query
   return Boolean(statuses || filters || sum || date)
 }
+
+
+function statusResult(arg: any) {
+  if (filters.statuses < 1) {
+    return true
+  } else if (Array.isArray(filters.statuses)) {
+    return filters.statuses.some((item: any) => item == arg) || filters.statuses.some((item: any) => item == '101')
+  } else {
+    return filters.statuses == arg || filters.statuses == 101
+  }
+}
+
+function getParsedTime(arg: string, symbols: string) {
+  const regex = new RegExp(`/${symbols || '.'}/`)
+  const formatted = arg.replace(regex, '-')
+  return Date.parse(formatted)
+}
+
 </script>
 
 <style>

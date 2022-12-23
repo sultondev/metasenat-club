@@ -1,5 +1,6 @@
-export function transformSums(sums: string) {
-    return Number(sums.replace(/ /g, ''))
+export function transformSums(sums: string | number) {
+    const sum = String(sums);
+    return Number(sum.replace(/ /g, ''))
 }
 
 export function numberWithSpaces(x: string | number) {
