@@ -78,7 +78,7 @@ const applicationOptions: Ref<optionsType[]> = ref(sponsorStatuses)
 const generousSums: any = ref<object[]>(generousOptions)
 const detailedFilters = reactive({
   sum: route.query.sum || "",
-  date: route.query.date || "",
+  date: route.query.date || "01-01-2021",
   statuses: checkArray(route.query.statuses) || []
 })
 

@@ -183,9 +183,13 @@ function statusResult(arg: any) {
 }
 
 function getParsedTime(arg: string, symbols: string) {
-  const regex = new RegExp(`/${symbols || '.'}/`)
-  const formatted = arg.replace(regex, '-')
-  return Date.parse(formatted)
+  if (arg) {
+    const regex = new RegExp(`/${symbols || '.'}/`)
+    const formatted = arg.replace(regex, '-')
+    return Date.parse(formatted)
+  } else {
+    return Date.parse('01-01-2021')
+  }
 }
 
 </script>
