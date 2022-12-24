@@ -116,7 +116,7 @@ import BaseInput from "@/components/UI/BaseInput.vue"
 import BaseButton from "@/components/UI/BaseButton.vue"
 
 import {publicApi} from "@/plugins/axios";
-import {useStudents} from "@/composables/student";
+import {useStudents} from "@/composables/students";
 import {minLength, required} from "@vuelidate/validators";
 import {useVuelidate} from "@vuelidate/core";
 import {contractValidation} from "@/plugins/vuelidate";

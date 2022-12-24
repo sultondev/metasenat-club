@@ -18,8 +18,9 @@
       <div class="bg-white rounded-xl p-8 max-w-[793px] w-full mx-auto mb-10">
         <div class="flex justify-between items-center mb-8">
           <h6 class="text-2xl">Talaba haqida</h6>
-          <button class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] rounded-[5px] text-[#3365FC]"
-                  @click="toggleModal(1)">
+          <button
+              class="flex items-center py-[9px] px-[32px] bg-[#EDF1FD] hover:bg-[#E0E7FF] rounded-[5px] text-[#3365FC]"
+              @click="toggleModal(1)">
             <img src="@/assets/icons/website/edit.svg" class="mr-[10px]" alt="Edit Icon">
             Tahrirlash
           </button>
@@ -163,7 +164,7 @@ import {getDiplomaType} from "@/helpers/institute"
 
 // composables
 import {useSponsors} from "@/composables/sponsors";
-import {useStudents} from "@/composables/student";
+import {useStudents} from "@/composables/students";
 
 // components
 import Table from "@/components/UI/Table.vue"

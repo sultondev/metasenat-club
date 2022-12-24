@@ -1,7 +1,7 @@
 <template>
   <form class="min-w-[586px] p-[28px]" @submit.prevent>
     <ModalHeaders title="Tahrirlash" @close-modal="$emit('close-modal')"></ModalHeaders>
-    <div class="separate__line"></div>
+    <div class="separate__line my-7"></div>
     <div class="flex flex-col gap-7">
 
       <BaseFormGroup label-title="F.I.Sh. (Familiya Ism Sharifingiz)" variant="1" id="edit-student-name">
@@ -25,14 +25,14 @@
       </BaseFormGroup>
 
       <BaseFormGroup variant="1" label-title="Kontrakt miqdori" :wrong-data="contractError">
-        <BaseInput :classes="styleInputs" v-model="student.contract" :default-value="student.contract"
+        <BaseInput class="modal-form__input" v-model="student.contract" :default-value="student.contract"
                    v-maska:[masks.sums]
                    :is-wrong="inputErrors.contract.empty || inputErrors.contract.minSum || inputErrors.contract.maxSum"
         />
       </BaseFormGroup>
 
     </div>
-    <div class="separate__line"></div>
+    <div class="separate__line my-7"></div>
     <div class="w-full flex justify-end">
       <BaseButton text="Saqlash" @save-changes="saveChanges" action-name="saveChanges"
                   :classes="['hover-primary__buttons', 'hover:text-primary hover:bg-transparent text-white bg-primary rounded py-2 px-8 text-sm gap-2']">

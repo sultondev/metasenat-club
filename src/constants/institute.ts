@@ -13,3 +13,6 @@ export const studyTypes = [
     }
 ]
 
+export const DEFAULT_INSTITUTE = 250028
+
+export const DEFAULT_STUDY_TYPE = 111

@@ -2,7 +2,7 @@
   <section class="modal-wrapper-big">
     <form @submit.prevent class="">
       <ModalHeaders title="Tahrirlash" @close-modal="$emit('closeModal')"></ModalHeaders>
-      <div class="separate__line"></div>
+      <div class="separate__line my-7"></div>
       <div class="modal-wrapper-inputs">
         <InputTablets :options="options" v-model="application.sponsorType"
                       :default-value="application.sponsorType"/>

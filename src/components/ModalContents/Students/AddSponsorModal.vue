@@ -2,7 +2,7 @@
   <form class="min-w-[586px] p-[28px]" @submit.prevent>
     <div class="flex justify-between mb-[28px]">
       <h6 class="font-bold text-2xl">Homiy qo'shish</h6>
-      <button class="" @click="$emit('close-modal')">
+      <button class="" @click="$emit('closeModal')">
         <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600"></span>
       </button>
     </div>

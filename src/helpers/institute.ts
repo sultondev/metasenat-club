@@ -6,3 +6,4 @@ export const getDiplomaType = (type: number | string) => {
     else if (type == 3) return StudentTypes.doktorantura
     else return StudentTypes.bakalavr
 }
+

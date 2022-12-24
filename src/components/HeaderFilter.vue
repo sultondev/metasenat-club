@@ -26,6 +26,14 @@
     </TheModal>
   </teleport>
 
+  <teleport to="#modal">
+    <TheModal @close-modal="closeModal"
+              :show="modals.isStudentsFilterOpen"
+              :is-modal-open="modals.isStudentsFilterOpen">
+      <StudentsFilterModal @close-modal="toggleModals"></StudentsFilterModal>
+    </TheModal>
+  </teleport>
+
 </template>
 
 
@@ -36,7 +44,9 @@ import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import TheModal from "@/components/UI/TheModal.vue"
 import SponsorsFilterModal from "@/components/ModalContents/Sponsors/SponsorsFilterModal.vue"
+import StudentsFilterModal from "@/components/ModalContents/Students/StudentsFilterModal.vue"
 import {useMainStore} from "@/store/useMainStore";
+
 
 const router = useRouter()
 const route = useRoute()

@@ -1,8 +1,7 @@
 <template>
   <section class="sect-main py-6 bg-white" v-cloak>
     <div class="responsive-container">
-      <ul class="sect-list"
-          :class="listClass">
+      <ul class="sect-list" :class="{'md:gap-8 sm:gap-4':$slots.right}">
         <li :class="leftClasses">
           <slot name="left"></slot>
         </li>
@@ -28,6 +27,6 @@ defineProps<TheHeaderProps>()
 
 <style scoped>
 .sect-list {
-  @apply flex md:gap-8 justify-between lg:flex-row sm:flex-col sm:gap-4
+  @apply flex justify-between lg:flex-row sm:flex-col md:gap-8 sm:gap-4
 }
 </style>

@@ -2,7 +2,6 @@
   <TheHeader
       left-classes="header-left"
       right-classes="header-right"
-      list-class="gap-y-6"
   >
     <template #left>
       <HeaderTablet/>
