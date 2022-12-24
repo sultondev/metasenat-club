@@ -1,8 +1,8 @@
 <template>
   <section class="dashboard" v-cloak>
-    <div class="container mx-auto">
+    <div class="responsive-container">
       <div class="mb-[28px]" v-if="dashboardFields">
-        <ul class="dashboard-list flex justify-between gap-[28px] flex-wrap items-center">
+        <ul class="dashboard-list">
           <li class="" v-for="banner in bannerList">
             <DashboardBanner :bg-clr="banner.bgClr" :image-name="banner.imgPath" :sums="banner.sums"
                              :currency="banner.currency" :text="banner.text"/>
@@ -71,4 +71,9 @@ fetchData("/dashboard")
 
 </script>
 
-<style></style>
+<style>
+
+.dashboard-list {
+  @apply flex justify-between xl:flex-row sm:flex-col sm:items-center sm:gap-7
+}
+</style>

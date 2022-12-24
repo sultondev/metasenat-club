@@ -8,7 +8,7 @@
                       :default-value="application.sponsorType"/>
         <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)">
           <BaseInput v-model="application.full_name" :is-wrong="v$.full_name.$error" class="modal-form__input"
-                     :default-value="application.full_name"/>
+                     :default-value="application.full_name" maxlength="30"/>
         </BaseFormGroup>
 
 
@@ -22,7 +22,7 @@
 
         <BaseFormGroup variant="1" label-title="Homiylik summasi">
           <BaseInput v-model="application.sums" class="modal-form__input" hint="Homiylik summasi"
-                     :default-value="numberWithSpaces(application.sums)" v-maska:[masks.sums]/>
+                     :default-value="application.sums" v-maska:[masks.sums]/>
         </BaseFormGroup>
         <Transition>
           <div class="w-full" v-if="application.sponsorType === SPONSOR.LEGALENTITY">
@@ -88,6 +88,7 @@ const application = reactive({
   sponsorFirm: "",
   sponsorType: ""
 })
+
 const masks = ref(telAndSumMask)
 const rules = {
   full_name: {
@@ -112,7 +113,7 @@ async function fetchSponsor() {
     const {full_name, phone, sum, is_legal, firm} = response.data;
     application.full_name = full_name
     application.phone = phone.slice(4)
-    application.sums = sum
+    application.sums = numberWithSpaces(sum)
     application.sponsorType = is_legal ? SPONSOR.LEGALENTITY : SPONSOR.INDIVIDUAL
     application.sponsorFirm = is_legal ? firm : ""
   }

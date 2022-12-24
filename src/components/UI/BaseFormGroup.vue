@@ -11,8 +11,8 @@
       </div>
     </div>
   </div>
-  <div v-else-if="variant === '2'">
-    <label :for="id" class="uppercase block text-xs font-medium focus mb-2">
+  <div v-else-if="variant === '2'" class="w-full">
+    <label :for="id" class="uppercase block text-xs font-medium focus mb-2" v-show="labelTitle">
       {{ labelTitle }}
     </label>
     <label :for="id" :class="[labelClasses, {'!border-rose-600': isWrong}]">

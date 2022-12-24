@@ -15,6 +15,7 @@
           <BaseInput v-model="application.fullName" id="fullName" hint="Abdullayev Abdulla Abdulla o’g’li"
                      classes="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
                      :is-wrong="v$.fullName.$error"
+                     maxlength="30"
           />
         </BaseFormGroup>
         <span class="text-red-600" v-show="v$.fullName.$error">Bu bo'lim to'ldirilishi shart</span>

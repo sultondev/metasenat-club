@@ -15,7 +15,9 @@
           <div class="w-full">
             <BaseFormGroup variant="1" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
                            label-classes="block text-xs mb-2 uppercase w-full"
-                           id="student-create-name" :is-wrong="inputErrors.full_name">
+                           id="student-create-name" :is-wrong="inputErrors.full_name"
+                           maxlength="30"
+            >
               <BaseInput v-model="application.full_name" id="student-create-name"
                          hint="Abdullayev Abdulla Abdulla o’g’li"
                          classes="bg-[#E0E7FF33] border border-[#E0E7FF] w-full focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"

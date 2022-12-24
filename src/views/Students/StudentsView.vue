@@ -1,7 +1,7 @@
 <template>
   <section class="students" v-cloak>
-    <div class="mx-auto xs:w-full ">
-      <div class="container mx-auto w-full flex justify-end">
+    <div class="responsive-container">
+      <div class="w-full flex justify-end">
         <router-link to="/students/create"
                      class="primary__button  text-sm"
         >
@@ -15,7 +15,7 @@
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else-if="listOfStudents.length > 0">
-          <Table classes="w-full table-auto border-separate border-spacing-y-4 container mx-auto">
+          <Table classes="responsive-table">
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
@@ -29,7 +29,7 @@
             </template>
             <template #tbody>
               <tr v-for="(student, idx) in filterStudentsByName"
-                  :key="student.id" class="border-spacing-y-3 border-separate text-sm">
+                  :key="student.full_name.trim()" class="">
                 <td class="py-[23px] bg-white rounded-l-[12px] px-4">
                   {{ (page - 1) * size + idx + 1 }}
                 </td>
@@ -71,7 +71,7 @@
           <p class="">{{ fetchError.message }}</p>
         </div>
       </div>
-      <div class="" v-if="listOfStudents.length > 1">
+      <div class="container mx-auto" v-if="listOfStudents.length > 1">
         <div class="container mx-auto flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ totalCount }} tadan

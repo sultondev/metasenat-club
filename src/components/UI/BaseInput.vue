@@ -34,14 +34,13 @@ const value: Ref<string> = ref("")
 watch(() => value.value, () => {
   if (props.onlyNum) {
     value.value = value.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')
+    emit("update:modelValue", value.value)
   }
   emit("update:modelValue", value.value)
 })
 
 watch(() => props.defaultValue, () => {
-  if (props.defaultValue) {
-    value.value = props.defaultValue
-  }
+  value.value = props.defaultValue
 })
 
 if (props.defaultValue) {

@@ -2,9 +2,9 @@
   <header class="header py-[12px] relative bg-white xl:px-0"
           v-if="$route.path !== '/login'"
   >
-    <div class="container mx-auto">
+    <div class="">
       <nav class="nav ">
-        <ul class="nav-list flex justify-between">
+        <ul class="nav-list">
           <li class="nav-list__item flex items-center">
             <router-link to="/" class="bg-none" exact-active-class="nav-active">
               <img src="@/assets/icons/website/header-logo.svg" class="min-w-[173px] min-h-[24px]" alt="">
@@ -60,6 +60,15 @@ const userStore = useUserStore();
 
 .nav-active {
   background: none;
+}
+
+.nav-list {
+  @apply flex justify-between responsive-container
+}
+
+
+.responsive-container {
+  @apply container mx-auto custom:px-4 xl:px-6 lg:px-4 md:px-6 sm:px-4
 }
 
 .nav-active:hover {

@@ -1,21 +1,17 @@
 <template>
-  <label
-      class="main__wrapper relative flex items-center bg-[#E8E8E8] focus-within:bg-[#E0E7FF] items-center rounded-[6px] p-[10px] min-w-[284px] max-h-[40px]"
-      :class="{'cursor-not-allowed': $route.path === '/main/dashboard', 'hover:bg-[#E0E7FF]': $route.path !== '/main/dashboard'}"
-      id="filter">
-    <img src="@/assets/icons/website/search.svg" alt="Search Icon"
-         class="icon-filter w-[20px] h-[20px] mr-[8px]">
-    <input id="filter" class="main-filter__input bg-transparent outline-0 text-[15px] disabled:cursor-not-allowed"
-           placeholder="Izlash" v-model="filters" :disabled="$route.path === '/main/dashboard' ?? true"/>
-    <span v-if="filters.length > 0 ">
-      <button class="absolute right-2 top-[24%]" @click="clearFilter">
-        <span class="icon-close"></span>
-      </button>
-    </span>
-  </label>
-  <button
-      class="rounded-[5px] w-[123px] flex items-center justify-center min-h-[40px] bg-[#EDF1FD] text-[#3365FC] text-[14px] hover:bg-[#E0E7FF]"
-      @click="mainStore.toggleFilterModal">
+  <BaseFormGroup variant="2" label-classes="header-filter__name"
+                 :label-classes="{'cursor-not-allowed': $route.path === '/main/dashboard', 'hover:bg-[#E0E7FF]': $route.path !== '/main/dashboard'}"
+                 id="filter"
+  >
+    <template #defVal>
+      <img src="@/assets/icons/website/search.svg" alt="Search Icon"
+           class="icon-filter w-[20px] h-[20px] mr-[8px]">
+    </template>
+    <BaseInput classes="def__input" hint="Izlash" id="filter" v-model="filters"
+               :disabled="$route.path === '/main/dashboard' ?? true"/>
+  </BaseFormGroup>
+
+  <button class="header-filter__button" @click="mainStore.toggleFilterModal">
             <span
                 class="icon-filter mr-[20px] text-2xl font-bold ">
             </span>
@@ -27,6 +23,8 @@
 import {ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useMainStore} from "@/store/useMainStore";
+import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
+import BaseInput from "@/components/UI/BaseInput.vue"
 
 
 const router = useRouter()
@@ -57,3 +55,15 @@ watch(filters, async () => {
 })
 
 </script>
+
+<style>
+.header-filter__name {
+  @apply flex items-center bg-[#E8E8E8] w-full focus-within:bg-[#E0E7FF] focus-within:border-primary border border-transparent rounded-md w-full py-2.5 px-2.5 min-w-[284px] disabled:cursor-not-allowed
+}
+
+
+.header-filter__button {
+  @apply flex items-center justify-center rounded w-fit py-[10px] px-7 bg-[#EDF1FD] text-primary text-sm hover:bg-[#E0E7FF]
+}
+
+</style>

@@ -1,18 +1,18 @@
 <template>
   <section class="sponsors" v-cloak>
-    <div class="mx-auto xs:w-full ">
-      <div class="overflow-x-scroll mb-[6px]">
+    <div class="responsive-container">
+      <div class="overflow-x-scroll mb-2.5">
         <div class="mx-auto"
              v-if="listOfSponsors.length === 0 && !fetchError.error || mainStore.loading">
           <img src="@/assets/images/website/loading.gif" class="block mx-auto w-[100px] h-[100px]" alt="Loading Gif">
         </div>
         <div class="" v-else-if="listOfSponsors.length > 0">
-          <Table classes="w-full table-auto border-separate border-spacing-y-4 container mx-auto">
+          <Table classes="responsive-table">
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
                 <th class=" text-left">F.I.SH.</th>
-                <th class="">Tel.Raqami {{ filters.date }}</th>
+                <th class="">Tel.Raqami</th>
                 <th class="px-4 whitespace-nowrap">Homiylik summasi</th>
                 <th class="px-4 whitespace-nowrap">Sarflangan summa</th>
                 <th class="px-4">Sana</th>
@@ -23,7 +23,7 @@
 
             <template #tbody>
               <tr v-for="(sponsor, idx) in filterSponsors"
-                  :key="sponsor.id" class="border-spacing-y-3 border-separate text-sm">
+                  :key="sponsor.id" class="">
                 <td class="py-[23px] bg-white rounded-l-[12px] px-4">
                   {{ (page - 1) * size + idx + 1 }}
                 </td>
@@ -63,7 +63,7 @@
           <p class="">{{ fetchError.message }}</p>
         </div>
       </div>
-      <div class="" v-if="listOfSponsors.length > 1">
+      <div class="responsive-container" v-if="listOfSponsors.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ totalCount }} tadan
@@ -108,7 +108,7 @@ const size = ref(+route.query.size! || 15)
 
 const filters: any = reactive({
   name: route.query.filters || "",
-  date: route.query.date || "20-20-2021",
+  date: route.query.date || "2021-01-01",
   sum: route.query.sum || "",
   statuses: route.query.statuses || [route.query.statuses],
 })
@@ -188,12 +188,17 @@ function getParsedTime(arg: string, symbols: string) {
     const formatted = arg.replace(regex, '-')
     return Date.parse(formatted)
   } else {
-    return Date.parse('01-01-2021')
+    return Date.parse('2021-01-01')
   }
 }
 
 </script>
 
 <style>
+
+.responsive-table {
+  @apply w-full table-auto border-separate border-spacing-y-4
+}
+
 
 </style>

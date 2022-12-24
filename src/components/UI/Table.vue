@@ -14,4 +14,7 @@ const props = defineProps<{ classes: string }>()
 </script>
 
 <style>
+.table {
+  @apply border-spacing-y-3 border-separate text-sm w-full
+}
 </style>

@@ -4,7 +4,7 @@
       <h6 class="text-2xl">
         Filter
       </h6>
-      <button class="" @click="$emit('close-modal')">
+      <button class="" @click="emits('close-modal')">
         <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600 transition-all ease-linear"></span>
       </button>
     </div>
@@ -32,11 +32,11 @@
       <h6 class="text-xs uppercase font-medium mb-[8px]">
         Sana
       </h6>
-      <BaseInput inp-type="date"
-                 class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] max-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
-                 placeholder="jwlai"
-                 v-model="detailedFilters.date"
-                 :default-value="detailedFilters.date"
+      <input type="date"
+             class="border border-[#B2B7C1] rounded-[5px] py-[12px] px-[16px] max-w-[253px] text-[#2E384D59] bg-[#E0E7FF33]"
+             placeholder="jwlai"
+             v-model="detailedFilters.date"
+             :default-value="detailedFilters.date"
       />
     </div>
     <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
@@ -72,13 +72,18 @@ type optionsType = {
   id: number;
 }
 
+interface Emits {
+  (e: 'closeModal'): void
+}
+
 const router = useRouter()
 const route = useRoute()
+const emits = defineEmits<Emits>()
 const applicationOptions: Ref<optionsType[]> = ref(sponsorStatuses)
 const generousSums: any = ref<object[]>(generousOptions)
 const detailedFilters = reactive({
   sum: route.query.sum || "",
-  date: route.query.date || "01-01-2021",
+  date: route.query.date || "2021-01-01",
   statuses: checkArray(route.query.statuses) || []
 })
 
@@ -86,6 +91,11 @@ function clearAll() {
   detailedFilters.statuses = []
   detailedFilters.sum = ""
   detailedFilters.date = ""
+  router.push({
+    name: 'sponsors-list',
+    query: {}
+  })
+  emits('closeModal')
 }
 
 async function search() {
@@ -98,6 +108,7 @@ async function search() {
       date: String(detailedFilters.date) || ""
     }
   })
+  emits('closeModal')
 }
 
 

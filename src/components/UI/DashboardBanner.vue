@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[381px]">
+  <div class="flex items-center gap-[16px] flex-wrap p-[24px] rounded-[8px] bg-white w-[380px]">
     <div class="py-[14px] px-[10px] rounded-xl" :class="bgClr">
       <img :src="getImageUrl(imageName)" class="w-[28px] h-[20px]" alt="">
     </div>

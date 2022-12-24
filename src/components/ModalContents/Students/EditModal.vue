@@ -7,6 +7,7 @@
       <BaseFormGroup label-title="F.I.Sh. (Familiya Ism Sharifingiz)" variant="1" id="edit-student-name">
         <BaseInput :classes="styleBaseFormGroup2" v-model="student.full_name" :default-value="student.full_name"
                    :is-wrong="inputErrors.full_name"
+                   maxlength="30"
         />
       </BaseFormGroup>
 
@@ -24,7 +25,7 @@
       </BaseFormGroup>
 
       <BaseFormGroup variant="1" label-title="Kontrakt miqdori" :wrong-data="contractError">
-        <BaseInput :classes="styleInputs" v-model="student.contract" :default-value="numberWithSpaces(student.contract)"
+        <BaseInput :classes="styleInputs" v-model="student.contract" :default-value="student.contract"
                    v-maska:[masks.sums]
                    :is-wrong="inputErrors.contract.empty || inputErrors.contract.minSum || inputErrors.contract.maxSum"
         />
@@ -58,6 +59,7 @@ import {numberWithSpaces, transformSums} from "@/helpers/sum"
 import {useVuelidate} from "@vuelidate/core";
 import {rules} from "@/constants/vuelidate";
 import {contractValidation} from "@/plugins/vuelidate";
+import {editStudentTypes} from "@/typing/types/students";
 
 interface Props {
   studentId: number
@@ -74,7 +76,7 @@ const masks = reactive(telAndSumMask)
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 
-const student = reactive({
+const student: editStudentTypes = reactive({
   full_name: "",
   phone: "",
   institute: 0,
@@ -94,7 +96,6 @@ async function saveChanges() {
     phone: '+998' + student.phone
   }
   const result = await v$.value.$validate()
-  console.log(result)
   if (result) {
     try {
       const response = await publicApi.patch(`/student-update/${props.studentId}/`, data)
@@ -142,7 +143,7 @@ async function fetchStudent(id: any) {
     const response: any = await publicApi.get(`/student-detail/${props.studentId}`)
     const {full_name, institute, phone, contract, id} = response.data
     student.full_name = full_name
-    student.contract = contract
+    student.contract = numberWithSpaces(contract) || "0"
     student.phone = phone.slice(4)
     student.institute = institute.id
     await fetchInstitutes()

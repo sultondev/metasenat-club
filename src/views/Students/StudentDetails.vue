@@ -93,7 +93,7 @@
               </template>
               <template #tbody>
                 <tr v-for="(sponsor, idx) in sponsors"
-                    :key="sponsor.given+idx"
+                    :key="sponsor.summa+sponsor.id"
                     class="border-spacing-y-4 border-separate text-sm border-[#FBFBFC]">
                   <td class="py-[23px] bg-[#FBFBFC] rounded-l-xl px-4 border-y border-l">
                     {{ idx + 1 }}
@@ -199,9 +199,7 @@ const modals = reactive({
 const sponsors: Ref<studentSponsorType[]> = ref()
 
 const {
-  validateInputAll,
   sponsorIdValidation,
-  sumsValidation,
   sponsorSumValidation
 } = useStudents()
 

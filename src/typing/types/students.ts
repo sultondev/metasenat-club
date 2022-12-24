@@ -1,3 +1,5 @@
+import {reactive} from "vue";
+
 type instituteType = {
     id: number
     name: string
@@ -48,4 +50,11 @@ export type studentSponsorType = {
     get_status_display: string,
     sponsor: sponsorType
     summa: ''
+}
+
+export type editStudentTypes = {
+    full_name: string,
+    phone: string,
+    institute: number,
+    contract: string,
 }

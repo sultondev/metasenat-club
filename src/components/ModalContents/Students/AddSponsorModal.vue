@@ -10,7 +10,7 @@
     <div class="mb-7">
       <BaseFormGroup variant="1" label-classes="font-medium text-xs uppercase mb-2"
                      label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
-                     id="none" :is-wrong="inputErrors.sponsorId.status">
+                     id="none" :is-wrong="inputErrors.sponsorId.status" maxlength="30">
         <OneSelect :title='state.chosenSponsor ? "Homiy tanlangan" : "Homiy qo‘shish"' label-classes=""
                    :variant="1" required
                    v-model="state.chosenSponsor"
