@@ -20,7 +20,7 @@
                  v-model="value"
                  name="items"
                  :id="String(option.id)">
-          <label :for="props.id || String(option.id)"
+          <label :for="id || String(option.id)"
                  class="w-full block text-[14px] onselect-label py-[12px] px-[16px] flex justify-between cursor-pointer">
             <span>{{ titleCase(option.label) }}</span>
             <img src="@/assets/icons/website/checked-icon.svg" alt="Checked icon"
@@ -100,6 +100,7 @@ interface BaseInputProps {
   defaultValue?: string | number | any
   title?: string
   isWrong?: boolean
+  id?: any
 }
 
 interface Emits {

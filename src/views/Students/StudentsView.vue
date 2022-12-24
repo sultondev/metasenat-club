@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 
-import {computed, inject, onMounted, Ref, ref, watch} from "vue";
+import {computed, inject, onMounted, reactive, Ref, ref, watch} from "vue";
 import Table from "@/components/UI/Table.vue"
 import ThePagination from "@/components/ThePagination.vue"
 import NotFound from "@/components/UI/NotFound.vue"
@@ -105,6 +105,7 @@ import {studentsListType} from "@/typing/types/students";
 import {useMainStore} from "@/store/useMainStore";
 import {getDiplomaType} from "@/helpers/institute"
 import {numberWithSpaces} from "@/helpers/sum"
+import {DEFAULT_INSTITUTE, DEFAULT_STUDY_TYPE} from "@/constants/institute";
 
 const mainStore = useMainStore()
 
@@ -115,10 +116,14 @@ const route = useRoute();
 const listOfStudents: Ref<studentsListType[]> = ref([])
 const page = ref(+route.query.page! || 1)
 const size = ref(+route.query.size! || 15)
-const filters: any = ref(route.query.filters || "")
+const filters: any = reactive({
+  name: route.query.filters || "",
+  studyType: route.query.type || DEFAULT_STUDY_TYPE,
+  institute: route.query.institute || DEFAULT_INSTITUTE
+})
+
 const totalCount = ref(0)
 const sponsorListLength = ref(listOfStudents.value.length)
-const isAddStudentModalOpen = ref(false)
 const sponsorListEnd = computed(() => (listOfStudents.value.length >= size.value || sponsorListLength.value === listOfStudents.value.length ?
     listOfStudents.value.length * page.value : totalCount))
 
@@ -143,28 +148,26 @@ const fetchSponsorsData = async () => {
 }
 
 const filterStudentsByName = computed(() => {
-  if (filters.value.length > 0) {
+  if (filters.name.length > 0) {
     return listOfStudents.value.filter((item: any) => {
       const lowVer = item.full_name.toLowerCase()
-      return lowVer.includes(filters.value.toLowerCase())
+      return lowVer.includes(filters.name.toLowerCase())
     })
   } else {
     return listOfStudents.value
   }
 })
 
-const toggleModal = () => {
-  isAddStudentModalOpen.value = !isAddStudentModalOpen.value
-}
 onMounted(async () => {
   await fetchSponsorsData()
 })
 
 
 watch(route, async () => {
-  filters.value = route.query.filters || ""
+  filters.name = route.query.filters || ""
   page.value = +route.query.page! || 1
   size.value = +route.query.size! || 15
+
   await fetchSponsorsData()
 })
 
