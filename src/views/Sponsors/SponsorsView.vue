@@ -63,7 +63,7 @@
           <p class="">{{ fetchError.message }}</p>
         </div>
       </div>
-      <div class="responsive-container" v-if="listOfSponsors.length > 1">
+      <div class="" v-if="listOfSponsors.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
             {{ totalCount }} tadan

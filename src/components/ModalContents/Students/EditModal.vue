@@ -1,7 +1,7 @@
 <template>
   <form class="min-w-[586px] p-[28px]" @submit.prevent>
     <ModalHeaders title="Tahrirlash" @close-modal="$emit('close-modal')"></ModalHeaders>
-    <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
     <div class="flex flex-col gap-7">
 
       <BaseFormGroup label-title="F.I.Sh. (Familiya Ism Sharifingiz)" variant="1" id="edit-student-name">
@@ -32,7 +32,7 @@
       </BaseFormGroup>
 
     </div>
-    <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
     <div class="w-full flex justify-end">
       <BaseButton text="Saqlash" @save-changes="saveChanges" action-name="saveChanges"
                   :classes="['hover-primary__buttons', 'hover:text-primary hover:bg-transparent text-white bg-primary rounded py-2 px-8 text-sm gap-2']">

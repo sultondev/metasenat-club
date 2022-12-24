@@ -13,17 +13,9 @@
   </TheHeader>
 
 
-  <main class="main mb-[84px] mt-7 custom:px-2 sm:px-5">
+  <main class="main mb-[84px] mt-7">
     <router-view></router-view>
   </main>
-
-  <teleport to="#modal">
-    <TheModal @close-modal="mainStore.filterModalOpen = false"
-              :show="mainStore.filterModalOpen"
-              :is-modal-open="mainStore.filterModalOpen">
-      <SponsorsFilterModal @close-modal="mainStore.toggleFilterModal"></SponsorsFilterModal>
-    </TheModal>
-  </teleport>
 </template>
 
 <script setup lang="ts">

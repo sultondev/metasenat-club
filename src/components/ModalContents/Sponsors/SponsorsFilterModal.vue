@@ -4,11 +4,11 @@
       <h6 class="text-2xl">
         Filter
       </h6>
-      <button class="" @click="emits('close-modal')">
+      <button class="" @click="emits('closeModal')">
         <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600 transition-all ease-linear"></span>
       </button>
     </div>
-    <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
     <div class="mb-[28px]">
       <h6 class="text-xs uppercase font-medium mb-[8px]">
         Ariza holati
@@ -39,7 +39,7 @@
              :default-value="detailedFilters.date"
       />
     </div>
-    <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
     <div class="flex justify-end gap-[16px] transition-all">
       <button class="flex items-center  py-[9px] px-[32px] rounded-[5px] border border-[#B2B7C1] hover:bg-[#E7E7E7]"
               @click="clearAll"

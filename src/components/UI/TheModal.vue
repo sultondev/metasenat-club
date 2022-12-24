@@ -3,7 +3,7 @@
     <div class="modal fixed top-0 w-auto h-auto z-[1000]" v-if="isModalOpen">
       <div
           class="modal__backdrop bg-[#00000080]  w-full h-screen w-screen flex justify-center items-center"
-          @click.self.left="$emit('close-modal', windowNum || '')">
+          @click.self.left="emits('closeModal', windowNum || '')">
         <div class="modal__container bg-white rounded-xl">
           <slot>Default</slot>
         </div>
@@ -13,11 +13,14 @@
 </template>
 
 <script setup lang="ts">
-
 import {watch} from "vue";
 
+interface Emits {
+  (e: 'closeModal', value?: any): void
+}
+
 const modal: any = document.querySelector("#modal")
-console.log(modal)
+const emits = defineEmits<Emits>()
 const props = defineProps<{
   isModalOpen: boolean
   windowNum?: number

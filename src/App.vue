@@ -97,4 +97,8 @@ body {
   @apply outline-0 border-0 bg-transparent
 }
 
+.separate__line {
+  @apply mb-7 w-full h-[2px] bg-[#F5F5F7]
+}
+
 </style>

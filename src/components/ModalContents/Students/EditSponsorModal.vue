@@ -5,7 +5,7 @@
         Homiylarni tahrirlash
       </h6>
     </div>
-    <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
     <div class="" v-if="sponsor.sponsorsOptions.length > 0">
       <BaseFormGroup id="edit-name" label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
                      variant="1" class="mb-7">

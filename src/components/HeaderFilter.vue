@@ -1,6 +1,6 @@
 <template>
-  <BaseFormGroup variant="2" label-classes="header-filter__name"
-                 :label-classes="{'cursor-not-allowed': $route.path === '/main/dashboard', 'hover:bg-[#E0E7FF]': $route.path !== '/main/dashboard'}"
+  <BaseFormGroup variant="2"
+                 :label-classes="['header-filter__name',{'cursor-not-allowed hover:bg-[#E0E7FF]': $route.path === '/main/dashboard'}]"
                  id="filter"
   >
     <template #defVal>
@@ -11,26 +11,41 @@
                :disabled="$route.path === '/main/dashboard' ?? true"/>
   </BaseFormGroup>
 
-  <button class="header-filter__button" @click="mainStore.toggleFilterModal">
+  <button class="header-filter__button" @click="toggleModals">
             <span
                 class="icon-filter mr-[20px] text-2xl font-bold ">
             </span>
     <span class="font-medium text-[14px]">Filter</span>
   </button>
+
+  <teleport to="#modal">
+    <TheModal @close-modal="closeModal"
+              :show="modals.isSponsorsFilterOpen"
+              :is-modal-open="modals.isSponsorsFilterOpen">
+      <SponsorsFilterModal @close-modal="toggleModals"></SponsorsFilterModal>
+    </TheModal>
+  </teleport>
+
 </template>
 
+
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {reactive, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {useMainStore} from "@/store/useMainStore";
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
-
+import TheModal from "@/components/UI/TheModal.vue"
+import SponsorsFilterModal from "@/components/ModalContents/Sponsors/SponsorsFilterModal.vue"
+import {useMainStore} from "@/store/useMainStore";
 
 const router = useRouter()
 const route = useRoute()
 const filters = ref(route.query.filters || "")
 const mainStore: any = useMainStore()
+const modals = reactive({
+  isSponsorsFilterOpen: false,
+  isStudentsFilterOpen: false
+})
 
 const setFilter = () => {
   router.push({path: route.path, query: {...route.query, filters: filters.value}})
@@ -53,6 +68,17 @@ watch(filters, async () => {
     }, 1000)
   }
 })
+
+
+function toggleModals() {
+  if (route.path === '/main/sponsors') modals.isSponsorsFilterOpen = !modals.isSponsorsFilterOpen
+  else if (route.path === '/main/students') modals.isStudentsFilterOpen = !modals.isStudentsFilterOpen
+}
+
+function closeModal(idx: number) {
+  if (route.path === '/main/sponsors') modals.isSponsorsFilterOpen = false
+  else if (route.path === '/main/students') modals.isStudentsFilterOpen = false
+}
 
 </script>
 

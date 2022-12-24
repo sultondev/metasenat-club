@@ -6,7 +6,7 @@
         <span class="icon-close text-2xl text-[#B2B7C1] hover:text-red-600"></span>
       </button>
     </div>
-    <div class="separate__line mb-[28px] w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
     <div class="mb-7">
       <BaseFormGroup variant="1" label-classes="font-medium text-xs uppercase mb-2"
                      label-title="F.I.Sh. (Familiya Ism Sharifingiz)"
@@ -39,7 +39,7 @@
               v-show="inputErrors.sponsorSumLimit.status">{{ inputErrors.sponsorSumLimit.message }}</span>
       </div>
     </div>
-    <div class="separate__line mb-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+    <div class="separate__line"></div>
 
     <div class="flex justify-end">
       <button type="submit" @click="$emit('dataSubmit', state.chosenSponsor, state.chosenSums)"

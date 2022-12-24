@@ -49,3 +49,11 @@ export type inputErrorsType = {
         message: string
     }
 }
+
+export type editSponsorTypes = {
+    full_name: string,
+    phone: string,
+    sums: string,
+    sponsorFirm: string,
+    sponsorType: string
+}

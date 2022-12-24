@@ -2,7 +2,7 @@
   <section class="modal-wrapper-big">
     <form @submit.prevent class="">
       <ModalHeaders title="Tahrirlash" @close-modal="$emit('closeModal')"></ModalHeaders>
-      <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+      <div class="separate__line"></div>
       <div class="modal-wrapper-inputs">
         <InputTablets :options="options" v-model="application.sponsorType"
                       :default-value="application.sponsorType"/>
@@ -34,7 +34,7 @@
         </Transition>
 
       </div>
-      <div class="separate__line my-7 w-full h-[2px] bg-[#F5F5F7]"></div>
+      <div class="separate__line"></div>
       <div class="w-full flex justify-end">
         <BaseButton text="Saqlash" class="primary__button" @save-changes="saveChanges" action-name="saveChanges">
           <span class="icon-save icons"></span>
@@ -49,7 +49,7 @@ import ModalHeaders from "@/components/ModalContents/ModalHeaders.vue"
 import InputTablets from "@/components/UI/InputTablets.vue"
 import {reactive, Ref, ref} from "vue";
 import {SPONSOR} from "@/typing/enums/sponsor";
-import {generousSumsType, optionType} from "@/typing/types/sponsors";
+import {editSponsorTypes, generousSumsType, optionType} from "@/typing/types/sponsors";
 import {generousOptions, sponsorLegalTypes} from "@/constants/sponsors";
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
@@ -81,7 +81,7 @@ const sumsOptions: Ref<generousSumsType[]> = ref(generousOptions.map((item: gene
   id: item.id
 })))
 
-const application = reactive({
+const application: editSponsorTypes = reactive({
   full_name: "",
   phone: "",
   sums: "",
@@ -113,7 +113,7 @@ async function fetchSponsor() {
     const {full_name, phone, sum, is_legal, firm} = response.data;
     application.full_name = full_name
     application.phone = phone.slice(4)
-    application.sums = numberWithSpaces(sum)
+    application.sums = numberWithSpaces(sum) || '0'
     application.sponsorType = is_legal ? SPONSOR.LEGALENTITY : SPONSOR.INDIVIDUAL
     application.sponsorFirm = is_legal ? firm : ""
   }
