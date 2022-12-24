@@ -13,7 +13,7 @@
                        label-classes="block text-xs mb-2 uppercase"
                        id="fullName">
           <BaseInput v-model="application.fullName" id="fullName" hint="Abdullayev Abdulla Abdulla o’g’li"
-                     classes="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
+                     classes="modal-form__input"
                      :is-wrong="v$.fullName.$error"
                      maxlength="30"
           />
@@ -24,7 +24,7 @@
         <BaseFormGroup variant="1" id="phoneNumber" label-title="Telefon raqamingiz"
                        label-classes="block text-xs mb-2 uppercase">
           <BaseFormGroup id="phoneNumber" variant="2"
-                         :label-classes="['flex items-center bg-[#E0E7FF33] border border-[#E0E7FF] py-3 px-4 focus-within:bg-[#E0E7FF] rounded-md outline-none text-[15px]', {'border-rose-500': v$.phoneNumber.$error}]"
+                         :label-classes="['modal-form__input form-group__def', {'!border-rose-500': v$.phoneNumber.$error}]"
           >
             <template #defVal>
               <span class="mr-1">+998</span>
@@ -45,17 +45,17 @@
         <BaseFormGroup variant="1" id="none" label-title="To‘lov summasi" label-classes="block text-xs mb-3 uppercase">
           <OneSelect v-model="application.sums" :variant="2" :hide-all="false" hint="" required classes="" title=""
                      :options="generousSums" :additional="true"
-                     default-value="1000000"
-                     label-classes="select-none py-5 px-9 cursor-pointer hover:bg-[#E0E7FF] transition-all ease-linear overflow-hidden"></OneSelect>
+                     :default-value="1291">
+          </OneSelect>
         </BaseFormGroup>
       </div>
       <Transition mode="out-in">
         <div v-if="application.sums === 'boshqa'" class="">
           <BaseInput v-model="application.yourSums"
                      hint="0"
-                     class="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
+                     class="modal-form__input"
                      v-maska:[masks.sums]
-                     :class="{'border-rose-500':v$.yourSums.validateYourSums.$invalid}"
+                     :class="{'!border-rose-500':v$.yourSums.validateYourSums.$invalid}"
           />
           <span class="text-red-600" v-show="v$.yourSums.validateYourSums.$invalid">
             Minimal summa 1 000 000
@@ -67,7 +67,7 @@
           <BaseFormGroup variant="1" id="firmName" label-title="Tashkilot nomi"
                          label-classes="block mb-2 uppercase text-xs">
             <BaseInput v-model="application.sponsorFirm" id="firmName"
-                       classes="bg-[#E0E7FF33] border border-[#E0E7FF] rounded-md appearance-none outline-none py-3 px-4 text-[15px] mb-4 focus-within:bg-[#E0E7FF]"
+                       classes="modal-form__input"
                        hint="Orient group"
                        required
                        :class="{'border-rose-500': v$.$error && !validateSponsorType()}"

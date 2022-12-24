@@ -17,4 +17,12 @@ const props = defineProps<{ classes: string }>()
 .table {
   @apply border-spacing-y-3 border-separate text-sm w-full
 }
+
+.table tbody tr td {
+  @apply py-5 px-4
+}
+
+.table thead tr th {
+  @apply py-2 px-4
+}
 </style>

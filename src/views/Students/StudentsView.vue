@@ -28,33 +28,33 @@
               </tr>
             </template>
             <template #tbody>
-              <tr v-for="(student, idx) in filterStudentsByName"
-                  :key="student.full_name.trim()" class="">
-                <td class="py-[23px] bg-white rounded-l-[12px] px-4">
+              <tr v-for="(student, idx) in filterStudents"
+                  :key="student.full_name.trim()+student.id" class="">
+                <td class=" bg-white rounded-l-[12px] px-4">
                   {{ (page - 1) * size + idx + 1 }}
                 </td>
-                <td class="py-[23px]  bg-white font-bold text-ellipsis">{{ student.full_name }}</td>
-                <td class="py-[23px]  bg-white text-center whitespace-nowrap capitalize">
+                <td class="  bg-white font-bold text-ellipsis">{{ student.full_name }}</td>
+                <td class="  bg-white text-center capitalize">
                   {{
                     getDiplomaType(student.type)
                   }}
                 </td>
-                <td class="py-[23px]  bg-white text-center font-medium">
+                <td class="  bg-white text-center font-medium">
                   <span class="font-medium text-slate-700">
                     {{ student.institute.name }}
                   </span>
                 </td>
-                <td class="py-[23px]  bg-white text-center whitespace-nowrap font-medium">
+                <td class="  bg-white text-center whitespace-nowrap font-medium">
                   <span class="font-medium text-slate-700">
                   {{ numberWithSpaces(student.given) }}
                   </span> <span class="text-[#B2B7C1]">UZS</span>
                 </td>
-                <td class="py-[23px]  bg-white text-center whitespace-nowrap px-4">
+                <td class="  bg-white text-center whitespace-nowrap px-4">
                   <span class="font-medium text-slate-700">
                   {{ numberWithSpaces(student.contract) }}
                   </span> <span class="text-[#B2B7C1]">UZS</span>
                 </td>
-                <td class="py-[23px]  bg-white text-center rounded-r-[12px] px-4">
+                <td class="  bg-white text-center rounded-r-[12px] px-4">
                   <router-link :to="'/main/students/'+student.id" class="w-fit block mx-auto">
                     <img src="@/assets/icons/website/eye.svg" alt="Eye icon">
                   </router-link>
@@ -62,7 +62,7 @@
               </tr>
             </template>
           </Table>
-          <NotFound :condition="filterStudentsByName.length === 0"
+          <NotFound :condition="filterStudents.length === 0"
                     text="Uzur siz qidirayotgan homiy ro'yxatda yo'q">
             <img src="@/assets/icons/website/empty.svg" alt="" class="mx-auto">
           </NotFound>
@@ -110,13 +110,13 @@ import {DEFAULT_INSTITUTE, DEFAULT_STUDY_TYPE} from "@/constants/institute";
 const mainStore = useMainStore()
 
 const fetchData: any = inject("fetchData")
-const fetchError: any = ref({})
-const router = useRouter()
+const fetchError: any = ref({});
+const router = useRouter();
 const route = useRoute();
 const listOfStudents: Ref<studentsListType[]> = ref([])
 const page = ref(+route.query.page! || 1)
 const size = ref(+route.query.size! || 15)
-const filters: any = reactive({
+const filters = reactive({
   name: route.query.filters || "",
   studyType: route.query.type || DEFAULT_STUDY_TYPE,
   institute: route.query.institute || DEFAULT_INSTITUTE
@@ -128,7 +128,7 @@ const sponsorListEnd = computed(() => (listOfStudents.value.length >= size.value
     listOfStudents.value.length * page.value : totalCount))
 
 
-const fetchSponsorsData = async () => {
+const fetchStudentsData = async () => {
   setTimeout(() => {
     mainStore.loading = false
   }, 600)
@@ -147,11 +147,10 @@ const fetchSponsorsData = async () => {
   }
 }
 
-const filterStudentsByName = computed(() => {
-  if (filters.name.length > 0) {
+const filterStudents = computed(() => {
+  if (filters.institute || filters.studyType) {
     return listOfStudents.value.filter((item: any) => {
-      const lowVer = item.full_name.toLowerCase()
-      return lowVer.includes(filters.name.toLowerCase())
+      return checkName(item.full_name) && checkInstitute(item.institute.id) && checkStudyType(item.type)
     })
   } else {
     return listOfStudents.value
@@ -159,7 +158,7 @@ const filterStudentsByName = computed(() => {
 })
 
 onMounted(async () => {
-  await fetchSponsorsData()
+  await fetchStudentsData()
 })
 
 
@@ -167,9 +166,30 @@ watch(route, async () => {
   filters.name = route.query.filters || ""
   page.value = +route.query.page! || 1
   size.value = +route.query.size! || 15
-
-  await fetchSponsorsData()
+  filters.institute = route.query.institute || DEFAULT_INSTITUTE
+  filters.studyType = route.query.type || DEFAULT_STUDY_TYPE
+  await fetchStudentsData()
 })
+
+function checkInstitute(idx: any) {
+  if (filters.institute != DEFAULT_INSTITUTE) {
+    return idx == filters.institute
+  } else return true
+}
+
+function checkStudyType(idx: any) {
+  if (filters.studyType != DEFAULT_STUDY_TYPE) {
+    return idx == filters.studyType
+  } else return true
+}
+
+function checkName(name: string) {
+  const searchedName = String(filters.name).toLowerCase()
+  const studentName = name.toLowerCase()
+  if (filters.name.length > 0) {
+    return studentName.includes(searchedName)
+  } else return true
+}
 
 </script>
 
