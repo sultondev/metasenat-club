@@ -1,9 +1,6 @@
 <template>
   <div class="relative" v-if="variant === 1">
-    <button
-        class="py-[12px] border-2 text-[15px] w-full flex justify-between border-[#E0E7FF] text-left px-4 rounded-xl bg-[#F9FAFF]"
-        :class="{'border-[#2E5BFF]': isDropdownOpen}"
-        @click="toggleDropdown">
+    <button class="" :class="{'border-[#2E5BFF]': isDropdownOpen}" @click="toggleDropdown">
       <span>{{ value.length > 0 ? value.length + ' ta tanlangan' : "Arizalar holatlarni tanlang" }}</span>
       <span class="transition-all" :class="{'rotate-180':isDropdownOpen}"><img
           src="@/assets/icons/website/arrow-down.svg" alt=""></span>
@@ -154,6 +151,10 @@ function containValue(theArray: string[] | number[], theValue: string | number) 
 </script>
 
 <style>
+
+.multiselect__button {
+  @apply py-3 border-2 text-sm w-full flex justify-between border-[#E0E7FF] text-left px-4 rounded-xl bg-[#F9FAFF]
+}
 
 .multiselect-list__item {
   border-color: #E0E7FF;
