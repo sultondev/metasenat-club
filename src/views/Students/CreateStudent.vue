@@ -1,6 +1,6 @@
 <template>
   <section class="">
-    <TheHeader left-classes="flex" right-classes="">
+    <TheHeader left-classes="flex" :is-full="{left: true, right: false}">
       <template #left>
         <button class="mr-6" @click="router.back()"><img
             src="@/assets/icons/website/back-icon.svg"

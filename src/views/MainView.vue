@@ -2,6 +2,7 @@
   <TheHeader
       left-classes="header-left"
       right-classes="header-right"
+      :isFull="{right: true, left: true}"
   >
     <template #left>
       <HeaderTablet/>
@@ -34,7 +35,6 @@ const currentRoute: any = ref(route.name || "")
 
 watch(() => route.name, () => {
   currentRoute.value = route.name
-  console.log(currentRoute.value)
 })
 
 </script>

@@ -1,14 +1,13 @@
 <template>
 
   <div class="">
-    <TheHeader left-classes="flex" right-classes="">
+    <TheHeader left-classes="flex" :is-full="{right: false, left: true}">
       <template #left>
         <button class="mr-6" @click="router.push({path: '/main/students'})"><img
             src="@/assets/icons/website/back-icon.svg"
             alt="Back Icon"></button>
-        <h6 class="text-2xl font-bold  mr-[12px]">{{ student.full_name }}</h6>
-        <span
-            class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">
+        <h6 class="text-2xl font-bold  mr-3">{{ student.full_name }}</h6>
+        <span class="bg-[#DDFFF2] py-2.5 px-3 rounded text-[#00CF83] text-xs flex items-center font-normal">
             {{ student.get_status_display }}
         </span>
       </template>

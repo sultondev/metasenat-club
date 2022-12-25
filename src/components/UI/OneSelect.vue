@@ -42,7 +42,7 @@
                required
                :id="String(option.id)">
         <label :for="String(option.id)"
-               class=" w-full font-medium cursor-pointer hover:bg-blue-200 border ease-linear transition-all border-[#E0E7FF] rounded-[5px] text-[12px] block text-[14px] py-[12px] px-[16px] flex justify-center"
+               class=" w-full font-medium cursor-pointer hover:bg-blue-200 border ease-linear transition-all border-[#E0E7FF] rounded-[5px] text-xs block text-[14px] py-[12px] px-[16px] flex justify-center"
                :class="[{'border border-[#2E5BFF]': value == option.id}, labelClasses]"
         >
           <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
@@ -62,7 +62,7 @@
                name="item"
                id="all">
         <label for="all"
-               class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center"
+               class=" w-full font-medium text-xs block text-[14px] py-[12px] px-[16px] text-center"
                :class="labelClasses"
         >
           BOSHQA

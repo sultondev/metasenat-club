@@ -1,11 +1,11 @@
 <template>
   <section class="sect-main py-6 bg-white" v-cloak>
     <div class="responsive-container">
-      <ul class="sect-list" :class="{'md:gap-8 sm:gap-4':$slots.right}">
-        <li :class="leftClasses">
+      <ul class="sect-list" :class="{'md:gap-8 sm:gap-4': props.isFull.left}">
+        <li :class="leftClasses" v-if="isFull ? isFull.left : true">
           <slot name="left"></slot>
         </li>
-        <li :class="rightClasses">
+        <li :class="rightClasses" v-if="isFull ? isFull.right : true">
           <slot name="right"></slot>
         </li>
       </ul>
@@ -19,9 +19,13 @@ interface TheHeaderProps {
   leftClasses?: string | [] | {}
   rightClasses?: string | [] | {}
   listClass?: string | [] | {}
+  isFull: {
+    left: boolean
+    right: boolean
+  }
 }
 
-defineProps<TheHeaderProps>()
+const props = defineProps<TheHeaderProps>()
 
 </script>
 

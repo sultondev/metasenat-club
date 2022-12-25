@@ -1,46 +1,37 @@
 <template>
-  <section class="login flex items-center flex-col bg-[#F5F5F7]">
+  <section class="login">
     <div class="mx-auto">
-      <h2 class="login__header justify-center flex gap-3 mb-[48px] items-center xs:text-2xl">
+      <h2 class="login__header">
         <img src="@/assets/images/logo/logo.svg" alt="Logo">
         METASENAT
       </h2>
 
-      <form @submit.prevent="onSubmit"
-            class="login-form bg-white rounded-xl p-8 flex flex-col gap-[44px]">
-        <h2 class="text-left text-3xl font-bold">Kirish</h2>
-        <div class="flex flex-col gap-[22px]">
+      <form @submit.prevent="onSubmit" class="login-form">
+        <h2 class="login__title">Kirish</h2>
+        <div class="flex flex-col gap-5">
           <div class="flex flex-col">
-            <div v-show="loginAlert" class="text-rose-600 text-center">
+            <div v-show="loginAlert" class="login__wrong">
               Login yoki parol nato'g'ri
             </div>
             <BaseFormGroup id="login" variant="1" label-title="LOGIN" label-classes="mb-2" :wrong-data="loginErrors">
-              <BaseInput v-model="authSubmit.username"
-                         classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:border-[#2E5BFF] focus-within:bg-[#E0E7FF] focus-within:border-[#E0E7FF]black outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
-                         id="login"
-                         hint="adm8904"
-                         :is-wrong="inputErrors.username.$error || loginAlert"
-                         maxlength="20"
+              <BaseInput v-model="authSubmit.username" classes="modal-form__input" id="login" hint="adm8904"
+                         :is-wrong="inputErrors.username.$error || loginAlert" maxlength="20"
               />
             </BaseFormGroup>
           </div>
           <div class="flex flex-col">
-            <label for="password" class="font-medium text-[12px] mb-[8px]">PAROL</label>
-            <BaseInput v-model="authSubmit.password" inp-type="password"
-                       classes="border border-[#E0E7FF] bg-[#E0E7FF33] focus-within:bg-[#E0E7FF] focus-within:border-[#2E5BFF] outline-none rounded-[6px] py-[12px] px-[14px] text-sm"
-                       hint="parol kiriting"
-                       id="password"
-                       :is-wrong="inputErrors.password.minlength || loginAlert"
-            />
+            <BaseFormGroup variant="1" label-title="PAROL" id="password">
+              <BaseInput v-model="authSubmit.password" inp-type="password" classes="modal-form__input" maxlength="30"
+                         hint="parol kiriting" id="password" :is-wrong="inputErrors.password.minlength || loginAlert"
+              />
+            </BaseFormGroup>
           </div>
-          <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true"
-                         @verify="testRobot">
+          <!-- Recaptcha -->
+          <vue-recaptcha sitekey="6Lf1pDcjAAAAABE3lkawNZtrvNk5pPXfKVFT_pML" aria-required="true" @verify="testRobot">
           </vue-recaptcha>
-          <button class="bg-[#2E5BFF] py-[14px] rounded-[6px] text-white disabled:bg-[#cdcdcd]" type="submit"
-                  :disabled="loading ">
-            <span>
+
+          <button class="login__button" type="submit" :disabled="loading">
             {{ loading ? "Checking..." : "Kirish" }}
-            </span>
           </button>
 
         </div>
@@ -163,16 +154,17 @@ watch(authSubmit, () => {
 
 <style>
 .login {
-  width: 100%;
-  height: 100vh;
   min-height: 700px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @apply flex items-center justify-center flex-col bg-[#F5F5F7] min-h-screen;
 }
 
 .login-form {
+  @apply bg-white rounded-xl p-8 flex flex-col gap-11;
   box-shadow: 0 0 10px #EBEEFC
+}
+
+.login__header {
+  @apply justify-center flex gap-3 mb-[48px] items-center xs:text-2xl
 }
 
 .login__header::after {
@@ -183,4 +175,17 @@ watch(authSubmit, () => {
   color: white;
   padding: 4px 8px;
 }
+
+.login__title {
+  @apply text-left text-3xl font-bold
+}
+
+.login__wrong {
+  @apply text-rose-600 text-center;
+}
+
+.login__button {
+  @apply primary__button py-4 rounded-md flex justify-center text-base;
+}
+
 </style>

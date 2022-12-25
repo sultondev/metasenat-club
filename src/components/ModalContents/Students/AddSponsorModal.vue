@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-// Components
+// components
 import BaseFormGroup from "@/components/UI/BaseFormGroup.vue"
 import BaseInput from "@/components/UI/BaseInput.vue"
 import OneSelect from "@/components/UI/OneSelect.vue"

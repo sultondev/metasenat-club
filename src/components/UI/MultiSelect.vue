@@ -33,15 +33,15 @@
   <div class="relative" v-else-if="variant === 2">
     <form @submit.prevent class="">
       <ul class="grid grid-cols-4 gap-[12px]">
-        <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded-[5px]" v-if="hideAll"
-            :class="{'border-[2px] !border-[#2E5BFF]': value.includes('barchasi')}">
+        <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded" v-if="hideAll"
+            :class="{'border-2 !border-[#2E5BFF]': value.includes('barchasi')}">
           <input type="checkbox" value="barchasi"
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
                  id="all">
           <label for="all"
-                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center">
+                 class=" w-full font-medium text-xs block py-3 px-4 text-center">
             Barchasi
           </label>
           <span class="absolute -top-2 -right-2">
@@ -49,8 +49,8 @@
                v-show="value.includes('barchasi')">
           </span>
         </li>
-        <li class="relative max-w-[124px] border-[2px] border-[#E0E7FF] rounded-[5px]"
-            :class="{'border-[2px] border-[#2E5BFF]': value.includes(option.label)}"
+        <li class="relative max-w-[124px] border-2 border-[#E0E7FF] rounded"
+            :class="{'border-2 border-[#2E5BFF]': value.includes(option.label)}"
             v-for="(option, idx) in options">
           <input type="checkbox" :value="option.label"
                  class="hidden multiselect-label__box appearance-none"
@@ -58,7 +58,7 @@
                  name="item"
                  :id="String(option.id)">
           <label :for="String(option.id)"
-                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] flex">
+                 class=" w-full font-medium text-xs block py-[12px] px-[16px] flex">
             <span class="whitespace-nowrap mr-[2px]">{{ numberWithSpaces(option.label) }} </span>
             <span class="text-[#2E5BFF]"> UZS</span>
           </label>
@@ -68,14 +68,14 @@
           </span>
         </li>
         <li class="relative max-w-[124px] border-2 border-[transparent] bg-[#E0E7FF] rounded-[5px]" v-if="additional"
-            :class="{'border-[2px] !border-[#2E5BFF]': value.includes('boshqa')}">
+            :class="{'border-2 !border-[#2E5BFF]': value.includes('boshqa')}">
           <input type="checkbox" value="barchasi"
                  class="hidden multiselect-label__box appearance-none"
                  v-model="value"
                  name="item"
                  id="all">
           <label for="all"
-                 class=" w-full font-medium text-[12px] block text-[14px] py-[12px] px-[16px] text-center">
+                 class=" w-full font-medium text-xs block text-[14px] py-[12px] px-[16px] text-center">
             BOSHQA
           </label>
           <span class="absolute -top-2 -right-2">

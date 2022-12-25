@@ -1,22 +1,17 @@
 <template>
 
   <div class="">
-    <TheHeader left-classes="flex" list-class="xl:flex-row gap-0">
+    <TheHeader left-classes="flex" list-class="xl:flex-row gap-0" :isFull="{left: true, right: false}">
       <template #left>
-        <button class="mr-6" @click="router.back()"><img
-            src="@/assets/icons/website/back-icon.svg"
-            alt="Back Icon"></button>
-        <h6 class="text-2xl font-bold  mr-[12px]">{{ sponsor.full_name }}</h6>
-        <span
-            class="bg-[#DDFFF2] py-[6px] px-[12px] rounded-[5px] text-[#00CF83] text-xs flex items-center font-normal">
-          {{
-            sponsor.get_status_display
-          }}
-        </span>
+        <button class="mr-6" @click="router.back()">
+          <img src="@/assets/icons/website/back-icon.svg" alt="Back Icon">
+        </button>
+        <h6 class="sponsor__name">{{ sponsor.full_name }}</h6>
+        <span class="sponsor__status">{{ sponsor.get_status_display }}</span>
       </template>
     </TheHeader>
 
-    <section class="details py-[40px]" v-if="sponsor.id">
+    <section class="details py-10" v-if="sponsor.id">
       <div class="bg-white rounded-xl p-8 max-w-[793px] w-full  mx-auto">
         <div class="flex justify-between items-center mb-[32px]">
           <h6 class="text-2xl">Homiy haqida</h6>
@@ -116,4 +111,12 @@ async function fetchTheSponsor(id: any) {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.sponsor__status {
+  @apply bg-[#DDFFF2] py-2 px-3 rounded text-[#00CF83] text-xs flex items-center font-normal
+}
+
+.sponsor__name {
+  @apply text-2xl font-bold mr-3
+}
+</style>

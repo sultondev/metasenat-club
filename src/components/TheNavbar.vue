@@ -5,42 +5,32 @@
     <div class="">
       <nav class="nav ">
         <ul class="nav-list">
-          <li class="nav-list__item flex items-center">
+          <li class="nav-list__item">
             <router-link to="/" class="bg-none" exact-active-class="nav-active">
               <img src="@/assets/icons/website/header-logo.svg" class="min-w-[173px] min-h-[24px]" alt="">
             </router-link>
           </li>
-          <li class="nav-list__item flex items-center gap-[40px]" v-if="userStore.isAuthenticated">
-            <a href="#" class="nav-user flex items-center gap-[24px]"><span
-                class="nav-user__name text-[13px]">Shohrux</span> <img
-                src="@/assets/icons/website/user.svg"
-                class="nav-user__picture"
-                alt="UserImage">
+          <li class="nav-list__item gap-10" v-if="userStore.isAuthenticated">
+            <a href="#" class="nav-user">
+              <span class="text-xs">Shohrux</span>
+              <img src="@/assets/icons/website/user.svg" alt="UserImage">
             </a>
             <button class="nav__logout " @click="userStore.logOut">
               <img src="@/assets/icons/website/exit.svg" class="w-[26px] h-[22px]" alt="Exit icon">
             </button>
           </li>
-          <li class="flex sm:gap-x-10 custom:gap-x-2 items-center text-sm" v-else>
-            <router-link to="/main/dashboard">
-              Asosiy
+          <li class="nav-list__welcome" v-else>
+
+            <router-link :to="item.link" :key="item.link+idx" v-for="(item,idx) in WelcomeLinks" class="nav-list__link">
+              {{ item.label }}
             </router-link>
-            <router-link to="/scholarships">
-              Grantlar
+
+            <router-link to="/login" class="nav-list__login">
+              <span class=""><img src="@/assets/icons/website/enter-icon.svg" class="w-6 h-6" alt=""></span>
+              <span>Kirish</span>
             </router-link>
-            <router-link to="/duty">
-              Soliq imtiyozlari
-            </router-link>
-            <router-link to="/login" class="flex items-center gap-x-2 relative">
-              <span class="">
-                <img src="@/assets/icons/website/enter-icon.svg" class="w-6 h-6" alt="">
-              </span>
-              <span>
-              Kirish
-              </span>
-            </router-link>
-            <router-link to="/register"
-                         class="border-2 py-2 px-8 rounded-lg border-[#3366FF] text-[#3366FF] text-sm hover:bg-[#E0E7FF] transition-all font-medium">
+
+            <router-link to="/register" class="nav-list__reg">
               Ro‘yxatdan o’tish
             </router-link>
           </li>
@@ -52,8 +42,10 @@
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
+import {WelcomeLinks} from "@/constants/components/TheNavbar";
 
 const userStore = useUserStore();
+
 </script>
 
 <style>
@@ -66,6 +58,25 @@ const userStore = useUserStore();
   @apply flex justify-between responsive-container
 }
 
+.nav-list__item {
+  @apply flex items-center;
+}
+
+.nav-list__link {
+  @apply text-sm font-medium;
+}
+
+.nav-list__welcome {
+  @apply flex sm:gap-x-10 custom:gap-x-2 items-center text-sm;
+}
+
+.nav-list__login {
+  @apply flex items-center gap-x-2;
+}
+
+.nav-list__reg {
+  @apply border-2 py-2 px-8 rounded-lg border-primary text-primary text-sm hover:bg-blue-200 transition-all font-medium;
+}
 
 .responsive-container {
   @apply container mx-auto custom:px-4 xl:px-6 lg:px-4 md:px-6 sm:px-4
@@ -77,11 +88,12 @@ const userStore = useUserStore();
 
 .header {
   box-shadow: 2px 0 20px #00000010;
-  /*position: relative;*/
+  position: relative;
   z-index: 10;
 }
 
 .nav-user {
+  @apply flex items-center gap-6;
   background-color: #F1F1F3;
   border-radius: 6px;
   padding: 4px 4px 4px 20px
@@ -94,18 +106,4 @@ const userStore = useUserStore();
   justify-content: center;
 }
 
-.nav-logo__name {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.nav-logo__picture {
-  margin-right: 10px;
-}
-
-.nav-logo__name::after {
-  content: "PRO";
-  color: #00AE69;
-  font-size: 14px;
-}
 </style>

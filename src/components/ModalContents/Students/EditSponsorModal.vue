@@ -17,7 +17,7 @@
       <BaseFormGroup id="" variant="1" label-title="Ajratilingan summa">
         <BaseInput
             classes="bg-[#E0E7FF33] border border-[#E0E7FF] focus-within:bg-[#E0E7FF] rounded-md outline-none py-3 px-4 text-[15px]"
-            :default-value="numberWithSpaces(sponsor.sums)" v-maska:[masks.sums] v-model="sponsor.sums"
+            :default-value="sponsor.sums" v-maska:[masks.sums] v-model="sponsor.sums"
             :is-wrong="sponsor.limit.status || v$.sums.$error"/>
       </BaseFormGroup>
       <span class="text-rose-600 text-xs" v-if="sponsor.limit.status">Homiyda u miqdordagi summa mavjud emas !</span>
@@ -74,9 +74,7 @@ interface Emits {
 }
 
 
-const masks = {
-  ...telAndSumMask
-}
+const masks = reactive(telAndSumMask)
 const props = defineProps<Props>()
 const emits = defineEmits<Emits>()
 const sponsors: Ref<studentSponsors[]> = ref([])
@@ -111,7 +109,7 @@ watch(() => sponsor.sums, () => {
 watch(() => sponsor.selectedSponsor, () => {
   sponsor.index = sponsors.value.findIndex((item: studentSponsors) => item.sponsor.id === sponsor.selectedSponsor)
   console.log(String(sponsors.value[sponsor.index].summa))
-  sponsor.sums = String(sponsors.value[sponsor.index].summa)
+  sponsor.sums = numberWithSpaces(sponsors.value[sponsor.index].summa)
 })
 
 async function fetchSponsors(id: any) {
@@ -124,7 +122,7 @@ async function fetchSponsors(id: any) {
       }))
       sponsors.value = response.data.sponsors
       sponsor.index = sponsors.value.findIndex((item: studentSponsors) => item.sponsor.id == sponsor.selectedSponsor)
-      sponsor.sums = String(sponsors.value[sponsor.index].summa)
+      sponsor.sums = numberWithSpaces(sponsors.value[sponsor.index].summa)
       sponsor.payIndex = sponsors.value[sponsor.index].id
     }
   } catch (error: any) {
