@@ -10,7 +10,12 @@
               <img src="@/assets/icons/website/header-logo.svg" class="min-w-[173px] min-h-[24px]" alt="">
             </router-link>
           </li>
+
           <li class="nav-list__item gap-10" v-if="userStore.isAuthenticated">
+            <button class="font-medium uppercase text-base" @click="toggleLanguage">
+              {{ t$.locale.value }}
+            </button>
+
             <a href="#" class="nav-user">
               <span class="text-xs">Shohrux</span>
               <img src="@/assets/icons/website/user.svg" alt="UserImage">
@@ -19,7 +24,11 @@
               <img src="@/assets/icons/website/exit.svg" class="w-[26px] h-[22px]" alt="Exit icon">
             </button>
           </li>
+
           <li class="nav-list__welcome" v-else>
+            <button class="font-medium uppercase text-base" @click="toggleLanguage">
+              {{ t$.locale.value }}
+            </button>
 
             <router-link :to="item.link" :key="item.link+idx" v-for="(item,idx) in WelcomeLinks" class="nav-list__link">
               {{ item.label }}
@@ -27,11 +36,11 @@
 
             <router-link to="/login" class="nav-list__login">
               <span class=""><img src="@/assets/icons/website/enter-icon.svg" class="w-6 h-6" alt=""></span>
-              <span>Kirish</span>
+              <span>{{ $t('navbar.login') }}</span>
             </router-link>
 
             <router-link to="/register" class="nav-list__reg">
-              Ro‘yxatdan o’tish
+              {{ $t('navbar.reg') }}
             </router-link>
           </li>
         </ul>
@@ -42,9 +51,35 @@
 
 <script setup lang="ts">
 import {useUserStore} from "@/store/userStore";
-import {WelcomeLinks} from "@/constants/components/TheNavbar";
+import {useI18n} from "vue-i18n";
+import {computed} from "vue";
 
 const userStore = useUserStore();
+
+
+const {t} = useI18n()
+const t$ = useI18n()
+
+const toggleLanguage = () => {
+  if (t$.locale.value === 'uz') t$.locale.value = 'en'
+  else if (t$.locale.value === 'en') t$.locale.value = 'uz'
+  else t$.locale.value = 'en'
+}
+
+const WelcomeLinks = computed(() => [
+  {
+    link: '/main/dashboard',
+    label: t('navbar.main')
+  },
+  {
+    link: '/scholarships',
+    label: t('navbar.grants')
+  },
+  {
+    link: '/duty',
+    label: t('navbar.duty')
+  }
+])
 
 </script>
 

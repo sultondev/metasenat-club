@@ -11,13 +11,13 @@
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
-                <th class=" text-left">F.I.SH.</th>
-                <th class="">Tel.Raqami</th>
-                <th class="px-4 whitespace-nowrap">Homiylik summasi</th>
-                <th class="px-4 whitespace-nowrap">Sarflangan summa</th>
-                <th class="px-4">Sana</th>
-                <th class="">Holati</th>
-                <th class=" px-4">Amallar</th>
+                <th class=" text-left">{{ $t('table.head.full_name') }}</th>
+                <th class="">{{ $t('sponsor_table.phone') }}</th>
+                <th class="px-4 whitespace-nowrap">{{ $t('sponsor_table.have') }}</th>
+                <th class="px-4 whitespace-nowrap">{{ $t('sponsor_table.spent') }}</th>
+                <th class="px-4">{{ $t('sponsor_table.date') }}</th>
+                <th class="">{{ $t('sponsor_table.status') }}</th>
+                <th class=" px-4">{{ $t('table.head.actions') }}</th>
               </tr>
             </template>
 
@@ -66,13 +66,17 @@
       <div class="" v-if="listOfSponsors.length > 1">
         <div class="flex justify-between items-center gap-[40px] ">
           <div class="whitespace-nowrap text-[15px]">
-            {{ totalCount }} tadan
-            {{ (page - 1) * size + 1 }}-{{ sponsorListEnd }}
-            ko'rsatilmoqda
+            {{
+              $t('table.bottom.left', {
+                count: totalCount,
+                startOrder: (page - 1) * size + 1,
+                endOrder: sponsorListEnd
+              })
+            }}
           </div>
           <ul class="flex items-center gap-[12px]">
             <li class="flex gap-2 items-center">
-              <p class="text-[15px]">Ko'rsatish</p>
+              <p class="text-[15px]">{{ $t('table.bottom.right') }}</p>
             </li>
             <li class="flex items-center gap-[20px] pb-[0px]  max-w-full">
               <ThePagination :count="totalCount"></ThePagination>

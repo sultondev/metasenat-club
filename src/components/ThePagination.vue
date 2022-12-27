@@ -17,7 +17,7 @@
           src="@/assets/icons/website/left.svg" class="min-w-[22px]" alt="">
       </button>
       <button
-          class="text-[14px] border border-[#DFE3E8] h-full  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF] "
+          class="text-sm border border-[#DFE3E8] h-full  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF] "
           @click="selectPage(1)"
           v-if="pageSize < count && page === pagesSizeAmount">
         {{ 1 }}
@@ -25,14 +25,14 @@
       <div v-for="p in pagesSizeAmount - 1 > page ? 2 : 1" :key="p">
         <button
             :class="page === page+p-1 ? ' pagination-list__active' : ''"
-            class="text-[14px] border border-[#DFE3E8] h-full  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF]  "
+            class="text-sm border border-[#DFE3E8] h-full  px-2.5 bg-white rounded hover:bg-[#E0E7FF]  "
             @click="selectPage(page+p-1)"
             v-if="pagesSizeAmount > page"
         >
           {{ page + p - 1 }}
         </button>
       </div>
-      <div class="text-[14px] border border-[#DFE3E8]  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF]"
+      <div class="text-sm border border-[#DFE3E8]  px-2.5 bg-white rounded-[5px] hover:bg-[#E0E7FF]"
            v-if="pageSize < count && pagesSizeAmount - 1 > page || ( pageSize < count && pagesSizeAmount === page)">
         ...
       </div>
@@ -40,7 +40,7 @@
           v-if="page"
           @click="selectPage(pagesSizeAmount)"
           :class="page === pagesSizeAmount ? ' pagination-list__active' : ' ' "
-          class="relative text-[14px] border border-[#DFE3E8]  px-[10px] bg-white rounded-[5px] hover:bg-[#E0E7FF] "
+          class="relative text-sm border border-[#DFE3E8]  px-2.5 bg-white rounded hover:bg-[#E0E7FF] "
       >
         {{ pagesSizeAmount }}
       </button>

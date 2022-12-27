@@ -16,6 +16,7 @@
     "maska": "^2.1.1",
     "pinia": "^2.0.26",
     "vue": "^3.2.41",
+    "vue-i18n": "^9.2.2",
     "vue-recaptcha": "^2.0.3",
     "vue-router": "4",
     "vue3-apexcharts": "^1.4.1",

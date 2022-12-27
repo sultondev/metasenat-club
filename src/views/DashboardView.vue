@@ -23,6 +23,7 @@
 import {computed, inject, Ref, ref} from "vue";
 import DashboardBanner from "@/components/UI/DashboardBanner.vue"
 import DashboardChart from "@/components/DashboardChart.vue"
+import {useI18n} from "vue-i18n";
 
 type fieldsType = {
   total_must_pay?: number
@@ -30,12 +31,14 @@ type fieldsType = {
   total_paid?: number
 }
 
+const {t} = useI18n()
 const axios: any = inject('axios')
 const dashboardFields: Ref<fieldsType> = ref({})
 const loading = ref(true)
+
 const bannerList = computed(() => [
   {
-    text: "Jami so‘ralgan summa",
+    text: t('dashboard.first_banner'),
     imgPath: "money-1",
     sums: dashboardFields.value.total_paid,
     currency: "UZS",
@@ -43,14 +46,14 @@ const bannerList = computed(() => [
     icon: 'bg-red'
   },
   {
-    text: "Jami so‘ralgan summa",
+    text: t('dashboard.second_banner'),
     imgPath: "money-2",
     sums: dashboardFields.value.total_need,
     currency: "UZS",
     bgClr: "bg-banner-02"
   },
   {
-    text: "To'lanishi kerak summa",
+    text: t('dashboard.third_banner'),
     imgPath: "money-3",
     sums: dashboardFields.value.total_must_pay,
     currency: "UZS",

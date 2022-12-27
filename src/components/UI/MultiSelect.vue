@@ -67,7 +67,7 @@
                  name="item"
                  id="all">
           <label for="all"
-                 class=" w-full font-medium text-xs block text-[14px] py-[12px] px-[16px] text-center">
+                 class=" w-full font-medium text-xs block text-sm py-3 px-4 text-center">
             BOSHQA
           </label>
           <span class="absolute -top-2 -right-2">

@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import {ref} from "vue"
+import {computed, ref} from "vue"
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n()
 
 const series = ref([
   {
-    name: "Homiylar",
+    name: t('dashboard.chart_first'),
     data: [30, 40, 35, 50, 40000, 60, 70, 91],
   },
   {
-    name: "Talabalar",
+    name: t('dashboard.chart_second'),
     data: [25000, 1, 1284, 60, 35000, 90, 10, 11],
   },
 ])
+
+const chartTitle = computed(() =>
+    t('dashboard.chart_title')
+)
 const chartOptions = ref({
   chart: {
     id: 'area-datetime',
@@ -33,7 +40,7 @@ const chartOptions = ref({
     }
   },
   title: {
-    text: 'Homiylar va talabalar soni',
+    text: chartTitle.value,
     align: 'left',
     style: {
       fontSize: '24px',

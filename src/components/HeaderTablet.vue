@@ -4,25 +4,26 @@
 
 <script setup lang="ts">
 import Tablet from "@/components/UI/Tablets.vue";
-import {Ref, ref} from "vue";
+import {computed, Ref, ref} from "vue";
+import {useI18n} from "vue-i18n";
 
-
+const {t} = useI18n()
 type TabletObj = {
   title: string,
   link: string
 }
 
-const tablets: Ref<TabletObj[]> = ref([
+const tablets: Ref<TabletObj[]> = computed(() => [
   {
-    title: "dashboard",
+    title: t('header_tabs.first'),
     link: "/main/dashboard",
   },
   {
-    title: "sponsors",
+    title: t('header_tabs.second'),
     link: "/main/sponsors",
   },
   {
-    title: "students",
+    title: t('header_tabs.third'),
     link: "/main/students",
   },
 ])

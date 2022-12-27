@@ -7,15 +7,13 @@
       <img src="@/assets/icons/website/search.svg" alt="Search Icon"
            class="icon-filter w-[20px] h-[20px] mr-[8px]">
     </template>
-    <BaseInput classes="def__input" hint="Izlash" id="filter" v-model="filters"
+    <BaseInput classes="def__input" :hint="$t('header_filter.hint')" id="filter" v-model="filters"
                :disabled="$route.path === '/main/dashboard' ?? true"/>
   </BaseFormGroup>
 
   <button class="header-filter__button" @click="toggleModals">
-            <span
-                class="icon-filter mr-[20px] text-2xl font-bold ">
-            </span>
-    <span class="font-medium text-[14px]">Filter</span>
+    <span class="icon-filter mr-[20px] text-2xl font-bold"></span>
+    <span class="header-filter__txt">{{ $t('header_filter.button') }}</span>
   </button>
 
   <teleport to="#modal">
@@ -99,7 +97,10 @@ function closeModal(idx: number) {
 
 
 .header-filter__button {
-  @apply flex items-center justify-center rounded w-fit py-[10px] px-7 bg-[#EDF1FD] text-primary text-sm hover:bg-[#E0E7FF]
+  @apply flex items-center justify-center rounded w-fit py-1.5 px-7 bg-[#EDF1FD] text-primary text-sm hover:bg-[#E0E7FF]
 }
 
+.header-filter__txt {
+  @apply font-medium text-sm capitalize;
+}
 </style>

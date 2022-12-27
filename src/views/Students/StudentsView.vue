@@ -19,7 +19,7 @@
             <template #thead>
               <tr class="text-xs text-[#B1B1B8] uppercase text-center">
                 <th class="text-left px-4">#</th>
-                <th class=" text-left">F.I.SH.</th>
+                <th class=" text-left">{{ $t('table.head.full_name') }}</th>
                 <th class="">Talabalik turi</th>
                 <th class="px-4 whitespace-nowrap">OTM</th>
                 <th class="px-4 whitespace-nowrap">Ajratilgan summa</th>
