@@ -3,7 +3,7 @@
     <div class="responsive-container">
       <div class="w-full flex justify-end">
         <router-link to="/students/create"
-                     class="primary__button  text-sm"
+                     class="primary__button text-sm"
         >
           <span class="icon-increase text-base mr-2.5"></span>
           <span>Talaba qo'shish</span>
