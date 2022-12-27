@@ -37,6 +37,7 @@ const router = createRouter({
             path: "/main",
             name: "MainView",
             component: MainView,
+            redirect: '/main/dashboard',
             children: [
                 {
                     path: "sponsors",
